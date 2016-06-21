@@ -1,0 +1,12 @@
+apply plugin: 'application'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+mainClassName = "de.hhu.propra16.coastal.tddt.Main"
