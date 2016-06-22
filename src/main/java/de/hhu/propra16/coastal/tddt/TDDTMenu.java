@@ -2,15 +2,14 @@ package de.hhu.propra16.coastal.tddt;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.stage.Stage;
 
 
 public class TDDTMenu {
+
+    private static Stage primaryStage;
 
     @FXML
     MenuItem miopen;
@@ -26,6 +25,7 @@ public class TDDTMenu {
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Wähle eine Datei aus");
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+        dialog.showOpenDialog(primaryStage);
     }
 
     @FXML
@@ -33,5 +33,15 @@ public class TDDTMenu {
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Wähle eine Datei aus");
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+        dialog.showOpenDialog(primaryStage);
+    }
+
+    @FXML
+    public void close(ActionEvent event) {
+        primaryStage.close();
+    }
+
+    public static void setStage (Stage stage) {
+        primaryStage = stage;
     }
 }

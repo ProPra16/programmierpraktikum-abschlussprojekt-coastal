@@ -18,6 +18,7 @@ public class Main extends Application {
         }
         primaryStage.setTitle("Test Driven Development Trainer");
         primaryStage.setScene(new Scene(root, 1080, 720));
+        TDDTMenu.setStage(primaryStage);
         primaryStage.show();
     }
 
