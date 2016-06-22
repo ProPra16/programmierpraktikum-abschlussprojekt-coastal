@@ -10,15 +10,15 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:controller="de.hhu.propra16.coastal.tddt.TDDTMenu" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhu.propra16.coastal.tddt.TDDTMenu">
    <children>
       <MenuBar prefHeight="29.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Datei">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Öffne Katalog" />
-                  <MenuItem mnemonicParsing="false" text="Speichern" />
-              <MenuItem mnemonicParsing="false" text="Programm schließen" />
+                  <MenuItem fx:id="miopen" mnemonicParsing="false" onAction="#open" text="Öffne Katalog" />
+                  <MenuItem fx:id="misave" mnemonicParsing="false" onAction="#save" text="Speichern" />
+              <MenuItem fx:id="miclose" mnemonicParsing="false" text="Programm schließen" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Hilfe">

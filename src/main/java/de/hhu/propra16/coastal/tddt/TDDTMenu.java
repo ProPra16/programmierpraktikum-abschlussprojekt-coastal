@@ -1,5 +1,6 @@
 package de.hhu.propra16.coastal.tddt;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
@@ -9,7 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class TDDTMenu implements Initializable{
+public class TDDTMenu {
 
     @FXML
     MenuItem miopen;
@@ -20,24 +21,17 @@ public class TDDTMenu implements Initializable{
     @FXML
     MenuItem miclose;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+    public void open(ActionEvent event) {
+        FileChooser dialog = new FileChooser();
+        dialog.setTitle("Wähle eine Datei aus");
+        dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+    }
 
-        miopen.setOnAction(e -> {
-            FileChooser dialog = new FileChooser();
-            dialog.setTitle("Wähle eine Datei aus");
-            dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
-
-        });
-
-        misave.setOnAction(e -> {
-            FileChooser dialog = new FileChooser();
-            dialog.setTitle("Wähle eine Datei aus");
-            dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
-
-        });
-
-
-
+    @FXML
+    public void save(ActionEvent event) {
+        FileChooser dialog = new FileChooser();
+        dialog.setTitle("Wähle eine Datei aus");
+        dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
     }
 }
