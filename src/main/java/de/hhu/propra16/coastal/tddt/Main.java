@@ -9,10 +9,15 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+    public void start(Stage primaryStage) {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        }catch (Exception e) {
+            System.err.println("Sample nicht gefunden");
+        }
+        primaryStage.setTitle("Test Driven Development Trainer");
+        primaryStage.setScene(new Scene(root, 1080, 720));
         primaryStage.show();
     }
 
