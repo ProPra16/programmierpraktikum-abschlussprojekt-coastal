@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URL;
+
 public class Main extends Application {
 
     @Override
@@ -17,7 +19,10 @@ public class Main extends Application {
             System.err.println("Sample nicht gefunden");
         }
         primaryStage.setTitle("Test Driven Development Trainer");
-        primaryStage.setScene(new Scene(root, 1080, 720));
+        Scene scene = new Scene(root, 1080, 720);
+        URL url = getClass().getResource("tddt.css");
+        scene.getStylesheets().add(url.toExternalForm());
+        primaryStage.setScene(scene);
         TDDTMenu.setStage(primaryStage);
         primaryStage.show();
     }

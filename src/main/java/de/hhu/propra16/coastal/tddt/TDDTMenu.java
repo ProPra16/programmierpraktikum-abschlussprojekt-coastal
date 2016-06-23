@@ -4,8 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 import javax.xml.soap.Text;
 import java.nio.file.Files;
@@ -32,6 +35,12 @@ public class TDDTMenu {
 
     @FXML
     TextArea tatest;
+
+    @FXML
+    Button btnextstep;
+
+    @FXML
+    Label lbstatus;
 
     @FXML
     public void open(ActionEvent event) {
@@ -87,6 +96,24 @@ public class TDDTMenu {
     @FXML
     public void close(ActionEvent event) {
         primaryStage.close();
+    }
+
+    @FXML
+    public void next(ActionEvent event) {
+        switch (lbstatus.getText()) {
+            case "RED":
+                lbstatus.setText("GREEN");
+                lbstatus.setId("green");
+                break;
+            case "GREEN":
+                lbstatus.setText("REFACTOR");
+                lbstatus.setId("black");
+                break;
+            case "REFACTOR":
+                lbstatus.setText("RED");
+                lbstatus.setId("red");
+                break;
+        }
     }
 
     public static void setStage (Stage stage) {

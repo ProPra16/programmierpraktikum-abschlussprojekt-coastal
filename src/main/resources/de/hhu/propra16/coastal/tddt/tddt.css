@@ -1,0 +1,11 @@
+#red {
+	-fx-text-fill: RED;
+}
+
+#green {
+	-fx-text-fill: GREEN;
+}
+
+#black {
+	-fx-text-fill: BLACK;
+}
