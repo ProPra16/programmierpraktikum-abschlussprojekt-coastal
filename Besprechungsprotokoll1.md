@@ -9,16 +9,28 @@ Aktueller Stand:
 Wir haben aus der Aufgabenstellung grob folgende Aufgabenbereiche mit den entsprechenden Schwierigkeitsgraden und eingeschätztem Aufwand erkannt und uns dementsprechend aufgeteilt:
 
 -Erstellung des Hauptprogramms und der groben GUI, damit unser Team eine Richtungsvorgabe hat (Fabian)
+
 -README (Marc)
+
 -Nutzerhandbuch (Khoa)
+
 -Gradle, Travis (Marc)
+
 -Hauptprogramm (u.a. Wechsel zwischen Code und Test schreiben sowie Refactoring) (Marvin und Fabian)
+
 -Kompilieren und Ausführen des vom Nutzer programmierten Programms (Manh Khoi)
+
 -Verwaltung des Problems bezüglich des Katalogs und Integration in das Hauptprogramm (Marc und Fabian)
+
 -Visuelle Darstellung des TDD Prozesses (Marvin)
+
 -Babysteps (Khoa)
+
 -Tracking (Manh Khoi und Khoa)
+
 -ATDD (Marc und Marvin)
+
+
 
 sowie
 -Systembeschreibung
