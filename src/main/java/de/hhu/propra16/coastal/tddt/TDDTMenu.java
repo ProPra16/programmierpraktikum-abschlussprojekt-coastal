@@ -2,13 +2,12 @@ package de.hhu.propra16.coastal.tddt;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.xml.soap.Text;
 import java.awt.*;
@@ -16,6 +15,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -54,9 +55,23 @@ public class TDDTMenu {
     public void open(ActionEvent event) {
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Wähle eine Datei aus");
+        dialog.setInitialDirectory(Paths.get("src/test").toFile()); //TODO
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
-        dialog.showOpenDialog(primaryStage);
-        Path p = Paths.get("../Software.java");
+        File file = dialog.showOpenDialog(primaryStage);
+
+        Catalog catalog;
+
+        try {
+            catalog = new CatalogParser().parse(file);
+        } catch (Exception e) {
+            System.err.println("Fehler beim Parsen des Katalogs aufgetreten");
+            return;
+        }
+
+        catalog.loadExercise(taeditor, tatest, 0);
+
+
+/*        Path p = Paths.get("../Software.java");
         try {
             if (!Files.exists(p)) {
                 Files.write(p, new byte[0], StandardOpenOption.CREATE);
@@ -76,7 +91,7 @@ public class TDDTMenu {
             }
         } catch (Exception e) {
             System.err.println("Write to data failed");
-        }
+        }*/
     }
 
     @FXML
