@@ -11,6 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javax.xml.soap.Text;
+import java.awt.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,6 +46,9 @@ public class TDDTMenu {
 
     @FXML
     Label lbstatus;
+
+    @FXML
+    MenuItem mihelp;
 
     @FXML
     public void open(ActionEvent event) {
@@ -114,6 +122,17 @@ public class TDDTMenu {
                 lbstatus.setId("red");
                 break;
         }
+    }
+
+    @FXML
+    public void help(ActionEvent event) {
+        /*URL url = getClass().getResource("x.pdf");
+        File file = new File(url.toExternalForm());
+        try {
+            Desktop.getDesktop().open(file);
+        } catch (Exception e) {
+            System.err.println("Loading pdf failed");
+        }*/
     }
 
     public static void setStage (Stage stage) {
