@@ -23,6 +23,11 @@ public class Catalog {
         loadInListView(lvexercises);
     }
 
+    public void loadExercise(TextArea taeditor, TextArea tatest, Exercise exercise) {
+        loadClassContent(taeditor, exercise);
+        loadTestContent(tatest, exercise);
+    }
+
     private void loadClassContent(TextArea taeditor, int exercise) {
         taeditor.setText(mExercises.get(exercise).getClassContent());
     }
@@ -32,10 +37,21 @@ public class Catalog {
     }
 
     private void loadInListView(ListView<Exercise> lvexercises) {
+        lvexercises.getItems().clear();
         for(Exercise exercise: mExercises) {
             lvexercises.getItems().add(exercise);
         }
     }
+
+
+    private void loadClassContent(TextArea taeditor, Exercise exercise) {
+        taeditor.setText(exercise.getClassContent());
+    }
+
+    private void loadTestContent(TextArea tatest, Exercise exercise) {
+        tatest.setText(exercise.getTestContent());
+    }
+
 
     public ArrayList<Exercise> getExercises() {
         return mExercises;

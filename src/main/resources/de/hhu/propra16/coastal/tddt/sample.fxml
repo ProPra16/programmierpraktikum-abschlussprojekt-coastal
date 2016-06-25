@@ -55,7 +55,7 @@
                </children>
             </HBox>
             <Button fx:id="btnextstep" mnemonicParsing="false" onAction="#next" prefHeight="57.0" prefWidth="288.0" text="Nächster Schritt" GridPane.columnIndex="1" />
-            <ListView fx:id="lvexercises" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <ListView fx:id="lvexercises" onMouseClicked="#chooseExercise" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
 

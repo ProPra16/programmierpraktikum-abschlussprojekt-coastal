@@ -1,12 +1,15 @@
 package de.hhu.propra16.coastal.tddt;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -23,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ResourceBundle;
 
 
 public class TDDTMenu {
@@ -30,34 +34,37 @@ public class TDDTMenu {
     private static Stage primaryStage;
 
     @FXML
-    MenuItem miopen;
+    private MenuItem miopen;
 
     @FXML
-    MenuItem misave;
+    private MenuItem misave;
 
     @FXML
-    MenuItem miclose;
+    private MenuItem miclose;
 
     @FXML
-    TextArea taeditor;
+    private TextArea taeditor;
 
     @FXML
-    TextArea tatest;
+    private TextArea tatest;
 
     @FXML
-    Button btnextstep;
+    private Button btnextstep;
 
     @FXML
-    Label lbstatus;
+    private Label lbstatus;
 
     @FXML
-    MenuItem mihelp;
+    private MenuItem mihelp;
 
     @FXML
-    ListView<Exercise> lvexercises;
+    private ListView<Exercise> lvexercises;
+
+    private Catalog catalog;
+
 
     @FXML
-    public void open(ActionEvent event) {
+    protected void open(ActionEvent event) {
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Wähle eine Datei aus");
         dialog.setInitialDirectory(Paths.get("src/test").toFile()); //TODO
@@ -67,7 +74,6 @@ public class TDDTMenu {
         if(file == null) {
             return;
         }
-        Catalog catalog;
 
 
         try {
@@ -78,11 +84,12 @@ public class TDDTMenu {
         }
 
         catalog.loadExercise(taeditor, tatest, lvexercises, 0);
+
                 
     }
 
     @FXML
-    public void save(ActionEvent event) {
+    protected void save(ActionEvent event) {
         DirectoryChooser dialog = new DirectoryChooser();
         dialog.setTitle("Wähle einen Ordner aus");
         File directory = dialog.showDialog(primaryStage);
@@ -117,12 +124,12 @@ public class TDDTMenu {
     }
 
     @FXML
-    public void close(ActionEvent event) {
+    protected void close(ActionEvent event) {
         primaryStage.close();
     }
 
     @FXML
-    public void next(ActionEvent event) {
+    protected void next(ActionEvent event) {
         switch (lbstatus.getText()) {
             case "RED":
                 lbstatus.setText("GREEN");
@@ -140,14 +147,15 @@ public class TDDTMenu {
     }
 
     @FXML
-    public void help(ActionEvent event) {
-        /*URL url = getClass().getResource("x.pdf");
-        File file = new File(url.toExternalForm());
-        try {
-            Desktop.getDesktop().open(file);
-        } catch (Exception e) {
-            System.err.println("Loading pdf failed");
-        }*/
+    protected void help(ActionEvent event) {
+
+
+    }
+
+    @FXML
+    protected void chooseExercise(MouseEvent event) {
+        Exercise exercise = lvexercises.getSelectionModel().getSelectedItem();
+        catalog.loadExercise(taeditor, tatest, exercise);
     }
 
     public static void setStage (Stage stage) {

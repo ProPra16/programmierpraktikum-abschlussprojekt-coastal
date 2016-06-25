@@ -42,4 +42,25 @@ import org.junit.Test;
 			<timetracking value="True" />
 		</config>
 	</exercise>
+	<exercise name="Fibonacci">
+	<description>Schreibt ein Programm, dass die Fibonacci-Folge berechnet.</description>
+		<classes>
+			<class name="Fibonacci"> public class Fibbonacci {
+}
+			</class>
+		</classes>
+		<tests>
+			<test name="FibonacciTest">import static org.junit.Assert.*;
+import org.junit.Test;
+	public class Fibbonacci {
+		@Test public void testSomething() {
+		}
+}
+			</test>
+		</tests>
+		<config>
+			<babysteps value="True" time="2:00" />
+			<timetracking value="True" />
+		</config>
+	</exercise>
 </exercises>
