@@ -2,6 +2,7 @@ package de.hhu.propra16.coastal.tddt;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -52,6 +53,9 @@ public class TDDTMenu {
     MenuItem mihelp;
 
     @FXML
+    ListView lvexercises;
+
+    @FXML
     public void open(ActionEvent event) {
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Wähle eine Datei aus");
@@ -61,6 +65,7 @@ public class TDDTMenu {
 
         Catalog catalog;
 
+
         try {
             catalog = new CatalogParser().parse(file);
         } catch (Exception e) {
@@ -68,7 +73,10 @@ public class TDDTMenu {
             return;
         }
 
-        catalog.loadExercise(taeditor, tatest, 0);
+        catalog.loadExercise(taeditor, tatest, lvexercises, 0);
+
+
+
 
 
 /*        Path p = Paths.get("../Software.java");

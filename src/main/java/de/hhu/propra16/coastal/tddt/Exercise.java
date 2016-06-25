@@ -6,7 +6,7 @@ public class Exercise {
     private String mDescription;
     private String mClassContent;
     private String mTestContent;
-    private Object mClassName;
+    private String mClassName;
     private String mTestName;
 
     public Exercise(String name) {
@@ -40,4 +40,10 @@ public class Exercise {
     public String getTestContent() {
         return mTestContent;
     }
+
+    public String getClassName() {return mClassName; }
+
+    public String getTestName() {return mTestName; }
+
+    public String toString() {return mName; }
 }
