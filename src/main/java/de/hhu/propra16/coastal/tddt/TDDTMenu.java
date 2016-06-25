@@ -56,7 +56,6 @@ public class TDDTMenu {
     @FXML
     ListView<Exercise> lvexercises;
 
-
     @FXML
     public void open(ActionEvent event) {
         FileChooser dialog = new FileChooser();
