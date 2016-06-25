@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -53,7 +54,8 @@ public class TDDTMenu {
     MenuItem mihelp;
 
     @FXML
-    ListView lvexercises;
+    ListView<Exercise> lvexercises;
+
 
     @FXML
     public void open(ActionEvent event) {
@@ -63,6 +65,9 @@ public class TDDTMenu {
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
         File file = dialog.showOpenDialog(primaryStage);
 
+        if(file == null) {
+            return;
+        }
         Catalog catalog;
 
 
@@ -74,51 +79,39 @@ public class TDDTMenu {
         }
 
         catalog.loadExercise(taeditor, tatest, lvexercises, 0);
-
-
-
-
-
-/*        Path p = Paths.get("../Software.java");
-        try {
-            if (!Files.exists(p)) {
-                Files.write(p, new byte[0], StandardOpenOption.CREATE);
-            } else {
-                taeditor.setText(new String(Files.readAllBytes(p)));
-            }
-        } catch (Exception e) {
-            System.err.println("Write to data failed");
-        }
-
-        Path p2 = Paths.get("../SoftwareTest.java");
-        try {
-            if(!Files.exists(p2)) {
-                Files.write(p2, new byte[0], StandardOpenOption.CREATE);
-            } else {
-                tatest.setText(new String(Files.readAllBytes(p2)));
-            }
-        } catch (Exception e) {
-            System.err.println("Write to data failed");
-        }*/
+                
     }
 
     @FXML
     public void save(ActionEvent event) {
-        /*FileChooser dialog = new FileChooser();
-        dialog.setTitle("Wähle eine Datei aus");
-        dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
-        dialog.showSaveDialog(primaryStage);*/
+        DirectoryChooser dialog = new DirectoryChooser();
+        dialog.setTitle("Wähle einen Ordner aus");
+        File directory = dialog.showDialog(primaryStage);
 
-        Path p = Paths.get("../Software.java");
+        if(directory == null) {
+            return;
+        }
+
         try {
-            Files.write(p, taeditor.getText().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+
+            Path p = Paths.get(directory.toPath().toString() + "/" + lvexercises.getItems().get(0).getClassName() + ".java");
+            StandardOpenOption option = StandardOpenOption.TRUNCATE_EXISTING;
+            if (!Files.exists(p)) {
+                option = StandardOpenOption.CREATE;
+            }
+            Files.write(p, taeditor.getText().getBytes(), option);
         } catch (Exception e) {
             System.err.println("Write to data failed");
         }
 
-        Path p2 = Paths.get("../SoftwareTest.java");
+
         try {
-            Files.write(p2, tatest.getText().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+            Path p2 = Paths.get(directory.toPath().toString() + "/" + lvexercises.getItems().get(0).getTestName() + ".java");
+            StandardOpenOption option = StandardOpenOption.TRUNCATE_EXISTING;
+            if (!Files.exists(p2)) {
+                option = StandardOpenOption.CREATE;
+            }
+            Files.write(p2, taeditor.getText().getBytes(), option);
         } catch (Exception e) {
             System.err.println("Write to data failed");
         }
