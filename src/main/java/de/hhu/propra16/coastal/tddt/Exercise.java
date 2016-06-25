@@ -1,16 +1,26 @@
 package de.hhu.propra16.coastal.tddt;
 
+import java.util.Date;
+
 public class Exercise {
 
     private final String mName;
+    private boolean mBabystepEnabled;
+    private Date mBabystepTime;
     private String mDescription;
     private String mClassContent;
     private String mTestContent;
     private String mClassName;
     private String mTestName;
+    private boolean mTracking;
 
     public Exercise(String name) {
         this.mName = name;
+    }
+
+    public void addBabystepTime(Date time) {
+        mBabystepEnabled = true;
+        mBabystepTime = time;
     }
 
     public void addDescription(String description) {
@@ -33,6 +43,10 @@ public class Exercise {
         this.mTestName = testName;
     }
 
+    public void setTracking(boolean enabled) {
+        this.mTracking = enabled;
+    }
+
     public String getClassContent() {
         return mClassContent;
     }
@@ -46,6 +60,12 @@ public class Exercise {
     public String getTestName() {return mTestName; }
 
     public String getDescription() {return mDescription; }
+
+    public Date getBabystepTime() {return mBabystepTime; }
+
+    public boolean isBabysteps() {return mBabystepEnabled; }
+
+    public boolean isTracking() {return mTracking; }
 
     public String toString() {return mName; }
 }

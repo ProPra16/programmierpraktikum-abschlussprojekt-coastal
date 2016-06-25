@@ -10,7 +10,10 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CatalogParser extends DefaultHandler {
 
@@ -74,6 +77,24 @@ public class CatalogParser extends DefaultHandler {
                 break;
             case TEST:
                 mExercise.addTestName(attributes.getValue("name"));
+                break;
+            case BABYSTEPS:
+                String babystepsEnabled = attributes.getValue("value");
+                if (Boolean.parseBoolean(babystepsEnabled)) {
+                    String timeString = attributes.getValue("time");
+                    Date time = null;
+                    try {
+                        time = new SimpleDateFormat("mm:ss").parse(timeString);
+                    } catch (ParseException e) {
+                        e.printStackTrace(); // TODO throw
+                    }
+                    mExercise.addBabystepTime(time);
+                }
+                break;
+            case TIMETRACKING:
+                String trackingEnabled = attributes.getValue("value");
+                boolean enabled = Boolean.parseBoolean(trackingEnabled);
+                mExercise.setTracking(enabled);
                 break;
             default:
                 //System.out.println("Skipping unknown tag: " + qName);
