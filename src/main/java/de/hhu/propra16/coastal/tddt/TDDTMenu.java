@@ -60,6 +60,9 @@ public class TDDTMenu {
     @FXML
     private ListView<Exercise> lvexercises;
 
+    @FXML
+    private Label lbdescription;
+
     private Catalog catalog;
 
 
@@ -83,7 +86,7 @@ public class TDDTMenu {
             return;
         }
 
-        catalog.loadExercise(taeditor, tatest, lvexercises, 0);
+        catalog.loadExercise(taeditor, tatest, lbdescription, lvexercises, 0);
 
                 
     }
@@ -158,7 +161,7 @@ public class TDDTMenu {
             return;
         }
         Exercise exercise = lvexercises.getSelectionModel().getSelectedItem();
-        catalog.loadExercise(taeditor, tatest, exercise);
+        catalog.loadExercise(taeditor, tatest, lbdescription, exercise);
     }
 
     public static void setStage (Stage stage) {

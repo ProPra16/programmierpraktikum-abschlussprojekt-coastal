@@ -1,5 +1,6 @@
 package de.hhu.propra16.coastal.tddt;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
@@ -17,15 +18,17 @@ public class Catalog {
         mExercises.add(exercise);
     }
 
-    public void loadExercise(TextArea taeditor, TextArea tatest, ListView<Exercise> lvexercises, int exercise) {
+    public void loadExercise(TextArea taeditor, TextArea tatest, Label lbdescription, ListView<Exercise> lvexercises, int exercise) {
         loadClassContent(taeditor, exercise);
         loadTestContent(tatest, exercise);
+        loadDescription(lbdescription, exercise);
         loadInListView(lvexercises);
     }
 
-    public void loadExercise(TextArea taeditor, TextArea tatest, Exercise exercise) {
+    public void loadExercise(TextArea taeditor, TextArea tatest, Label lbdescription, Exercise exercise) {
         loadClassContent(taeditor, exercise);
         loadTestContent(tatest, exercise);
+        loadDescription(lbdescription, exercise);
     }
 
     private void loadClassContent(TextArea taeditor, int exercise) {
@@ -34,6 +37,10 @@ public class Catalog {
 
     private void loadTestContent(TextArea tatest, int exercise) {
         tatest.setText(mExercises.get(exercise).getTestContent());
+    }
+
+    private void loadDescription(Label lbdescription, int exercise) {
+        lbdescription.setText(mExercises.get(exercise).getDescription());
     }
 
     private void loadInListView(ListView<Exercise> lvexercises) {
@@ -50,6 +57,10 @@ public class Catalog {
 
     private void loadTestContent(TextArea tatest, Exercise exercise) {
         tatest.setText(exercise.getTestContent());
+    }
+
+    private void loadDescription(Label lbdescription, Exercise exercise) {
+        lbdescription.setText(exercise.getDescription());
     }
 
 

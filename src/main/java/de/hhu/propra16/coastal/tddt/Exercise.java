@@ -45,5 +45,7 @@ public class Exercise {
 
     public String getTestName() {return mTestName; }
 
+    public String getDescription() {return mDescription; }
+
     public String toString() {return mName; }
 }

@@ -38,24 +38,26 @@
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="46.0" minHeight="15.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-            <RowConstraints maxHeight="46.0" minHeight="15.0" percentHeight="10.0" prefHeight="17.0" valignment="BOTTOM" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="46.0" minHeight="15.0" percentHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="46.0" minHeight="15.0" percentHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="46.0" minHeight="15.0" percentHeight="5.0" prefHeight="17.0" valignment="BOTTOM" vgrow="ALWAYS" />
             <RowConstraints minHeight="227.0" percentHeight="70.0" prefHeight="256.0" vgrow="ALWAYS" />
             <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
          </rowConstraints>
          <children>
-             <TextArea fx:id="taeditor" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-             <TextArea fx:id="tatest" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-             <Label layoutX="50.0" layoutY="45.0" text="Das zu bearbeitende Programm: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
-             <Label layoutX="421.0" layoutY="45.0" text="Die zu schreibenden Tests: " GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+             <TextArea fx:id="taeditor" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+             <TextArea fx:id="tatest" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+             <Label layoutX="50.0" layoutY="45.0" text="Das zu bearbeitende Programm: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
+             <Label layoutX="421.0" layoutY="45.0" text="Die zu schreibenden Tests: " GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="65.0" text="Status: " />
+                  <Label prefHeight="46.0" prefWidth="65.0" text="Status: " />
                   <Label fx:id="lbstatus" prefHeight="46.0" prefWidth="189.0" text="RED" textFill="RED" />
                </children>
             </HBox>
-            <Button fx:id="btnextstep" mnemonicParsing="false" onAction="#next" prefHeight="57.0" prefWidth="288.0" text="Nächster Schritt" GridPane.columnIndex="1" />
-            <ListView fx:id="lvexercises" onMouseClicked="#chooseExercise" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="btnextstep" mnemonicParsing="false" onAction="#next" prefHeight="57.0" prefWidth="288.0" text="Nächster Schritt" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ListView fx:id="lvexercises" onMouseClicked="#chooseExercise" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="lbdescription" alignment="TOP_LEFT" prefHeight="145.0" prefWidth="635.0" text="Description" GridPane.columnSpan="2" />
          </children>
       </GridPane>
 
