@@ -154,6 +154,9 @@ public class TDDTMenu {
 
     @FXML
     protected void chooseExercise(MouseEvent event) {
+        if(lvexercises.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
         Exercise exercise = lvexercises.getSelectionModel().getSelectedItem();
         catalog.loadExercise(taeditor, tatest, exercise);
     }
