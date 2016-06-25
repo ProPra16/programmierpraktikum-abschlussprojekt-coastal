@@ -52,7 +52,7 @@ import org.junit.Test;
 		<tests>
 			<test name="FibonacciTest">import static org.junit.Assert.*;
 import org.junit.Test;
-	public class Fibbonacci {
+	public class FibbonacciTest {
 		@Test public void testSomething() {
 		}
 }
