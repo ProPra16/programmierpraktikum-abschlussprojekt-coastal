@@ -37,9 +37,8 @@ public class CatalogParser extends DefaultHandler {
         mCatalog = new Catalog();
 
         mTags = new ArrayList<>();
-        mDescription = "";
-        mClassContent = "";
-        mTestContent = "";
+
+        clearCurrentExercise();
 
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
@@ -117,9 +116,17 @@ public class CatalogParser extends DefaultHandler {
                 break;
             case EXERCISE:
                 mCatalog.addExercise(mExercise);
+                clearCurrentExercise();
                 mExercise = null;
                 break;
         }
         mTags.remove(mTags. size() - 1);
+    }
+
+    private void clearCurrentExercise() {
+        mExercise = null;
+        mDescription = "";
+        mClassContent = "";
+        mTestContent = "";
     }
 }
