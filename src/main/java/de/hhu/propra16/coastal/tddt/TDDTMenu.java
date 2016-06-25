@@ -1,9 +1,7 @@
 package de.hhu.propra16.coastal.tddt;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -86,8 +84,7 @@ public class TDDTMenu {
             return;
         }
 
-        catalog.loadExercise(taeditor, tatest, lbdescription, lvexercises, 0);
-
+        catalog.loadExercises(taeditor, tatest, lbdescription, lvexercises);
                 
     }
 
