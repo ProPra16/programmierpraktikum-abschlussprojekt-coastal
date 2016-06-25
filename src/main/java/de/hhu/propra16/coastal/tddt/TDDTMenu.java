@@ -53,7 +53,7 @@ public class TDDTMenu {
     MenuItem mihelp;
 
     @FXML
-    ListView lvexercises;
+    ListView<Exercise> lvexercises;
 
     @FXML
     public void open(ActionEvent event) {

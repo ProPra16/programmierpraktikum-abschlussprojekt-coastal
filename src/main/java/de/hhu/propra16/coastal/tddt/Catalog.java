@@ -17,7 +17,7 @@ public class Catalog {
         mExercises.add(exercise);
     }
 
-    public void loadExercise(TextArea taeditor, TextArea tatest, ListView lvexercises, int exercise) {
+    public void loadExercise(TextArea taeditor, TextArea tatest, ListView<Exercise> lvexercises, int exercise) {
         loadClassContent(taeditor, exercise);
         loadTestContent(tatest, exercise);
         loadInListView(lvexercises);
@@ -31,7 +31,7 @@ public class Catalog {
         tatest.setText(mExercises.get(exercise).getTestContent());
     }
 
-    private void loadInListView(ListView lvexercises) {
+    private void loadInListView(ListView<Exercise> lvexercises) {
         for(Exercise exercise: mExercises) {
             lvexercises.getItems().add(exercise);
         }
