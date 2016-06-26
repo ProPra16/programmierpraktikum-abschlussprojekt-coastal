@@ -1,28 +1,43 @@
 package de.hhu.propra16.coastal.tddt;
-/**
- * Created by Jimmy on 26.06.2016.
- */
+import java.util.ArrayList;
+
 public class Tracking {
-    int timeSpend;
-    long start;
-    long end;
+    ArrayList<Timer> timerList;
+    /*A Tracking datatype automatically contains one Timer object in its ArrayList*/
     public Tracking(){
+        timerList.add(new Timer());
     }
 
-    public void startTracking() {
-        start = System.currentTimeMillis();
+    public void addTimer(){
+        timerList.add(new Timer());
     }
 
-    public void endTracking(){
-        end = System.currentTimeMillis();
+    /*Operating with the standard Timer*/
+    public void startTimer(){
+        timerList.get(0).start();
     }
 
-    public int returnTimeSpentinSeconds() {
-        timeSpend = (int) (end-start)/1000;
-        return timeSpend;
+    public void stopTimer(){
+        timerList.get(0).end();
     }
 
+    public int getTimer() {
+        return timerList.get(0).returnTimeSpentInSeconds();
+    }
 
+    /*Operating with any timer in the Arraylist*/
+    public void startTimerX(int x){
+        if(x>=timerList.size()) return;
+        timerList.get(x).start();
+    }
 
+    public void stopTimerX(int x){
+        if(x>=timerList.size()) return;
+        timerList.get(x).end();
+    }
 
+    public int getTimerX(int x) {
+        if (x >=timerList.size()) return 0;
+        return timerList.get(x).returnTimeSpentInSeconds();
+    }
 }
