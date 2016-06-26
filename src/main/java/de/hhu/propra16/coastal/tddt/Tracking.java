@@ -25,19 +25,35 @@ public class Tracking {
         return timerList.get(0).returnTimeSpentInSeconds();
     }
 
+    public void setLabel(String s){
+        timerList.get(0).setLabel(s);
+    }
+
+    public String getLabel(){
+        return timerList.get(0).getLabel();
+    }
+
     /*Operating with any timer in the Arraylist*/
-    public void startTimerX(int x){
+    public void startTimer(int x){
         if(x>=timerList.size()) return;
         timerList.get(x).start();
     }
 
-    public void stopTimerX(int x){
+    public void stopTimer(int x){
         if(x>=timerList.size()) return;
         timerList.get(x).end();
     }
 
-    public int getTimerX(int x) {
+    public int getTimer(int x) {
         if (x >=timerList.size()) return 0;
         return timerList.get(x).returnTimeSpentInSeconds();
+    }
+
+    public void setLabel(String s, int x){
+        timerList.get(x).setLabel(s);
+    }
+
+    public String getLabel(int x){
+        return timerList.get(x).getLabel();
     }
 }
