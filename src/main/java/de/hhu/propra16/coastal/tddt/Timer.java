@@ -1,16 +1,16 @@
 package de.hhu.propra16.coastal.tddt;
 public class Timer {
     int timeSpend;
-    long start;
-    long end;
+    long start = 0;
+    long end = 0;
     public Timer(){
     }
 
-    public void startTracking() {
+    public void start() {
         start = System.currentTimeMillis();
     }
 
-    public void endTracking(){
+    public void end(){
         end = System.currentTimeMillis();
     }
 
