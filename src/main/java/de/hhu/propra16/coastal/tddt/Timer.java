@@ -1,5 +1,6 @@
 package de.hhu.propra16.coastal.tddt;
 public class Timer {
+    String name;
     int timeSpend;
     long start = 0;
     long end = 0;
@@ -17,6 +18,14 @@ public class Timer {
     public int returnTimeSpentInSeconds() {
         timeSpend = (int) (end-start)/1000;
         return timeSpend;
+    }
+
+    public void setLabel(String s){
+        name = s;
+    }
+
+    public String getLabel(){
+        return name;
     }
 
 }
