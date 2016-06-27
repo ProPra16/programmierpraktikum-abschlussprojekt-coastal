@@ -159,6 +159,7 @@ public class TDDTMenu {
         }
         Exercise exercise = lvexercises.getSelectionModel().getSelectedItem();
         catalog.loadExercise(taeditor, tatest, lbdescription, exercise);
+        Babysteps baby = new Babysteps(exercise, lbstatus);
     }
 
     public static void setStage (Stage stage) {
