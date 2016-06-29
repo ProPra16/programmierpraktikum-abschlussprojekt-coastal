@@ -75,6 +75,8 @@ public class TDDTMenu implements Initializable {
 
     private CompileTarget target = CompileTarget.TEST;
 
+    private Exercise currentExercise;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -103,6 +105,10 @@ public class TDDTMenu implements Initializable {
         }
 
         catalog.loadExercises(taeditor, tatest, lbdescription, lvexercises);
+        if(lvexercises.getItems().get(0) == null) {
+            return;
+        }
+        currentExercise = lvexercises.getItems().get(0);
                 
     }
 
@@ -153,23 +159,27 @@ public class TDDTMenu implements Initializable {
     }
 
     private void compile(CompileTarget target) {
-
-        Exercise exercise = lvexercises.getItems().get(0);
-        CompilationUnit compilerunit = new CompilationUnit(exercise.getTestName(), tatest.getText() , false);
+        taterminal.clear();
+        CompilationUnit compilerunit = new CompilationUnit(currentExercise.getTestName(), tatest.getText() , false);
+        String fehler = "Compiler Error in Test:" + "\n" + "\n";
         if(target == CompileTarget.EDITOR) {
-            compilerunit = new CompilationUnit(exercise.getClassName(), taeditor.getText() , false);
+            compilerunit = new CompilationUnit(currentExercise.getClassName(), taeditor.getText() , false);
+            fehler = "Compiler Error in Program:" + "\n" + "\n";
         }
-
         JavaStringCompiler compiler = CompilerFactory.getCompiler(compilerunit);
         compiler.compileAndRunTests();
         Collection<CompileError> errors = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilerunit);
-        taterminal.clear();
+
         for(CompileError error: errors) {
             String currentTerminal = taterminal.getText();
             taterminal.setText(currentTerminal + " " +error.getLineNumber() + ": " + error.getMessage() +"\n" +"\n");
         }
         if(!compiler.getCompilerResult().hasCompileErrors()) {
             changeReport();
+        } else {
+            if(!taterminal.getText().substring(0,13).equals("Compiler Error")) {
+                taterminal.setText(fehler + taterminal.getText());
+            }
         }
     }
 
@@ -179,7 +189,7 @@ public class TDDTMenu implements Initializable {
                 lbstatus.setText("GREEN");
                 lbstatus.setId("green");
                 TDDController.toEditor(taeditor, tatest);
-                target = CompileTarget.TEST;
+                target = CompileTarget.EDITOR;
                 break;
             case "GREEN":
                 lbstatus.setText("REFACTOR");
@@ -190,6 +200,7 @@ public class TDDTMenu implements Initializable {
                 lbstatus.setText("RED");
                 lbstatus.setId("red");
                 TDDController.toTestEditor(taeditor, tatest);
+                target = CompileTarget.TEST;
                 break;
         }
     }
@@ -205,9 +216,9 @@ public class TDDTMenu implements Initializable {
         if(lvexercises.getSelectionModel().getSelectedItem() == null) {
             return;
         }
-        Exercise exercise = lvexercises.getSelectionModel().getSelectedItem();
-        catalog.loadExercise(taeditor, tatest, lbdescription, exercise);
-        Babysteps baby = new Babysteps(exercise, lbstatus);
+        currentExercise = lvexercises.getSelectionModel().getSelectedItem();
+        catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
+        Babysteps baby = new Babysteps(currentExercise, lbstatus);
     }
 
     public static void setStage (Stage stage) {

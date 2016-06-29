@@ -45,14 +45,14 @@ import org.junit.Test;
 	<exercise name="Fibonacci">
 	<description>Schreibt ein Programm, dass die Fibonacci-Folge berechnet.</description>
 		<classes>
-			<class name="Fibonacci"> public class Fibbonacci {
+			<class name="Fibonacci"> public class Fibonacci {
 }
 			</class>
 		</classes>
 		<tests>
 			<test name="FibonacciTest">import static org.junit.Assert.*;
 import org.junit.Test;
-	public class FibbonacciTest {
+	public class FibonacciTest {
 		@Test public void testSomething() {
 		}
 }
