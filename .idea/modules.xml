@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/de.hhu.propra16.coastal.tddt.iml" filepath="$PROJECT_DIR$/.idea/modules/de.hhu.propra16.coastal.tddt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/programmierpraktikum-abschlussprojekt-coastal.iml" filepath="$PROJECT_DIR$/.idea/modules/programmierpraktikum-abschlussprojekt-coastal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/programmierpraktikum-abschlussprojekt-coastal_main.iml" filepath="$PROJECT_DIR$/.idea/modules/programmierpraktikum-abschlussprojekt-coastal_main.iml" group="programmierpraktikum-abschlussprojekt-coastal" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/programmierpraktikum-abschlussprojekt-coastal_test.iml" filepath="$PROJECT_DIR$/.idea/modules/programmierpraktikum-abschlussprojekt-coastal_test.iml" group="programmierpraktikum-abschlussprojekt-coastal" />
     </modules>
   </component>
 </project>

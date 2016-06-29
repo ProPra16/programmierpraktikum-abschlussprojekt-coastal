@@ -2,6 +2,7 @@ package de.hhu.propra16.coastal.tddt;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,7 +12,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import vk.core.api.CompilationUnit;
+import vk.core.api.CompileError;
+import vk.core.api.CompilerFactory;
+import vk.core.api.JavaStringCompiler;
 
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.soap.Text;
 import java.awt.*;
 import java.io.File;
@@ -24,10 +30,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.List;
 
 
-public class TDDTMenu {
+public class TDDTMenu implements Initializable {
 
     private static Stage primaryStage;
 
@@ -47,6 +54,9 @@ public class TDDTMenu {
     private TextArea tatest;
 
     @FXML
+    private TextArea taterminal;
+
+    @FXML
     private Button btnextstep;
 
     @FXML
@@ -64,6 +74,11 @@ public class TDDTMenu {
     private Catalog catalog;
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
     @FXML
     protected void open(ActionEvent event) {
         FileChooser dialog = new FileChooser();
@@ -71,6 +86,8 @@ public class TDDTMenu {
         dialog.setInitialDirectory(Paths.get("src/test").toFile()); //TODO
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
         File file = dialog.showOpenDialog(primaryStage);
+
+
 
         if(file == null) {
             return;
@@ -93,6 +110,7 @@ public class TDDTMenu {
         DirectoryChooser dialog = new DirectoryChooser();
         dialog.setTitle("Wähle einen Ordner aus");
         File directory = dialog.showDialog(primaryStage);
+
 
         if(directory == null) {
             return;
@@ -134,6 +152,7 @@ public class TDDTMenu {
             case "RED":
                 lbstatus.setText("GREEN");
                 lbstatus.setId("green");
+                TDDController.toEditor(taeditor, tatest);
                 break;
             case "GREEN":
                 lbstatus.setText("REFACTOR");
@@ -142,8 +161,37 @@ public class TDDTMenu {
             case "REFACTOR":
                 lbstatus.setText("RED");
                 lbstatus.setId("red");
+                TDDController.toTestEditor(taeditor, tatest);
                 break;
         }
+        compile();
+    }
+
+    private void compile() {
+
+        Exercise exercise = lvexercises.getItems().get(0);
+        CompilationUnit compilerunit = new CompilationUnit(exercise.getClassName(), taeditor.getText() , false);
+        CompilationUnit compilerunittest = new CompilationUnit(exercise.getTestName(), tatest.getText() , false);
+        System.out.println(exercise.getTestName());
+        JavaStringCompiler compiler = CompilerFactory.getCompiler(compilerunit, compilerunittest);
+        compiler.compileAndRunTests();
+
+        Collection<CompileError> errors = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilerunit);
+        Collection<CompileError> errorstest = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilerunittest);
+
+
+
+        taterminal.clear();
+        for(CompileError error: errors) {
+            String currentTerminal = taterminal.getText();
+            taterminal.setText(currentTerminal + " " +error.getLineNumber() + ": " + error.getMessage() +"\n" +"\n");
+        }
+
+        for(CompileError error: errorstest) {
+            String currentTerminal = taterminal.getText();
+            taterminal.setText(currentTerminal + " " +error.getLineNumber() + ": " + error.getMessage() +"\n" +"\n");
+        }
+
     }
 
     @FXML

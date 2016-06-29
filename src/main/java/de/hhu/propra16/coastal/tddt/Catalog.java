@@ -24,6 +24,7 @@ public class Catalog {
         loadTestContent(tatest, exercise);
         loadDescription(lbdescription, exercise);
         loadInListView(lvexercises);
+        TDDController.toTestEditor(taeditor, tatest);
     }
 
     public void loadExercise(TextArea taeditor, TextArea tatest, Label lbdescription, Exercise exercise) {
