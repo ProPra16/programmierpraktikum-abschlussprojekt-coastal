@@ -73,6 +73,7 @@ public class TDDTMenu implements Initializable {
 
     private Catalog catalog;
 
+    private CompileTarget target = CompileTarget.TEST;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -148,15 +149,42 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void next(ActionEvent event) {
+        compile(target);
+    }
+
+    private void compile(CompileTarget target) {
+
+        Exercise exercise = lvexercises.getItems().get(0);
+        CompilationUnit compilerunit = new CompilationUnit(exercise.getTestName(), tatest.getText() , false);
+        if(target == CompileTarget.EDITOR) {
+            compilerunit = new CompilationUnit(exercise.getClassName(), taeditor.getText() , false);
+        }
+
+        JavaStringCompiler compiler = CompilerFactory.getCompiler(compilerunit);
+        compiler.compileAndRunTests();
+        Collection<CompileError> errors = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilerunit);
+        taterminal.clear();
+        for(CompileError error: errors) {
+            String currentTerminal = taterminal.getText();
+            taterminal.setText(currentTerminal + " " +error.getLineNumber() + ": " + error.getMessage() +"\n" +"\n");
+        }
+        if(!compiler.getCompilerResult().hasCompileErrors()) {
+            changeReport();
+        }
+    }
+
+    private void changeReport() {
         switch (lbstatus.getText()) {
             case "RED":
                 lbstatus.setText("GREEN");
                 lbstatus.setId("green");
                 TDDController.toEditor(taeditor, tatest);
+                target = CompileTarget.TEST;
                 break;
             case "GREEN":
                 lbstatus.setText("REFACTOR");
                 lbstatus.setId("black");
+                target = CompileTarget.EDITOR;
                 break;
             case "REFACTOR":
                 lbstatus.setText("RED");
@@ -164,34 +192,6 @@ public class TDDTMenu implements Initializable {
                 TDDController.toTestEditor(taeditor, tatest);
                 break;
         }
-        compile();
-    }
-
-    private void compile() {
-
-        Exercise exercise = lvexercises.getItems().get(0);
-        CompilationUnit compilerunit = new CompilationUnit(exercise.getClassName(), taeditor.getText() , false);
-        CompilationUnit compilerunittest = new CompilationUnit(exercise.getTestName(), tatest.getText() , false);
-        System.out.println(exercise.getTestName());
-        JavaStringCompiler compiler = CompilerFactory.getCompiler(compilerunit, compilerunittest);
-        compiler.compileAndRunTests();
-
-        Collection<CompileError> errors = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilerunit);
-        Collection<CompileError> errorstest = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilerunittest);
-
-
-
-        taterminal.clear();
-        for(CompileError error: errors) {
-            String currentTerminal = taterminal.getText();
-            taterminal.setText(currentTerminal + " " +error.getLineNumber() + ": " + error.getMessage() +"\n" +"\n");
-        }
-
-        for(CompileError error: errorstest) {
-            String currentTerminal = taterminal.getText();
-            taterminal.setText(currentTerminal + " " +error.getLineNumber() + ": " + error.getMessage() +"\n" +"\n");
-        }
-
     }
 
     @FXML
