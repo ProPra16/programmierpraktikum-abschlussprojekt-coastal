@@ -57,6 +57,9 @@ public class TDDTMenu implements Initializable {
     private TextArea taterminal;
 
     @FXML
+    private TextArea tatestterminal;
+
+    @FXML
     private Button btnextstep;
 
     @FXML
@@ -109,7 +112,7 @@ public class TDDTMenu implements Initializable {
             return;
         }
         currentExercise = lvexercises.getItems().get(0);
-                
+
     }
 
     @FXML
@@ -160,25 +163,44 @@ public class TDDTMenu implements Initializable {
 
     private void compile(CompileTarget target) {
         taterminal.clear();
-        CompilationUnit compilerunit = new CompilationUnit(currentExercise.getTestName(), tatest.getText() , false);
-        String fehler = "Compiler Error in Test:" + "\n" + "\n";
-        if(target == CompileTarget.EDITOR) {
-            compilerunit = new CompilationUnit(currentExercise.getClassName(), taeditor.getText() , false);
-            fehler = "Compiler Error in Program:" + "\n" + "\n";
-        }
-        JavaStringCompiler compiler = CompilerFactory.getCompiler(compilerunit);
-        compiler.compileAndRunTests();
-        Collection<CompileError> errors = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilerunit);
+        tatestterminal.clear();
+        CompilationUnit compilationUnitProgram = new CompilationUnit(currentExercise.getClassName(), taeditor.getText(), false);
+        String errorMessagesProgram = "Compiler Error in Program:" + "\n" + "\n";
+        CompilationUnit compilationUnitTest = new CompilationUnit(currentExercise.getTestName(), tatest.getText(), true);
 
-        for(CompileError error: errors) {
+//        if(target == CompileTarget.TEST) {
+        String errorMessagesTest = "Compiler Error in Test:" + "\n" + "\n";
+ //       } else {
+ //           compiler = CompilerFactory.getCompiler(compilationUnitTest, compilationUnitProgram);
+//        }
+        JavaStringCompiler compiler = CompilerFactory.getCompiler(compilationUnitTest, compilationUnitProgram);
+
+        compiler.compileAndRunTests();
+        Collection<CompileError> errorsProgram = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnitProgram);
+        Collection<CompileError> errorsTest = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnitTest);
+
+        for(CompileError error : errorsProgram) {
             String currentTerminal = taterminal.getText();
-            taterminal.setText(currentTerminal + " " +error.getLineNumber() + ": " + error.getMessage() +"\n" +"\n");
+            taterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
+        }
+        for(CompileError error : errorsTest) {
+            String currentTerminal = tatestterminal.getText();
+            tatestterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
         }
         if(!compiler.getCompilerResult().hasCompileErrors()) {
             changeReport();
         } else {
-            if(!taterminal.getText().substring(0,13).equals("Compiler Error")) {
-                taterminal.setText(fehler + taterminal.getText());
+            if (target == CompileTarget.TEST) {
+                // TODO Bei Syxtaxfehlern sollte nicht changeReport aufrufen
+                changeReport();
+                tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
+
+            }
+            else
+            {
+            //if(!taterminal.getText().substring(0, 13).equals("Compiler Error")) {
+                taterminal.setText(errorMessagesProgram + taterminal.getText());
+                tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
             }
         }
     }
