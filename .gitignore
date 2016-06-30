@@ -91,6 +91,8 @@ local.properties
 .idea/mongoSettings.xml
 
 ## File-based project format:
+*.iml
+*.ipr
 *.iws
 
 ## Plugin-specific files:
