@@ -183,17 +183,18 @@ public class TDDTMenu implements Initializable {
             String currentTerminal = tatestterminal.getText();
             tatestterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
         }
-        if(continueable(compiler)) {
+        if(continueable(compiler, errorsTest)) {
             changeReport();
 
         } else {
-            ErrorType error = error(compiler);
+            ErrorType error = error(compiler, errorsTest);
             if (target == CompileTarget.TEST) {
                 // TODO Bei Syxtaxfehlern sollte nicht changeReport aufrufen
-                if(error == ErrorType.TestsNotFailed) {
-                    tatestterminal.setText("Alle Tests müssen fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
-                } else {
+                if(error == ErrorType.compilerErrorTest) {
                     tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
+
+                } else {
+                    tatestterminal.setText("Alle Tests müssen fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
                 }
 
             } else {
@@ -206,10 +207,15 @@ public class TDDTMenu implements Initializable {
         }
     }
 
-    private boolean continueable(JavaStringCompiler compiler) {
+    private boolean continueable(JavaStringCompiler compiler, Collection<CompileError> compileTestsErrors) {
         switch (lbstatus.getText()) {
             case "RED":
-                if(compiler.getCompilerResult().hasCompileErrors() || compiler.getTestResult().getNumberOfFailedTests() > 0) {
+               /* if((compiler.getCompilerResult().hasCompileErrors() && error(compiler, compileTestsErrors) != ErrorType.compilerErrorTest)
+                        || compiler.getTestResult().getNumberOfFailedTests() > 0) {*/
+                if(error(compiler, compileTestsErrors) == ErrorType.compilerErrorTest) {
+                    return false;
+                }
+                if(compiler.getTestResult().getNumberOfFailedTests() > 0) {
                     return true;
                 }
                 return false;
@@ -221,9 +227,17 @@ public class TDDTMenu implements Initializable {
         }
     }
 
-    private ErrorType error(JavaStringCompiler compiler) {
+    private ErrorType error(JavaStringCompiler compiler, Collection<CompileError> compilerTestsErrors) {
         switch (lbstatus.getText()) {
             case "RED":
+                if(compiler.getCompilerResult().hasCompileErrors()) {
+                    for(CompileError e: compilerTestsErrors) {
+                        if(e.getMessage().indexOf("cannot find symbol") == -1) {
+                            return ErrorType.compilerErrorTest;
+                        }
+                    }
+
+                }
                 if(compiler.getTestResult().getNumberOfFailedTests() == 0) {
                     return ErrorType.TestsNotFailed;
                 }
