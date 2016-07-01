@@ -21,7 +21,7 @@ public class Tracking {
         timerList.get(0).end();
     }
 
-    public int getTimer() {
+    public int getTime() {
         return timerList.get(0).returnTimeSpentInSeconds();
     }
 
@@ -44,7 +44,7 @@ public class Tracking {
         timerList.get(x).end();
     }
 
-    public int getTimer(int x) {
+    public int getTime(int x) {
         if (x >=timerList.size()) return 0;
         return timerList.get(x).returnTimeSpentInSeconds();
     }
