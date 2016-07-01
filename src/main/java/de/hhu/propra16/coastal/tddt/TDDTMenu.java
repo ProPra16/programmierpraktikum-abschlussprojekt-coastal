@@ -187,17 +187,26 @@ public class TDDTMenu implements Initializable {
             changeReport();
 
         } else {
+            ErrorType error = error(compiler);
             if (target == CompileTarget.TEST) {
                 // TODO Bei Syxtaxfehlern sollte nicht changeReport aufrufen
-                tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
+                if(error == ErrorType.TestsNotFailed) {
+                    tatestterminal.setText("Alle Tests müssen fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
+                } else {
+                    tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
+                }
 
             } else {
-                taterminal.setText(errorMessagesProgram + taterminal.getText());
+                if(error == ErrorType.compilerErrorProgram) {
+                    taterminal.setText(errorMessagesProgram + taterminal.getText());
+                } else {
+                    taterminal.setText("Alle Tests müssen erfüllt werden" + "\n" + "\n" + taterminal.getText());
+                }
             }
         }
     }
 
-    public boolean continueable(JavaStringCompiler compiler) {
+    private boolean continueable(JavaStringCompiler compiler) {
         switch (lbstatus.getText()) {
             case "RED":
                 if(compiler.getCompilerResult().hasCompileErrors() || compiler.getTestResult().getNumberOfFailedTests() > 0) {
@@ -211,6 +220,25 @@ public class TDDTMenu implements Initializable {
                 return false;
         }
     }
+
+    private ErrorType error(JavaStringCompiler compiler) {
+        switch (lbstatus.getText()) {
+            case "RED":
+                if(compiler.getTestResult().getNumberOfFailedTests() == 0) {
+                    return ErrorType.TestsNotFailed;
+                }
+            default:
+                if(compiler.getCompilerResult().hasCompileErrors()) {
+                    return ErrorType.compilerErrorProgram;
+                }
+                if(compiler.getTestResult().getNumberOfFailedTests() > 0) {
+                    return ErrorType.TestsNotSucceeded;
+                }
+        }
+        return ErrorType.NOERROR;
+    }
+
+
 
     @Deprecated
     private void runTests() {
