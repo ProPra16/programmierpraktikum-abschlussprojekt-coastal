@@ -183,7 +183,7 @@ public class TDDTMenu implements Initializable {
             String currentTerminal = tatestterminal.getText();
             tatestterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
         }
-        if(!compiler.getCompilerResult().hasCompileErrors()) {
+        if(continueable(compiler)) {
             changeReport();
 
         } else {
@@ -194,6 +194,21 @@ public class TDDTMenu implements Initializable {
             } else {
                 taterminal.setText(errorMessagesProgram + taterminal.getText());
             }
+        }
+    }
+
+    public boolean continueable(JavaStringCompiler compiler) {
+        switch (lbstatus.getText()) {
+            case "RED":
+                if(compiler.getCompilerResult().hasCompileErrors() || compiler.getTestResult().getNumberOfFailedTests() > 0) {
+                    return true;
+                }
+                return false;
+            default:
+                if(!compiler.getCompilerResult().hasCompileErrors() && compiler.getTestResult().getNumberOfFailedTests() == 0) {
+                    return true;
+                }
+                return false;
         }
     }
 
