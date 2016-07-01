@@ -158,15 +158,15 @@ public class TDDTMenu implements Initializable {
     private void compile(CompileTarget target) {
         taterminal.clear();
         tatestterminal.clear();
+        if(lvexercises.getItems().isEmpty()) {
+            return;
+        }
         CompilationUnit compilationUnitProgram = new CompilationUnit(currentExercise.getClassName(), taeditor.getText(), false);
         String errorMessagesProgram = "Compiler Error in Program:" + "\n" + "\n";
         CompilationUnit compilationUnitTest = new CompilationUnit(currentExercise.getTestName(), tatest.getText(), true);
 
-//        if(target == CompileTarget.TEST) {
         String errorMessagesTest = "Compiler Error in Test:" + "\n" + "\n";
- //       } else {
- //           compiler = CompilerFactory.getCompiler(compilationUnitTest, compilationUnitProgram);
-//        }
+
         JavaStringCompiler compiler = CompilerFactory.getCompiler(compilationUnitTest, compilationUnitProgram);
 
 
@@ -189,15 +189,10 @@ public class TDDTMenu implements Initializable {
         } else {
             if (target == CompileTarget.TEST) {
                 // TODO Bei Syxtaxfehlern sollte nicht changeReport aufrufen
-                changeReport();
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
 
-            }
-            else
-            {
-            //if(!taterminal.getText().substring(0, 13).equals("Compiler Error")) {
+            } else {
                 taterminal.setText(errorMessagesProgram + taterminal.getText());
-                tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
             }
         }
     }
