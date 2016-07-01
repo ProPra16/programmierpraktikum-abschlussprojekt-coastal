@@ -12,17 +12,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import vk.core.api.CompilationUnit;
-import vk.core.api.CompileError;
-import vk.core.api.CompilerFactory;
-import vk.core.api.JavaStringCompiler;
+import vk.core.api.*;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import javax.xml.soap.Text;
-import java.awt.*;
+
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.net.URL;
 
 
@@ -31,7 +25,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
-import java.util.List;
+
 
 
 public class TDDTMenu implements Initializable {
@@ -55,6 +49,9 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     private TextArea taterminal;
+
+    @FXML
+    private TextArea tatestterminal;
 
     @FXML
     private Button btnextstep;
@@ -160,7 +157,7 @@ public class TDDTMenu implements Initializable {
 
     private void compile(CompileTarget target) {
         taterminal.clear();
-        CompilationUnit compilerunit = new CompilationUnit(currentExercise.getTestName(), tatest.getText() , false);
+        CompilationUnit compilerunit = new CompilationUnit(currentExercise.getTestName(), tatest.getText() , true);
         String fehler = "Compiler Error in Test:" + "\n" + "\n";
         if(target == CompileTarget.EDITOR) {
             compilerunit = new CompilationUnit(currentExercise.getClassName(), taeditor.getText() , false);
@@ -170,17 +167,29 @@ public class TDDTMenu implements Initializable {
         compiler.compileAndRunTests();
         Collection<CompileError> errors = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilerunit);
 
+
         for(CompileError error: errors) {
             String currentTerminal = taterminal.getText();
             taterminal.setText(currentTerminal + " " +error.getLineNumber() + ": " + error.getMessage() +"\n" +"\n");
         }
         if(!compiler.getCompilerResult().hasCompileErrors()) {
             changeReport();
+
         } else {
             if(!taterminal.getText().substring(0,13).equals("Compiler Error")) {
                 taterminal.setText(fehler + taterminal.getText());
             }
         }
+    }
+
+    @Deprecated
+    private void runTests() {
+        /*tatestterminal.clear();
+        //Collection<TestFailure> failures = compiler.getTestResult().getTestFailures();
+        for(TestFailure failure: failures) {
+            String currentTerminal = tatestterminal.getText();
+            tatestterminal.setText(currentTerminal + failure.getMessage() +"\n" +"\n");
+        }*/
     }
 
     private void changeReport() {
