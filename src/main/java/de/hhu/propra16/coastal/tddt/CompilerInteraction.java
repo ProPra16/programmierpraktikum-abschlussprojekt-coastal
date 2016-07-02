@@ -78,7 +78,7 @@ public class CompilerInteraction {
                 if(error(compiler, compileTestsErrors, lbstatus) == ErrorType.compilerErrorTest) {
                     return false;
                 }
-                if(compiler.getTestResult().getNumberOfFailedTests() > 0) {
+                if (compileTestsErrors.size() > 0) {
                     return true;
                 }
                 return false;
