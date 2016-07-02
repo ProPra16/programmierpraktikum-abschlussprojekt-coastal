@@ -21,9 +21,9 @@ public class ExerciseTest {
     public void testBabysteps() throws Exception {
         assertEquals(false, exercise.isBabysteps());
         Date time = new SimpleDateFormat("mm:ss").parse("2:00");
-        exercise.addBabystepTime(time);
+        exercise.addBabystepTime(time.getTime());
         assertEquals(true, exercise.isBabysteps());
-        assertEquals(time, exercise.getBabystepTime());
+        assertEquals(time.getTime(), exercise.getBabystepTime());
     }
 
     @Test

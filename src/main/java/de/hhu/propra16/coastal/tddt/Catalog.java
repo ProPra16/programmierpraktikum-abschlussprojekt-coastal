@@ -2,7 +2,6 @@ package de.hhu.propra16.coastal.tddt;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 
 import java.util.ArrayList;
 
@@ -18,7 +17,7 @@ public class Catalog {
         mExercises.add(exercise);
     }
 
-    public void loadExercises(ITDDTextArea taeditor, TextArea tatest, Label lbdescription, ListView<Exercise> lvexercises) {
+    public void loadExercises(ITDDTextArea taeditor, ITDDTextArea tatest, Label lbdescription, ListView<Exercise> lvexercises) {
         Exercise exercise = mExercises.get(0);
         loadClassContent(taeditor, exercise);
         loadTestContent(tatest, exercise);
@@ -27,7 +26,7 @@ public class Catalog {
         TDDController.toTestEditor(taeditor, tatest);
     }
 
-    public void loadExercise(ITDDTextArea taeditor, TextArea tatest, Label lbdescription, Exercise exercise) {
+    public void loadExercise(ITDDTextArea taeditor, TDDTextArea tatest, Label lbdescription, Exercise exercise) {
         loadClassContent(taeditor, exercise);
         loadTestContent(tatest, exercise);
         loadDescription(lbdescription, exercise);
@@ -44,7 +43,7 @@ public class Catalog {
         taeditor.setText(exercise.getClassContent());
     }
 
-    private void loadTestContent(TextArea tatest, Exercise exercise) {
+    private void loadTestContent(ITDDTextArea tatest, Exercise exercise) {
         tatest.setText(exercise.getTestContent());
     }
 
