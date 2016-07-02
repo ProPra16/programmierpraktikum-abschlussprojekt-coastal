@@ -35,17 +35,19 @@ public class Tracking {
 
     /*Operating with any timer in the Arraylist*/
     public void startTimer(int x){
-        if(x>=timerList.size()) return;
-        timerList.get(x).start();
+        if(x<timerList.size()) {
+            timerList.get(x).start();
+        }
     }
 
     public void stopTimer(int x){
-        if(x>=timerList.size()) return;
-        timerList.get(x).end();
+        if(x<timerList.size()) {
+            timerList.get(x).end();
+        }
     }
 
     public int getTime(int x) {
-        if (x >=timerList.size()) return 0;
+        if (x>=timerList.size()) return -1;
         return timerList.get(x).returnTimeSpentInSeconds();
     }
 
