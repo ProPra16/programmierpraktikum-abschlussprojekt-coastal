@@ -18,8 +18,7 @@ public class Catalog {
         mExercises.add(exercise);
     }
 
-
-    public void loadExercises(TextArea taeditor, TextArea tatest, Label lbdescription, ListView<Exercise> lvexercises) {
+    public void loadExercises(ITDDTextArea taeditor, TextArea tatest, Label lbdescription, ListView<Exercise> lvexercises) {
         Exercise exercise = mExercises.get(0);
         loadClassContent(taeditor, exercise);
         loadTestContent(tatest, exercise);
@@ -28,7 +27,7 @@ public class Catalog {
         TDDController.toTestEditor(taeditor, tatest);
     }
 
-    public void loadExercise(TextArea taeditor, TextArea tatest, Label lbdescription, Exercise exercise) {
+    public void loadExercise(ITDDTextArea taeditor, TextArea tatest, Label lbdescription, Exercise exercise) {
         loadClassContent(taeditor, exercise);
         loadTestContent(tatest, exercise);
         loadDescription(lbdescription, exercise);
@@ -41,7 +40,7 @@ public class Catalog {
         }
     }
 
-    private void loadClassContent(TextArea taeditor, Exercise exercise) {
+    private void loadClassContent(ITDDTextArea taeditor, Exercise exercise) {
         taeditor.setText(exercise.getClassContent());
     }
 

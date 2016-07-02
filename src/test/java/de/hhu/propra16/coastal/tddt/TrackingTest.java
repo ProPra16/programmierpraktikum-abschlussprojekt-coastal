@@ -1,11 +1,24 @@
 package de.hhu.propra16.coastal.tddt;
 
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+@Ignore
 public class TrackingTest {
-    Tracking t = new Tracking();
-    Thread thread = new Thread();
+
+    private Tracking t;
+    private Thread thread;
+
+
+    @Before
+    public void setUp() throws Exception {
+        t = new Tracking();
+        thread = new Thread();
+
+    }
+
     @Test
     public void firsTimer() throws Exception{
         t.startTimer();

@@ -15,7 +15,7 @@ public class Main extends Application {
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Sample nicht gefunden");
         }
         primaryStage.setTitle("Test Driven Development Trainer");
