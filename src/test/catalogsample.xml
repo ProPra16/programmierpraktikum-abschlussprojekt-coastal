@@ -38,7 +38,7 @@ import org.junit.Test;
 			</test>
 		</tests>
 		<config>
-			<babysteps value="True" time="2:00" />
+			<babysteps value="True" time="00:05" />
 			<timetracking value="True" />
 		</config>
 	</exercise>
@@ -59,7 +59,7 @@ import org.junit.Test;
 			</test>
 		</tests>
 		<config>
-			<babysteps value="True" time="2:00" />
+			<babysteps value="True" time="0:03" />
 			<timetracking value="True" />
 		</config>
 	</exercise>

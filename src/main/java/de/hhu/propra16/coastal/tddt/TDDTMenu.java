@@ -57,7 +57,10 @@ public class TDDTMenu implements Initializable {
     private Button btnextstep;
 
     @FXML
-    private Label lbstatus;
+    protected Label lbstatus;
+
+    @FXML
+    protected Label lbtime;
 
     @FXML
     private MenuItem mihelp;
@@ -158,7 +161,10 @@ public class TDDTMenu implements Initializable {
         }
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
-        Babysteps baby = new Babysteps(currentExercise, lbstatus);
+        if (currentExercise.isBabysteps()) {
+            Babysteps baby = new Babysteps(currentExercise, this);
+            baby.babystep();
+        }
     }
 
     public static void setStage (Stage stage) {

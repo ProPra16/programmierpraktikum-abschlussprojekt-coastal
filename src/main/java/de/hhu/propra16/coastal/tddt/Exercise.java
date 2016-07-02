@@ -1,12 +1,10 @@
 package de.hhu.propra16.coastal.tddt;
 
-import java.util.Date;
-
 public class Exercise {
 
     private final String mName;
     private boolean mBabystepEnabled;
-    private Date mBabystepTime;
+    private long mBabystepTime;
     private String mDescription;
     private String mClassContent;
     private String mTestContent;
@@ -18,7 +16,7 @@ public class Exercise {
         this.mName = name;
     }
 
-    public void addBabystepTime(Date time) {
+    public void addBabystepTime(long time) {
         mBabystepEnabled = true;
         mBabystepTime = time;
     }
@@ -61,7 +59,7 @@ public class Exercise {
 
     public String getDescription() {return mDescription; }
 
-    public Date getBabystepTime() {return mBabystepTime; }
+    public long getBabystepTime() {return mBabystepTime; }
 
     public boolean isBabysteps() {return mBabystepEnabled; }
 

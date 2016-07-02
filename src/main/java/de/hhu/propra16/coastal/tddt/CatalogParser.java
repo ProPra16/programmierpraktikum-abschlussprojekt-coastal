@@ -104,7 +104,7 @@ public class CatalogParser extends DefaultHandler {
                     } catch (ParseException e) {
                         e.printStackTrace(); // TODO throw
                     }
-                    mExercise.addBabystepTime(time);
+                    mExercise.addBabystepTime(time.getTime()/1000);
                 }
                 break;
             case TIMETRACKING:

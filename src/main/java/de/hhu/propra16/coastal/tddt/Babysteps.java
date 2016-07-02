@@ -1,37 +1,38 @@
 package de.hhu.propra16.coastal.tddt;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.lang.Thread;
 import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
 
 public class Babysteps {
-    private Date time;
-    public Babysteps(Exercise exercise, Label lbstatus) {
+    private long time;
+    private TDDTMenu tddt;
+    private Exercise exercise;
+    public Babysteps(Exercise currentExercise, TDDTMenu tddtmenu) {
+        tddt = tddtmenu;
+        exercise = currentExercise;
         time = exercise.getBabystepTime();
     }
 
-    public static void babystep() {
-        /*while (exercise.isBabysteps()) {
-            while (!lbstatus.getText().equals("REFACTOR")) { // && time != 0
-                // time = time - 1 Sekunde
+    public void babystep() {
+        ActionEvent event = new ActionEvent();
+        if (!tddt.lbstatus.getText().equals("REFACTOR")) {
+            // String oldText = irgendwas;
+            while (time > 0) {
+                try {
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException e) { }
+                time--;
+                if (time == 0) {
+                    time = exercise.getBabystepTime();
+                }
+                long minutes = time/60;
+                long seconds = time%60;
+                tddt.lbtime.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
             }
-            switch (lbstatus.getText()) {
-                case "RED":
-                    lbstatus.setText("GREEN");
-                    lbstatus.setId("green");
-                    break;
-                case "GREEN":
-                    lbstatus.setText("REFACTOR");
-                    lbstatus.setId("black");
-                    break;
-                case "REFACTOR":
-                    lbstatus.setText("RED");
-                    lbstatus.setId("red");
-                    break;
-            }
-            // time = old time
-        }*/
+        }
     }
+    // public void blabla(Button "Nächster Schritt" wird angeklickt) {
+        // tddt.next(event); }
 }
