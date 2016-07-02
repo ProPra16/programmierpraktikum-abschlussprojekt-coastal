@@ -8,12 +8,12 @@ import javafx.scene.control.TextArea;
  */
 public class TDDController {
 
-    public static void toEditor(TextArea taeditor, TextArea tatest) {
+    public static void toEditor(ITDDTextArea taeditor, ITDDTextArea tatest) {
         taeditor.setEditable(true);
         tatest.setEditable(false);
     }
 
-    public static void toTestEditor(TextArea taeditor, TextArea tatest) {
+    public static void toTestEditor(ITDDTextArea taeditor, TextArea tatest) {
         taeditor.setEditable(false);
         tatest.setEditable(true);
     }

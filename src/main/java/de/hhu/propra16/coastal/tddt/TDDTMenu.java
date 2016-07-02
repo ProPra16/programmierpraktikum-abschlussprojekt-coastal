@@ -42,10 +42,10 @@ public class TDDTMenu implements Initializable {
     private MenuItem miclose;
 
     @FXML
-    private TextArea taeditor;
+    private TDDTextArea taeditor;
 
     @FXML
-    private TextArea tatest;
+    private TDDTextArea tatest;
 
     @FXML
     private TextArea taterminal;

@@ -17,7 +17,7 @@ public class CompilerInteraction {
 
     private static CompileTarget target = CompileTarget.TEST;
 
-    public static void compile(TextArea taeditor, TextArea tatest, TextArea taterminal, TextArea tatestterminal, Label lbstatus, Exercise currentExercise, ListView<Exercise> lvexercises) {
+    public static void compile(TDDTextArea taeditor, TDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, Label lbstatus, Exercise currentExercise, ListView<Exercise> lvexercises) {
         taterminal.clear();
         tatestterminal.clear();
         if(lvexercises.getItems().isEmpty() || currentExercise == null) {
@@ -116,7 +116,7 @@ public class CompilerInteraction {
         return ErrorType.NOERROR;
     }
 
-    private static void changeReport(TextArea taeditor, TextArea tatest, Label lbstatus) {
+    private static void changeReport(TDDTextArea taeditor, TDDTextArea tatest, Label lbstatus) {
         switch (lbstatus.getText()) {
             case "RED":
                 lbstatus.setText("GREEN");

@@ -1,8 +1,6 @@
 package de.hhu.propra16.coastal.tddt;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
+import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,6 +25,8 @@ public class CatalogParser extends DefaultHandler {
     private static final String CONFIG = "config";
     private static final String BABYSTEPS = "babysteps";
     private static final String TIMETRACKING = "timetracking";
+
+    private Locator mLocator;
 
     private ArrayList<String> mTags;
 
@@ -67,18 +67,34 @@ public class CatalogParser extends DefaultHandler {
     }
 
     @Override
+    public void setDocumentLocator(Locator locator) {
+        mLocator = locator;
+    }
+
+    @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         switch (qName) {
             case EXERCISE:
+                validateSubTag(EXERCISE, EXERCISES);
                 mExercise = new Exercise(attributes.getValue("name"));
                 break;
+            case DESCRIPTION:
+            case CLASSES:
+            case TESTS:
+            case CONFIG:
+                validateSubTag(qName, EXERCISE);
+                break;
             case CLASS:
+                validateSubTag(CLASS, CLASSES);
                 mExercise.addClassName(attributes.getValue("name"));
                 break;
             case TEST:
+                validateSubTag(TEST, TESTS);
                 mExercise.addTestName(attributes.getValue("name"));
                 break;
             case BABYSTEPS:
+                validateSubTag(BABYSTEPS, CONFIG);
+
                 String babystepsEnabled = attributes.getValue("value");
                 if (Boolean.parseBoolean(babystepsEnabled)) {
                     String timeString = attributes.getValue("time");
@@ -92,6 +108,8 @@ public class CatalogParser extends DefaultHandler {
                 }
                 break;
             case TIMETRACKING:
+                validateSubTag(TIMETRACKING, CONFIG);
+
                 String trackingEnabled = attributes.getValue("value");
                 boolean enabled = Boolean.parseBoolean(trackingEnabled);
                 mExercise.setTracking(enabled);
@@ -100,6 +118,11 @@ public class CatalogParser extends DefaultHandler {
                 //System.out.println("Skipping unknown tag: " + qName);
         }
         mTags.add(qName);
+    }
+
+    private void validateSubTag(String subtag, String tag) throws CatalogTagException {
+        if (!mTags.get(mTags.size() - 1).equals(tag))
+            throw new CatalogTagException(subtag, tag, mLocator);
     }
 
     @Override
@@ -136,6 +159,14 @@ public class CatalogParser extends DefaultHandler {
                 mExercise.addTestContent(mTestContent);
                 break;
             case EXERCISE:
+                if (mExercise == null)
+                    throw new CatalogTagNotFoundException(EXERCISE, EXERCISES, mLocator);
+                //else if (mDescription.isEmpty())
+                //    throw new CatalogTagNotFoundException(DESCRIPTION, EXERCISE, mLocator);
+                else if (mExercise.getClassName() == null)
+                    throw new CatalogTagNotFoundException(CLASS, CLASSES, mLocator);
+                else if (mExercise.getTestName() == null)
+                    throw new CatalogTagNotFoundException(TEST, TESTS, mLocator);
                 mCatalog.addExercise(mExercise);
                 clearCurrentExercise();
                 mExercise = null;
@@ -149,5 +180,17 @@ public class CatalogParser extends DefaultHandler {
         mDescription = "";
         mClassContent = "";
         mTestContent = "";
+    }
+
+    private class CatalogTagException extends SAXParseException {
+        public CatalogTagException(String subtag, String tag, Locator mLocator) {
+            super(String.format("%s ist kein Untertag von %s", subtag, tag), mLocator);
+        }
+    }
+
+    private class CatalogTagNotFoundException extends SAXParseException {
+        public CatalogTagNotFoundException(String subtag, String tag, Locator mLocator) {
+            super(String.format("%s enthält keinen oder ungültigen %s-Untertag", tag, subtag), mLocator);
+        }
     }
 }
