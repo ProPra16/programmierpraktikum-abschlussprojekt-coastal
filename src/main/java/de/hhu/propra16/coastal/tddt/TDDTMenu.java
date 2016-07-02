@@ -101,11 +101,7 @@ public class TDDTMenu implements Initializable {
             return;
         }
 
-        catalog.loadExercises(taeditor, tatest, lbdescription, lvexercises);
-        if(lvexercises.getItems().get(0) == null) {
-            return;
-        }
-        currentExercise = lvexercises.getItems().get(0);
+        catalog.loadInListView(lvexercises);
 
     }
 
@@ -158,7 +154,7 @@ public class TDDTMenu implements Initializable {
     private void compile(CompileTarget target) {
         taterminal.clear();
         tatestterminal.clear();
-        if(lvexercises.getItems().isEmpty()) {
+        if(lvexercises.getItems().isEmpty() || currentExercise == null) {
             return;
         }
         CompilationUnit compilationUnitProgram = new CompilationUnit(currentExercise.getClassName(), taeditor.getText(), false);
