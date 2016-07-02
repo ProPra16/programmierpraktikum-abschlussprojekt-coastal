@@ -70,8 +70,6 @@ public class TDDTMenu implements Initializable {
 
     private Catalog catalog;
 
-    private CompileTarget target = CompileTarget.TEST;
-
     private Exercise currentExercise;
 
     @Override
@@ -87,12 +85,9 @@ public class TDDTMenu implements Initializable {
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
         File file = dialog.showOpenDialog(primaryStage);
 
-
-
         if(file == null) {
             return;
         }
-
 
         try {
             catalog = new CatalogParser().parse(file);
@@ -100,9 +95,7 @@ public class TDDTMenu implements Initializable {
             System.err.println("Fehler beim Parsen des Katalogs aufgetreten");
             return;
         }
-
         catalog.loadInListView(lvexercises);
-
     }
 
     @FXML
@@ -148,139 +141,9 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void next(ActionEvent event) {
-        compile(target);
+        CompilerInteraction.compile(taeditor, tatest, taterminal, tatestterminal, lbstatus, currentExercise, lvexercises);
     }
 
-    private void compile(CompileTarget target) {
-        taterminal.clear();
-        tatestterminal.clear();
-        if(lvexercises.getItems().isEmpty() || currentExercise == null) {
-            return;
-        }
-        CompilationUnit compilationUnitProgram = new CompilationUnit(currentExercise.getClassName(), taeditor.getText(), false);
-        String errorMessagesProgram = "Compiler Error in Program:" + "\n" + "\n";
-        CompilationUnit compilationUnitTest = new CompilationUnit(currentExercise.getTestName(), tatest.getText(), true);
-
-        String errorMessagesTest = "Compiler Error in Test:" + "\n" + "\n";
-
-        JavaStringCompiler compiler = CompilerFactory.getCompiler(compilationUnitTest, compilationUnitProgram);
-
-
-        compiler.compileAndRunTests();
-        Collection<CompileError> errorsProgram = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnitProgram);
-        Collection<CompileError> errorsTest = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnitTest);
-
-
-        for(CompileError error : errorsProgram) {
-            String currentTerminal = taterminal.getText();
-            taterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
-        }
-        for(CompileError error : errorsTest) {
-            String currentTerminal = tatestterminal.getText();
-            tatestterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
-        }
-        if(continueable(compiler, errorsTest)) {
-            changeReport();
-
-        } else {
-            ErrorType error = error(compiler, errorsTest);
-            if (target == CompileTarget.TEST) {
-                // TODO Bei Syxtaxfehlern sollte nicht changeReport aufrufen
-                if(error == ErrorType.compilerErrorTest) {
-                    tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
-
-                } else {
-                    tatestterminal.setText("Alle Tests müssen fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
-                }
-
-            } else {
-                if(error == ErrorType.compilerErrorProgram) {
-                    taterminal.setText(errorMessagesProgram + taterminal.getText());
-                } else {
-                    taterminal.setText("Alle Tests müssen erfüllt werden" + "\n" + "\n" + taterminal.getText());
-                }
-            }
-        }
-    }
-
-    private boolean continueable(JavaStringCompiler compiler, Collection<CompileError> compileTestsErrors) {
-        switch (lbstatus.getText()) {
-            case "RED":
-               /* if((compiler.getCompilerResult().hasCompileErrors() && error(compiler, compileTestsErrors) != ErrorType.compilerErrorTest)
-                        || compiler.getTestResult().getNumberOfFailedTests() > 0) {*/
-                if(error(compiler, compileTestsErrors) == ErrorType.compilerErrorTest) {
-                    return false;
-                }
-                if(compiler.getTestResult().getNumberOfFailedTests() > 0) {
-                    return true;
-                }
-                return false;
-            default:
-                if(!compiler.getCompilerResult().hasCompileErrors() && compiler.getTestResult().getNumberOfFailedTests() == 0) {
-                    return true;
-                }
-                return false;
-        }
-    }
-
-    private ErrorType error(JavaStringCompiler compiler, Collection<CompileError> compilerTestsErrors) {
-        switch (lbstatus.getText()) {
-            case "RED":
-                if(compiler.getCompilerResult().hasCompileErrors()) {
-                    for(CompileError e: compilerTestsErrors) {
-                        if(e.getMessage().indexOf("cannot find symbol") == -1) {
-                            return ErrorType.compilerErrorTest;
-                        }
-                    }
-
-                }
-                if(compiler.getTestResult().getNumberOfFailedTests() == 0) {
-                    return ErrorType.TestsNotFailed;
-                }
-            default:
-                if(compiler.getCompilerResult().hasCompileErrors()) {
-                    return ErrorType.compilerErrorProgram;
-                }
-                if(compiler.getTestResult().getNumberOfFailedTests() > 0) {
-                    return ErrorType.TestsNotSucceeded;
-                }
-        }
-        return ErrorType.NOERROR;
-    }
-
-
-
-    @Deprecated
-    private void runTests() {
-        /*tatestterminal.clear();
-        //Collection<TestFailure> failures = compiler.getTestResult().getTestFailures();
-        for(TestFailure failure: failures) {
-            String currentTerminal = tatestterminal.getText();
-            tatestterminal.setText(currentTerminal + failure.getMessage() +"\n" +"\n");
-        }*/
-    }
-
-    private void changeReport() {
-        switch (lbstatus.getText()) {
-            case "RED":
-                lbstatus.setText("GREEN");
-                lbstatus.setId("green");
-                TDDController.toEditor(taeditor, tatest);
-                target = CompileTarget.EDITOR;
-                break;
-            case "GREEN":
-                lbstatus.setText("REFACTOR");
-                lbstatus.setId("black");
-                target = CompileTarget.EDITOR;
-                break;
-            case "REFACTOR":
-                lbstatus.setText("RED");
-                lbstatus.setId("red");
-                TDDController.toTestEditor(taeditor, tatest);
-                target = CompileTarget.TEST;
-                break;
-        }
-    }
 
     @FXML
     protected void help(ActionEvent event) {
