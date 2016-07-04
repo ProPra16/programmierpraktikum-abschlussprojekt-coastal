@@ -12,7 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import vk.core.api.*;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 
 import java.io.File;
@@ -96,6 +97,16 @@ public class TDDTMenu implements Initializable {
             catalog = new CatalogParser().parse(file);
         } catch (Exception e) {
             System.err.println("Fehler beim Parsen des Katalogs aufgetreten");
+            if (!(e instanceof SAXException)) {
+                e.printStackTrace();
+            }
+            else if (e instanceof SAXParseException) {
+                SAXParseException saxParseE = (SAXParseException) e;
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Fehler beim Parsen des Katalogs");
+                alert.setHeaderText(saxParseE.getMessage() + " (Zeile " + saxParseE.getLineNumber() + ", Zeichen " + saxParseE.getColumnNumber() + ")");
+                alert.show();
+            }
             return;
         }
         catalog.loadInListView(lvexercises);

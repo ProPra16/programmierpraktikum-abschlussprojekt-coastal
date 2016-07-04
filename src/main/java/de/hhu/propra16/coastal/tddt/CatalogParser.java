@@ -74,6 +74,9 @@ public class CatalogParser extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         switch (qName) {
+            case EXERCISES:
+                validateRootTag(EXERCISES);
+                break;
             case EXERCISE:
                 validateSubTag(EXERCISE, EXERCISES);
                 mExercise = new Exercise(attributes.getValue("name"));
@@ -115,9 +118,14 @@ public class CatalogParser extends DefaultHandler {
                 mExercise.setTracking(enabled);
                 break;
             default:
-                //System.out.println("Skipping unknown tag: " + qName);
+                System.out.println("Skipping unknown tag: " + qName);
         }
         mTags.add(qName);
+    }
+
+    private void validateRootTag(String tag) throws CatalogRootTagException {
+        if (mTags.size() > 0)
+            throw new CatalogRootTagException(tag, mLocator);
     }
 
     private void validateSubTag(String subtag, String tag) throws CatalogTagException {
@@ -161,8 +169,6 @@ public class CatalogParser extends DefaultHandler {
             case EXERCISE:
                 if (mExercise == null)
                     throw new CatalogTagNotFoundException(EXERCISE, EXERCISES, mLocator);
-                //else if (mDescription.isEmpty())
-                //    throw new CatalogTagNotFoundException(DESCRIPTION, EXERCISE, mLocator);
                 else if (mExercise.getClassName() == null)
                     throw new CatalogTagNotFoundException(CLASS, CLASSES, mLocator);
                 else if (mExercise.getTestName() == null)
@@ -191,6 +197,12 @@ public class CatalogParser extends DefaultHandler {
     private class CatalogTagNotFoundException extends SAXParseException {
         public CatalogTagNotFoundException(String subtag, String tag, Locator mLocator) {
             super(String.format("%s enthält keinen oder ungültigen %s-Untertag", tag, subtag), mLocator);
+        }
+    }
+
+    private class CatalogRootTagException extends SAXParseException {
+        public CatalogRootTagException(String tag, Locator mLocator) {
+            super(String.format("%s ist kein Roottag", tag), mLocator);
         }
     }
 }
