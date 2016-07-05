@@ -1,5 +1,6 @@
 package de.hhu.propra16.coastal.tddt;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import vk.core.api.CompilationUnit;
 import vk.core.api.CompileError;
@@ -15,7 +16,9 @@ public class CompilerInteraction {
 
     private static CompileTarget target = CompileTarget.TEST;
 
-    public static void compile(ITDDTextArea taeditor, ITDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus, Exercise currentExercise, ITDDListView<Exercise> lvexercises) {
+    private static String previousTest;
+
+    public static void compile(ITDDTextArea taeditor, ITDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus, Exercise currentExercise, ITDDListView<Exercise> lvexercises, Button btback) {
         taterminal.clear();
         tatestterminal.clear();
         if(lvexercises.getItems().isEmpty() || currentExercise == null) {
@@ -23,27 +26,25 @@ public class CompilerInteraction {
         }
         CompilationUnit compilationUnitProgram = new CompilationUnit(currentExercise.getClassName(), taeditor.getText(), false);
         CompilationUnit compilationUnitTest = new CompilationUnit(currentExercise.getTestName(), tatest.getText(), true);
-
-        JavaStringCompiler compiler = CompilerFactory.getCompiler(compilationUnitTest, compilationUnitProgram);
+        JavaStringCompiler compiler = CompilerFactory.getCompiler(compilationUnitProgram, compilationUnitTest);
 
         compiler.compileAndRunTests();
         Collection<CompileError> errorsProgram = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnitProgram);
         Collection<CompileError> errorsTest = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnitTest);
 
-
         for(CompileError error : errorsTest) {
             String currentTerminal = tatestterminal.getText();
             tatestterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
         }
-        if(continueable(compiler, errorsTest, lbstatus)) {
-            changeReport(taeditor, tatest, lbstatus);
+        if(continueable(compiler, errorsProgram, errorsTest, currentExercise, lbstatus)) {
+            changeReport(taeditor, tatest, lbstatus, btback);
 
         } else {
-            showErrors(compiler, errorsProgram, errorsTest, taterminal, tatestterminal, lbstatus);
+            showErrors(compiler, errorsProgram, errorsTest, taterminal, tatestterminal, currentExercise, lbstatus);
         }
     }
 
-    private static void showErrors(JavaStringCompiler compiler, Collection<CompileError> errorsProgram, Collection<CompileError> errorsTest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus) {
+    private static void showErrors(JavaStringCompiler compiler, Collection<CompileError> errorsProgram, Collection<CompileError> errorsTest, TextArea taterminal, TextArea tatestterminal, Exercise currentExercise, ITDDLabel lbstatus) {
         for(CompileError error : errorsProgram) {
             String currentTerminal = taterminal.getText();
             taterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
@@ -51,9 +52,9 @@ public class CompilerInteraction {
 
         String errorMessagesProgram = "Compiler Error in Program:" + "\n" + "\n";
         String errorMessagesTest = "Compiler Error in Test:" + "\n" + "\n";
-        ErrorType error = error(compiler, errorsTest, lbstatus);
+        ErrorType error = error(compiler, errorsProgram, errorsTest, currentExercise, lbstatus);
+        System.out.println(error);
         if (target == CompileTarget.TEST) {
-            System.out.println(error.toString());
             if(error == ErrorType.compilerErrorTest) {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
 
@@ -70,30 +71,20 @@ public class CompilerInteraction {
         }
     }
 
-    private static boolean continueable(JavaStringCompiler compiler, Collection<CompileError> compileTestsErrors, ITDDLabel lbstatus) {
-        switch (lbstatus.getText()) {
-            case "RED":
-                if(error(compiler, compileTestsErrors, lbstatus) == ErrorType.compilerErrorTest) {
-                    return false;
-                }
-                if (compiler.getTestResult().getNumberOfFailedTests() > 0) {
-                    return true;
-                }
-                return false;
-            default:
-                if(!compiler.getCompilerResult().hasCompileErrors() && compiler.getTestResult().getNumberOfFailedTests() == 0) {
-                    return true;
-                }
-                return false;
+    private static boolean continueable(JavaStringCompiler compiler, Collection<CompileError> compileProgramErrors, Collection<CompileError> compileTestsErrors, Exercise currentExercise, ITDDLabel lbstatus) {
+        if(error(compiler,  compileProgramErrors, compileTestsErrors, currentExercise, lbstatus) == ErrorType.NOERROR) {
+            return true;
         }
+        return false;
     }
 
-    private static ErrorType error(JavaStringCompiler compiler, Collection<CompileError> compilerTestsErrors, ITDDLabel lbstatus) {
+    private static ErrorType error(JavaStringCompiler compiler, Collection<CompileError> compilerProgramErrors, Collection<CompileError> compilerTestsErrors, Exercise curentExercise, ITDDLabel lbstatus) {
+
         switch (lbstatus.getText()) {
             case "RED":
                 if(compiler.getCompilerResult().hasCompileErrors()) {
                     for(CompileError e: compilerTestsErrors) {
-                        if(e.getMessage().indexOf("cannot find symbol") == -1) {
+                        if(e.getMessage().indexOf("cannot find symbol") == -1 || e.getMessage().indexOf(curentExercise.getClassName()) == -1 || e.getMessage().indexOf(curentExercise.getTestName()) != -1) {
                             return ErrorType.compilerErrorTest;
                         }
                     }
@@ -102,7 +93,7 @@ public class CompilerInteraction {
                 }
                 return ErrorType.NOERROR;
             default:
-                if(compiler.getCompilerResult().hasCompileErrors()) {
+                if(!compilerProgramErrors.isEmpty()) {
                     return ErrorType.compilerErrorProgram;
                 }
                 if(compiler.getTestResult().getNumberOfFailedTests() > 0) {
@@ -112,20 +103,23 @@ public class CompilerInteraction {
         return ErrorType.NOERROR;
     }
 
-    private static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus) {
+    private static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
         switch (lbstatus.getText()) {
             case "RED":
+                btback.setDisable(false);
                 lbstatus.setText("GREEN");
                 lbstatus.setId("green");
                 TDDController.toEditor(taeditor, tatest);
                 target = CompileTarget.EDITOR;
                 break;
             case "GREEN":
+                btback.setDisable(true);
                 lbstatus.setText("REFACTOR");
                 lbstatus.setId("black");
                 target = CompileTarget.EDITOR;
                 break;
             case "REFACTOR":
+                previousTest = tatest.getText();
                 lbstatus.setText("RED");
                 lbstatus.setId("red");
                 TDDController.toTestEditor(taeditor, tatest);
@@ -133,5 +127,22 @@ public class CompilerInteraction {
                 break;
         }
     }
+
+    public static void back(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
+        btback.setDisable(true);
+        tatest.setText(previousTest);
+        lbstatus.setText("RED");
+        lbstatus.setId("red");
+        TDDController.toTestEditor(taeditor, tatest);
+        target = CompileTarget.TEST;
+    }
+
+    public static void setPreviousTest(String previous) {
+        previousTest = previous;
+    }
+
+
+
+
 
 }

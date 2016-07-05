@@ -58,6 +58,9 @@ public class TDDTMenu implements Initializable {
     private Button btnextstep;
 
     @FXML
+    private Button btback;
+
+    @FXML
     protected TDDLabel lbstatus;
 
     @FXML
@@ -75,6 +78,7 @@ public class TDDTMenu implements Initializable {
     private Catalog catalog;
 
     private Exercise currentExercise;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -155,7 +159,12 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void next(ActionEvent event) {
-        CompilerInteraction.compile(taeditor, tatest, taterminal, tatestterminal, lbstatus, currentExercise, lvexercises);
+        CompilerInteraction.compile(taeditor, tatest, taterminal, tatestterminal, lbstatus, currentExercise, lvexercises, btback);
+    }
+
+    @FXML
+    protected void previous(ActionEvent event) {
+        CompilerInteraction.back(taeditor, tatest, lbstatus, btback);
     }
 
 
@@ -172,6 +181,7 @@ public class TDDTMenu implements Initializable {
         }
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
+        CompilerInteraction.setPreviousTest(tatest.getText());
         if (currentExercise.isBabysteps()) {
             Babysteps baby = new Babysteps(currentExercise, this);
             baby.babystep();

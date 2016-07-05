@@ -62,8 +62,8 @@
              </HBox>
              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                  <children>
-                     <Button fx:id="btback" mnemonicParsing="false" onAction="#next" prefHeight="57.0" prefWidth="288.0" text="Schritt zurück" />
-                     <Button fx:id="btnextstep" mnemonicParsing="false" onAction="#next" prefHeight="57.0" prefWidth="288.0" text="Nächster Schritt" />
+                     <Button fx:id="btback" disable="true" mnemonicParsing="false" onAction="#previous" prefHeight="57.0" prefWidth="288.0" text="Schritt zurück" />
+                     <Button fx:id="btnextstep"  mnemonicParsing="false" onAction="#next" prefHeight="57.0" prefWidth="288.0" text="Nächster Schritt" />
                  </children>
              </HBox>
 
