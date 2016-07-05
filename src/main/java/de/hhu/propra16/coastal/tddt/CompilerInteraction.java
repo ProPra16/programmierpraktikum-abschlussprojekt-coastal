@@ -65,6 +65,8 @@ public class CompilerInteraction {
         } else {
             if(error == ErrorType.compilerErrorProgram) {
                 taterminal.setText(errorMessagesProgram + taterminal.getText());
+            } else if (error == ErrorType.compilerErrorTest) {
+                tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
             } else {
                 taterminal.setText("Alle Tests müssen erfüllt werden" + "\n" + "\n" + taterminal.getText());
             }
@@ -96,7 +98,7 @@ public class CompilerInteraction {
                 if(!compilerProgramErrors.isEmpty()) {
                     return ErrorType.compilerErrorProgram;
                 }
-                if(compiler.getTestResult().getNumberOfFailedTests() > 0) {
+                if(!compilerTestsErrors.isEmpty() || compiler.getTestResult().getNumberOfFailedTests() > 0) {
                     return ErrorType.TestsNotSucceeded;
                 }
         }
