@@ -1,12 +1,14 @@
 package de.hhu.propra16.coastal.tddt;
 
-import org.junit.Ignore;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class CatalogTest {
+
     @Test
     public void addExercise1() throws Exception {
         Catalog catalog = new Catalog();
@@ -38,24 +40,16 @@ public class CatalogTest {
         verify(mockLabel).setText(testDescription);
     }
 
-    @Ignore
     @Test
     public void loadInListView() throws Exception {
         Catalog catalog = new Catalog();
+        ObservableList<Exercise> list = FXCollections.observableArrayList();
         ITDDListView mockListView = mock(ITDDListView.class);
+        when(mockListView.getItems()).thenReturn(list);
         Exercise mockercise = mock(Exercise.class);
         catalog.addExercise(mockercise);
         catalog.loadInListView(mockListView);
+        assertEquals(mockercise, catalog.getExercises().get(0));
         assertEquals(mockercise, mockListView.getItems().get(0));
-    }
-
-    @Test
-    public void getExercises() throws Exception {
-
-    }
-
-    @Test
-    public void addExercise() throws Exception {
-
     }
 }
