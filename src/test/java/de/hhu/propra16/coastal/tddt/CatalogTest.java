@@ -1,13 +1,10 @@
 package de.hhu.propra16.coastal.tddt;
 
-import javafx.scene.control.ListView;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CatalogTest {
     @Test
@@ -19,30 +16,33 @@ public class CatalogTest {
     }
 
     @Test
-    public void loadExercises() throws Exception {
-
-    }
-
-    @Test
-    public void loadExercise1() throws Exception {
-
+    public void loadExercise() throws Exception {
+        String testClassContent = "testClassContent";
+        String testTestContent = "testTestContent";
+        String testDescription = "testDescription";
         Catalog catalog = new Catalog();
-        ITDDTextArea mockArea = mock(ITDDTextArea.class);
+        ITDDTextArea mockAreaClass = mock(ITDDTextArea.class);
+        ITDDTextArea mockAreaTest = mock(ITDDTextArea.class);
+        ITDDLabel mockLabel = mock(ITDDLabel.class);
         Exercise mockercise = mock(Exercise.class);
-        when(mockercise.getClassContent()).thenReturn("testClassContent");
+
+        when(mockercise.getClassContent()).thenReturn(testClassContent);
+        when(mockercise.getTestContent()).thenReturn(testTestContent);
+        when(mockercise.getDescription()).thenReturn(testDescription);
+
         catalog.addExercise(mockercise);
-        try {
-            catalog.loadExercise(mockArea, null, null, mockercise);
-        }
-        catch (NullPointerException ignored) {}
-        verify(mockArea).setText("testClassContent");
+        catalog.loadExercise(mockAreaClass, mockAreaTest, mockLabel, mockercise);
+
+        verify(mockAreaClass).setText(testClassContent);
+        verify(mockAreaTest).setText(testTestContent);
+        verify(mockLabel).setText(testDescription);
     }
 
     @Ignore
     @Test
     public void loadInListView() throws Exception {
         Catalog catalog = new Catalog();
-        ListView<Exercise> mockListView = mock(ListView.class);
+        ITDDListView mockListView = mock(ITDDListView.class);
         Exercise mockercise = mock(Exercise.class);
         catalog.addExercise(mockercise);
         catalog.loadInListView(mockListView);
@@ -58,10 +58,4 @@ public class CatalogTest {
     public void addExercise() throws Exception {
 
     }
-
-    @Test
-    public void loadExercise() throws Exception {
-
-    }
-
 }

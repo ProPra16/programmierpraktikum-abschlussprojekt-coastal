@@ -1,7 +1,5 @@
 package de.hhu.propra16.coastal.tddt;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import vk.core.api.CompilationUnit;
 import vk.core.api.CompileError;
@@ -17,7 +15,7 @@ public class CompilerInteraction {
 
     private static CompileTarget target = CompileTarget.TEST;
 
-    public static void compile(TDDTextArea taeditor, TDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, Label lbstatus, Exercise currentExercise, ListView<Exercise> lvexercises) {
+    public static void compile(ITDDTextArea taeditor, ITDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus, Exercise currentExercise, ITDDListView<Exercise> lvexercises) {
         taterminal.clear();
         tatestterminal.clear();
         if(lvexercises.getItems().isEmpty() || currentExercise == null) {
@@ -45,7 +43,7 @@ public class CompilerInteraction {
         }
     }
 
-    private static void showErrors(JavaStringCompiler compiler, Collection<CompileError> errorsProgram, Collection<CompileError> errorsTest, TextArea taterminal, TextArea tatestterminal, Label lbstatus) {
+    private static void showErrors(JavaStringCompiler compiler, Collection<CompileError> errorsProgram, Collection<CompileError> errorsTest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus) {
         for(CompileError error : errorsProgram) {
             String currentTerminal = taterminal.getText();
             taterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
@@ -55,7 +53,6 @@ public class CompilerInteraction {
         String errorMessagesTest = "Compiler Error in Test:" + "\n" + "\n";
         ErrorType error = error(compiler, errorsTest, lbstatus);
         if (target == CompileTarget.TEST) {
-            // TODO Bei Syxtaxfehlern sollte nicht changeReport aufrufen
             if(error == ErrorType.compilerErrorTest) {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
 
@@ -72,7 +69,7 @@ public class CompilerInteraction {
         }
     }
 
-    private static boolean continueable(JavaStringCompiler compiler, Collection<CompileError> compileTestsErrors, Label lbstatus) {
+    private static boolean continueable(JavaStringCompiler compiler, Collection<CompileError> compileTestsErrors, ITDDLabel lbstatus) {
         switch (lbstatus.getText()) {
             case "RED":
                 if(error(compiler, compileTestsErrors, lbstatus) == ErrorType.compilerErrorTest) {
@@ -90,7 +87,7 @@ public class CompilerInteraction {
         }
     }
 
-    private static ErrorType error(JavaStringCompiler compiler, Collection<CompileError> compilerTestsErrors, Label lbstatus) {
+    private static ErrorType error(JavaStringCompiler compiler, Collection<CompileError> compilerTestsErrors, ITDDLabel lbstatus) {
         switch (lbstatus.getText()) {
             case "RED":
                 if(compiler.getCompilerResult().hasCompileErrors()) {
@@ -116,7 +113,7 @@ public class CompilerInteraction {
         return ErrorType.NOERROR;
     }
 
-    private static void changeReport(TDDTextArea taeditor, TDDTextArea tatest, Label lbstatus) {
+    private static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus) {
         switch (lbstatus.getText()) {
             case "RED":
                 lbstatus.setText("GREEN");

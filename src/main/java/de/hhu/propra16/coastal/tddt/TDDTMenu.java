@@ -58,7 +58,7 @@ public class TDDTMenu implements Initializable {
     private Button btnextstep;
 
     @FXML
-    protected Label lbstatus;
+    protected TDDLabel lbstatus;
 
     @FXML
     protected Label lbtime;
@@ -67,10 +67,10 @@ public class TDDTMenu implements Initializable {
     private MenuItem mihelp;
 
     @FXML
-    private ListView<Exercise> lvexercises;
+    private TDDListView<Exercise> lvexercises;
 
     @FXML
-    private Label lbdescription;
+    private TDDLabel lbdescription;
 
     private Catalog catalog;
 
