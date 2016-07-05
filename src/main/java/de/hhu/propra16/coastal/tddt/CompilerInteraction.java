@@ -16,7 +16,7 @@ public class CompilerInteraction {
 
     private static CompileTarget target = CompileTarget.TEST;
 
-    private static String previousTest;
+    private static String previousCode;
 
     public static void compile(ITDDTextArea taeditor, ITDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus, Exercise currentExercise, ITDDListView<Exercise> lvexercises, Button btback) {
         taterminal.clear();
@@ -119,7 +119,7 @@ public class CompilerInteraction {
                 target = CompileTarget.EDITOR;
                 break;
             case "REFACTOR":
-                previousTest = tatest.getText();
+                previousCode = taeditor.getText();
                 lbstatus.setText("RED");
                 lbstatus.setId("red");
                 TDDController.toTestEditor(taeditor, tatest);
@@ -130,15 +130,15 @@ public class CompilerInteraction {
 
     public static void back(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
         btback.setDisable(true);
-        tatest.setText(previousTest);
+        taeditor.setText(previousCode);
         lbstatus.setText("RED");
         lbstatus.setId("red");
         TDDController.toTestEditor(taeditor, tatest);
         target = CompileTarget.TEST;
     }
 
-    public static void setPreviousTest(String previous) {
-        previousTest = previous;
+    public static void setPreviousCode(String previous) {
+        previousCode = previous;
     }
 
 

@@ -181,7 +181,7 @@ public class TDDTMenu implements Initializable {
         }
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
-        CompilerInteraction.setPreviousTest(tatest.getText());
+        CompilerInteraction.setPreviousCode(taeditor.getText());
         if (currentExercise.isBabysteps()) {
             Babysteps baby = new Babysteps(currentExercise, this);
             baby.babystep();
