@@ -53,6 +53,7 @@ public class CompilerInteraction {
         String errorMessagesTest = "Compiler Error in Test:" + "\n" + "\n";
         ErrorType error = error(compiler, errorsTest, lbstatus);
         if (target == CompileTarget.TEST) {
+            System.out.println(error.toString());
             if(error == ErrorType.compilerErrorTest) {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
 
@@ -75,7 +76,7 @@ public class CompilerInteraction {
                 if(error(compiler, compileTestsErrors, lbstatus) == ErrorType.compilerErrorTest) {
                     return false;
                 }
-                if (compileTestsErrors.size() > 0) {
+                if (compiler.getTestResult().getNumberOfFailedTests() > 0) {
                     return true;
                 }
                 return false;
@@ -96,12 +97,10 @@ public class CompilerInteraction {
                             return ErrorType.compilerErrorTest;
                         }
                     }
-                    return ErrorType.NOERROR;
-
-                }
-                if(compiler.getTestResult().getNumberOfFailedTests() == 0) {
+                } else if(compiler.getTestResult().getNumberOfFailedTests() == 0) {
                     return ErrorType.TestsNotFailed;
                 }
+                return ErrorType.NOERROR;
             default:
                 if(compiler.getCompilerResult().hasCompileErrors()) {
                     return ErrorType.compilerErrorProgram;
