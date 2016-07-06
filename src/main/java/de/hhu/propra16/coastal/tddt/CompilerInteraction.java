@@ -2,10 +2,7 @@ package de.hhu.propra16.coastal.tddt;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import vk.core.api.CompilationUnit;
-import vk.core.api.CompileError;
-import vk.core.api.CompilerFactory;
-import vk.core.api.JavaStringCompiler;
+import vk.core.api.*;
 
 import java.util.Collection;
 
@@ -21,6 +18,7 @@ public class CompilerInteraction {
     public static void compile(ITDDTextArea taeditor, ITDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus, Exercise currentExercise, ITDDListView<Exercise> lvexercises, Button btback) {
         taterminal.clear();
         tatestterminal.clear();
+        boolean compileError = false;
         if(lvexercises.getItems().isEmpty() || currentExercise == null) {
             return;
         }
@@ -33,6 +31,7 @@ public class CompilerInteraction {
         Collection<CompileError> errorsTest = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnitTest);
 
         for(CompileError error : errorsTest) {
+            compileError = true;
             String currentTerminal = tatestterminal.getText();
             tatestterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
         }
@@ -41,6 +40,10 @@ public class CompilerInteraction {
 
         } else {
             showErrors(compiler, errorsProgram, errorsTest, taterminal, tatestterminal, currentExercise, lbstatus);
+        }
+
+       if(!compileError) {
+            showTestResults(compiler, tatestterminal);
         }
     }
 
@@ -61,7 +64,7 @@ public class CompilerInteraction {
             } else if (error == ErrorType.TestsNotSucceeded) {
                 tatestterminal.setText("Alle Tests müssen erfüllt werden" +"\n" + "\n" + tatestterminal.getText());
             } else {
-                tatestterminal.setText("Alle Tests müssen fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
+                tatestterminal.setText("Ein Test müssen fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
             }
 
         } else {
@@ -73,6 +76,21 @@ public class CompilerInteraction {
                 taterminal.setText("Alle Tests müssen erfüllt werden" + "\n" + "\n" + taterminal.getText());
             }
         }
+    }
+
+    private static void showTestResults(JavaStringCompiler compiler, TextArea tatestterminal) {
+        TestResult result = compiler.getTestResult();
+        String output = "";
+
+        output = output + "Numbers of failed Tests: " + result.getNumberOfFailedTests() +"\n" +"\n";
+        output = output + "Numbers of ignored Tests: " + result.getNumberOfIgnoredTests() +"\n" +"\n";
+        output = output + "Numbers of successfull Tests: " + result.getNumberOfSuccessfulTests() +"\n" +"\n";
+
+        for(TestFailure failure: result.getTestFailures()) {
+            output = output + failure.getMethodName() +": " + failure.getMessage() +"\n" +"\n";
+        }
+        tatestterminal.setText(tatestterminal.getText() + output);
+
     }
 
     private static boolean continueable(JavaStringCompiler compiler, Collection<CompileError> compileProgramErrors, Collection<CompileError> compileTestsErrors, Exercise currentExercise, ITDDLabel lbstatus) {
