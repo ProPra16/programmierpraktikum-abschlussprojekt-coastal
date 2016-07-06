@@ -14,13 +14,22 @@ import java.util.Collection;
  */
 public class CompilerReport {
 
+    private static Tracking tracker = new Tracking();
+
     private static String previousCode;
 
     private static CompileTarget target = CompileTarget.TEST;
 
     static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
+        /*implementing Tracking*/
+        for(int i=0; i<3; i++){
+            tracker.addTimer();
+        }
+
         switch (lbstatus.getText()) {
             case "RED":
+                tracker.stopTimer(3);
+                tracker.startTimer();
                 btback.setDisable(false);
                 lbstatus.setText("GREEN");
                 lbstatus.setId("green");
@@ -28,17 +37,23 @@ public class CompilerReport {
                 target = CompileTarget.EDITOR;
                 break;
             case "GREEN":
+                tracker.stopTimer();
+                tracker.startTimer(1);
                 btback.setDisable(true);
                 lbstatus.setText("REFACTOR CODE");
                 lbstatus.setId("black");
                 target = CompileTarget.EDITOR;
                 break;
             case "REFACTOR CODE":
+                tracker.stopTimer(1);
+                tracker.startTimer(2);
                 lbstatus.setText("REFACTOR TEST");
                 TDDController.toTestEditor(taeditor, tatest);
                 target = CompileTarget.TEST;
                 break;
             case "REFACTOR TEST":
+                tracker.stopTimer(2);
+                tracker.startTimer(3);
                 previousCode = taeditor.getText();
                 lbstatus.setText("RED");
                 lbstatus.setId("red");
