@@ -1,5 +1,6 @@
 package de.hhu.propra16.coastal.tddt;
 
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import vk.core.api.CompileError;
@@ -7,20 +8,25 @@ import vk.core.api.JavaStringCompiler;
 import vk.core.api.TestFailure;
 import vk.core.api.TestResult;
 
+import java.net.URL;
 import java.util.Collection;
+import java.util.ResourceBundle;
 
 /**
  * Created by student on 06/07/16.
  */
 public class CompilerReport {
 
-    private static Tracking tracker = new Tracking();
+    private static Tracking tracker;
 
     private static String previousCode;
 
     private static CompileTarget target = CompileTarget.TEST;
 
+
+
     static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
+        tracker = new Tracking();
         /*implementing Tracking*/
         for(int i=0; i<3; i++){
             tracker.addTimer();
@@ -143,5 +149,6 @@ public class CompilerReport {
         }
         return ErrorType.NOERROR;
     }
+
 
 }

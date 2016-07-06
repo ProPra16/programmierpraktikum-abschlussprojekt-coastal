@@ -5,6 +5,7 @@ public class Tracking {
     ArrayList<Timer> timerList;
     /*A Tracking datatype automatically contains one Timer object in its ArrayList*/
     public Tracking(){
+        timerList = new ArrayList<Timer>();
         timerList.add(new Timer());
     }
 
