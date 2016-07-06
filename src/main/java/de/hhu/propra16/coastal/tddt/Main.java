@@ -19,10 +19,12 @@ public class Main extends Application {
             System.err.println("Sample nicht gefunden");
         }
         primaryStage.setTitle("Test Driven Development Trainer");
-        Scene scene = new Scene(root, 1920, 1080);
+        Scene scene = new Scene(root);
+
         URL url = getClass().getResource("tddt.css");
         scene.getStylesheets().add(url.toExternalForm());
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         TDDTMenu.setStage(primaryStage);
         primaryStage.show();
     }
