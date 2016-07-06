@@ -1,7 +1,7 @@
 package de.hhu.propra16.coastal.tddt;
 public class Timer {
     String name;
-    int timeSpend;
+    int timeSpend = 0;
     long start = 0;
     long end = 0;
     public Timer(){
@@ -13,10 +13,11 @@ public class Timer {
 
     public void end(){
         end = System.currentTimeMillis();
+        timeSpend += (int) (end-start)/1000;
+
     }
 
-    public int returnTimeSpentInSeconds() {
-        timeSpend = (int) (end-start)/1000;
+    public int returnTimeSpentInSeconds(){
         return timeSpend;
     }
 
