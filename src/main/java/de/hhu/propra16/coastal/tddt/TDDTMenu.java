@@ -164,7 +164,7 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void previous(ActionEvent event) {
-        CompilerInteraction.back(taeditor, tatest, lbstatus, btback);
+        CompilerReport.back(taeditor, tatest, lbstatus, btback);
     }
 
 
@@ -181,7 +181,7 @@ public class TDDTMenu implements Initializable {
         }
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
-        CompilerInteraction.setPreviousCode(taeditor.getText());
+        CompilerReport.setPreviousCode(taeditor.getText());
         if (currentExercise.isBabysteps()) {
             Babysteps baby = new Babysteps(currentExercise, this);
             baby.babystep();
