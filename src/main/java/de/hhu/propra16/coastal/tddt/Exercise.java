@@ -4,7 +4,7 @@ public class Exercise {
 
     private final String mName;
     private boolean mBabystepEnabled;
-    private long mBabystepTime;
+    private int mBabystepTime;
     private String mDescription;
     private String mClassContent;
     private String mTestContent;
@@ -16,7 +16,7 @@ public class Exercise {
         this.mName = name;
     }
 
-    public void addBabystepTime(long time) {
+    public void addBabystepTime(int time) {
         mBabystepEnabled = true;
         mBabystepTime = time;
     }
@@ -59,7 +59,7 @@ public class Exercise {
 
     public String getDescription() {return mDescription; }
 
-    public long getBabystepTime() {return mBabystepTime; }
+    public int getBabystepTime() {return mBabystepTime; }
 
     public boolean isBabysteps() {return mBabystepEnabled; }
 

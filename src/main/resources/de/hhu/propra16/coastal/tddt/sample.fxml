@@ -69,7 +69,7 @@
 
             <TDDListView fx:id="lvexercises" onMouseClicked="#chooseExercise" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <TDDLabel fx:id="lbdescription" alignment="TOP_LEFT" prefHeight="145.0" prefWidth="635.0" text="Aufgabenstellung" GridPane.columnSpan="2" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Label fx:id="lbtime" alignment="TOP_RIGHT" prefHeight="145.0" prefWidth="200.0" text="mm:ss" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <TDDLabel fx:id="lbtime" alignment="TOP_RIGHT" prefHeight="145.0" prefWidth="200.0" text="00:00" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
             <TextArea fx:id="taterminal" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
             <TextArea fx:id="tatestterminal" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>

@@ -12,7 +12,7 @@ import java.util.Collection;
 public class CompilerInteraction {
 
 
-    public static void compile(ITDDTextArea taeditor, ITDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus, Exercise currentExercise, ITDDListView<Exercise> lvexercises, Button btback) {
+    public static void compile(ITDDTextArea taeditor, ITDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus, ITDDLabel lbtime, Exercise currentExercise, ITDDListView<Exercise> lvexercises, Button btback) {
         taterminal.clear();
         tatestterminal.clear();
         boolean compileError = false;
@@ -41,6 +41,11 @@ public class CompilerInteraction {
 
        if(!compileError) {
             CompilerReport.showTestResults(compiler, tatestterminal);
+        }
+
+        if (currentExercise.isBabysteps()) {
+            Babysteps baby = new Babysteps(currentExercise, lbstatus, lbtime);
+            baby.babystep();
         }
     }
 
