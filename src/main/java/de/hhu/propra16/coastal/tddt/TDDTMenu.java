@@ -16,10 +16,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 
+import java.awt.*;
 import java.io.File;
 
 import java.net.URL;
 
+import java.io.*;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,6 +43,9 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     private MenuItem miclose;
+
+    @FXML
+    private MenuItem userTracking;
 
     @FXML
     private TDDTextArea taeditor;
@@ -170,7 +175,6 @@ public class TDDTMenu implements Initializable {
     @FXML
     protected void help(ActionEvent event) {
 
-
     }
 
     @FXML
@@ -181,6 +185,28 @@ public class TDDTMenu implements Initializable {
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
         CompilerReport.setPreviousCode(taeditor.getText());
+    }
+
+
+    @FXML
+    protected void showChart(ActionEvent event){
+        int[] chart = new int[4];
+        /*init declar*/
+        File fileChart = new File("chart.txt");
+
+        /*load file*/
+        if(fileChart.exists()){
+            try{
+                FileReader chartReader = new FileReader("chart.txt");
+                for(int i=0; i<4; i++){
+                    chart[i] = chartReader.read();
+                }
+            }
+            catch(IOException ex){
+                System.out.println(ex.toString());
+            }
+        }
+        /*Chart Darstellung*/
     }
 
     public static void setStage (Stage stage) {
