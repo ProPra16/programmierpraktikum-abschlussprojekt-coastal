@@ -1,8 +1,14 @@
 package de.hhu.propra16.coastal.tddt;
 
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.*;
+import javafx.scene.Group;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -190,23 +196,46 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void showChart(ActionEvent event){
-        int[] chart = new int[4];
+        int[] chartNumber = new int[4];
         /*init declar*/
         File fileChart = new File("chart.txt");
+        int sum = 0;
 
         /*load file*/
         if(fileChart.exists()){
             try{
-                FileReader chartReader = new FileReader("chart.txt");
+                FileReader chartFileReader = new FileReader("chart.txt");
                 for(int i=0; i<4; i++){
-                    chart[i] = chartReader.read();
+                    chartNumber[i] = chartFileReader.read();
                 }
             }
             catch(IOException ex){
-                System.out.println(ex.toString());
+                System.out.println("User hat noch keine Aktionen betätigt.");
             }
         }
-        /*Chart Darstellung*/
+        for(int i=0; i<chartNumber.length; i++){
+            sum+=chartNumber[i];
+        }
+
+        /*Chart Darstellung, oeffnet ein neues Fenster*/
+        Stage stage = new Stage();
+        Scene scene = new Scene(new Group());
+        stage.setTitle("Benutzeranalyse");
+        stage.setWidth(500);
+        stage.setHeight(500);
+
+        ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                        new PieChart.Data("RED", (int) chartNumber[0]/sum),
+                        new PieChart.Data("GREEN", (int) chartNumber[1]/sum),
+                        new PieChart.Data("Refactor Code", (int) chartNumber[2]/sum),
+                        new PieChart.Data("Refactor Test", (int) chartNumber[3]/sum));
+        final PieChart chart = new PieChart(pieChartData);
+        chart.setTitle("Verbrachte Zeit von Nutzer:");
+
+        ((Group) scene.getRoot()).getChildren().add(chart);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void setStage (Stage stage) {
