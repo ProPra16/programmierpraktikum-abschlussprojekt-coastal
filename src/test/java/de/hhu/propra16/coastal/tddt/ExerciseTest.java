@@ -3,10 +3,10 @@ package de.hhu.propra16.coastal.tddt;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ExerciseTest {
 
@@ -20,10 +20,11 @@ public class ExerciseTest {
     @Test
     public void testBabysteps() throws Exception {
         assertEquals(false, exercise.isBabysteps());
-        Date time = new SimpleDateFormat("mm:ss").parse("2:00");
-        exercise.addBabystepTime(time.getTime());
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:m:s");
+        LocalTime time = LocalTime.parse("00:" + "02:00", timeFormatter);
+        exercise.addBabystepTime(time.getMinute()*60 + time.getSecond());
         assertEquals(true, exercise.isBabysteps());
-        assertEquals(time.getTime(), exercise.getBabystepTime());
+        assertEquals(120, exercise.getBabystepTime());
     }
 
     @Test

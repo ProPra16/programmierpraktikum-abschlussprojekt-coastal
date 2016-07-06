@@ -8,10 +8,10 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class CatalogParser extends DefaultHandler {
 
@@ -101,13 +101,14 @@ public class CatalogParser extends DefaultHandler {
                 String babystepsEnabled = attributes.getValue("value");
                 if (Boolean.parseBoolean(babystepsEnabled)) {
                     String timeString = attributes.getValue("time");
-                    Date time = null;
+                    LocalTime time;
                     try {
-                        time = new SimpleDateFormat("mm:ss").parse(timeString);
-                    } catch (ParseException e) {
+                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:m:s");
+                        time = LocalTime.parse("00:" + timeString, timeFormatter);
+                        mExercise.addBabystepTime(time.getMinute() * 60 + time.getSecond());
+                    } catch (DateTimeParseException e) {
                         e.printStackTrace(); // TODO throw
                     }
-                    mExercise.addBabystepTime((int) time.getTime()/1000);
                 }
                 break;
             case TIMETRACKING:
