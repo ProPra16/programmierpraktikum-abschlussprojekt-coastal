@@ -58,6 +58,8 @@ public class CompilerInteraction {
             if(error == ErrorType.compilerErrorTest) {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
 
+            } else if (error == ErrorType.TestsNotSucceeded) {
+                tatestterminal.setText("Alle Tests müssen erfüllt werden" +"\n" + "\n" + tatestterminal.getText());
             } else {
                 tatestterminal.setText("Alle Tests müssen fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
             }
@@ -116,16 +118,19 @@ public class CompilerInteraction {
                 break;
             case "GREEN":
                 btback.setDisable(true);
-                lbstatus.setText("REFACTOR");
+                lbstatus.setText("REFACTOR CODE");
                 lbstatus.setId("black");
                 target = CompileTarget.EDITOR;
                 break;
-            case "REFACTOR":
+            case "REFACTOR CODE":
+                lbstatus.setText("REFACTOR TEST");
+                TDDController.toTestEditor(taeditor, tatest);
+                target = CompileTarget.TEST;
+                break;
+            case "REFACTOR TEST":
                 previousCode = taeditor.getText();
                 lbstatus.setText("RED");
                 lbstatus.setId("red");
-                TDDController.toTestEditor(taeditor, tatest);
-                target = CompileTarget.TEST;
                 break;
         }
     }
