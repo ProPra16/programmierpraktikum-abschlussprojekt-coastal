@@ -37,7 +37,7 @@ public class CatalogParser extends DefaultHandler {
     private String mTestContent;
 
     public Catalog parse(File file) throws ParserConfigurationException, SAXException, IOException {
-        mCatalog = new Catalog();
+        mCatalog = new Catalog(file.getName().substring(0, file.getName().length() - 4));
 
         mTags = new ArrayList<>();
 

@@ -84,6 +84,8 @@ public class TDDTMenu implements Initializable {
 
     private Exercise currentExercise;
 
+    private File directory;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -96,6 +98,7 @@ public class TDDTMenu implements Initializable {
         dialog.setInitialDirectory(Paths.get("src/test").toFile()); //TODO
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
         File file = dialog.showOpenDialog(primaryStage);
+        directory = file.getParentFile();
 
         if(file == null) {
             return;
@@ -122,18 +125,15 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void save(ActionEvent event) {
-        DirectoryChooser dialog = new DirectoryChooser();
-        dialog.setTitle("Wähle einen Ordner aus");
-        File directory = dialog.showDialog(primaryStage);
-
-
-        if(directory == null) {
+        if(currentExercise == null) {
             return;
         }
-
         try {
-
-            Path p = Paths.get(directory.toPath().toString() + "/" + lvexercises.getItems().get(0).getClassName() + ".java");
+            File dir = new File(directory.toPath().toString() + "/" + catalog +"/");
+            if(!dir.exists()) {
+                dir.mkdir();
+            }
+            Path p = Paths.get(directory.toPath().toString() + "/" + catalog + "/" + currentExercise.getClassName() + ".java");
             StandardOpenOption option = StandardOpenOption.TRUNCATE_EXISTING;
             if (!Files.exists(p)) {
                 option = StandardOpenOption.CREATE;
@@ -145,12 +145,12 @@ public class TDDTMenu implements Initializable {
 
 
         try {
-            Path p2 = Paths.get(directory.toPath().toString() + "/" + lvexercises.getItems().get(0).getTestName() + ".java");
+            Path p2 = Paths.get(directory.toPath().toString() + "/" + catalog +"/" + currentExercise.getTestName() + ".java");
             StandardOpenOption option = StandardOpenOption.TRUNCATE_EXISTING;
             if (!Files.exists(p2)) {
                 option = StandardOpenOption.CREATE;
             }
-            Files.write(p2, taeditor.getText().getBytes(), option);
+            Files.write(p2, tatest.getText().getBytes(), option);
         } catch (Exception e) {
             System.err.println("Write to data failed");
         }

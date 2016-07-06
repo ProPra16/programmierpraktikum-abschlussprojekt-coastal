@@ -6,8 +6,11 @@ public class Catalog {
 
     private ArrayList<Exercise> mExercises;
 
-    public Catalog() {
+    private String name;
+
+    public Catalog(String name) {
         mExercises = new ArrayList<>();
+        this.name = name;
     }
 
     public void addExercise(Exercise exercise) {
@@ -50,5 +53,9 @@ public class Catalog {
 
     public ArrayList<Exercise> getExercises() {
         return mExercises;
+    }
+
+    public String toString() {
+        return name;
     }
 }
