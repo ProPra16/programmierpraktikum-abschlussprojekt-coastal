@@ -3,39 +3,44 @@ package de.hhu.propra16.coastal.tddt;
 import java.lang.Thread;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
 
 public class Babysteps {
     private int timer;
+    private int oldtimer;
     private ITDDLabel status;
     private ITDDLabel time;
+    private static Timer t;
     public Babysteps(Exercise currentExercise, ITDDLabel lbstatus, ITDDLabel lbtime) {
         timer = currentExercise.getBabystepTime();
+        oldtimer = timer;
         status = lbstatus;
         time = lbtime;
     }
 
     public void babystep() {
-        //ActionEvent event = new ActionEvent();
         if (!status.getText().equals("REFACTOR CODE") && !status.getText().equals("REFACTOR TEST")) {
-            // String oldText = irgendwas;
-            /*while (time > 0) {
-                try {
-                    Thread.sleep(1000);
-                }
-                catch (InterruptedException e) { }
-                time--;
-                if (time == 0) {
-                    time = exercise.getBabystepTime();
-                }*/
-                int minutes = timer/60;
-                int seconds = timer%60;
-                time.setText(Integer.toString(minutes) + ":" + Integer.toString(seconds));
-            //}
+            if (timer > 0) {
+                t = new Timer();
+                t.schedule(new TimerTask() {
+                    public void run() {
+                        Platform.runLater(() -> {
+                            timer--;
+                            int minutes = timer / 60;
+                            int seconds = timer % 60;
+                            time.setText(Integer.toString(minutes) + ":" + Integer.toString(seconds));
+                            if (timer == 0) {
+                                timer = oldtimer;
+                            }
+                        });
+                    }
+                }, 1000, 1000);
+            }
         }
         else {
-            time.setText("00:00");
+            time.setText("-:-");
         }
     }
-    // public void blabla(Button "Nächster Schritt" wird angeklickt) {
-        // tddt.next(event); }
 }
