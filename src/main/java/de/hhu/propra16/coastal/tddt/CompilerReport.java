@@ -111,6 +111,9 @@ public class CompilerReport {
     }
 
     static void showTestResults(JavaStringCompiler compiler, TextArea tatestterminal) {
+        if(compiler.getTestResult() == null) {
+            return;
+        }
         TestResult result = compiler.getTestResult();
         String output = "";
 
