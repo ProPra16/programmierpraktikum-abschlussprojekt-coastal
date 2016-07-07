@@ -46,8 +46,18 @@ public class CompilerInteraction {
         }
 
         if (currentExercise.isBabysteps()) {
-            Babysteps baby = new Babysteps(currentExercise, lbstatus, lbtime);
-            baby.babystep();
+            if (!TDDTMenu.baby.status.getText().equals("REFACTOR CODE") && !TDDTMenu.baby.status.getText().equals("REFACTOR TEST")) {
+                TDDTMenu.baby.timer = TDDTMenu.baby.oldTimer;
+                if (TDDTMenu.baby.status.getText().equals("RED")) {
+                    TDDTMenu.baby.oldCode = TDDTMenu.baby.test.getText();
+                }
+                else {
+                    TDDTMenu.baby.oldCode = TDDTMenu.baby.editor.getText();
+                }
+            }
+            else {
+                TDDTMenu.baby.time.setText("-:-");
+            }
         }
     }
 

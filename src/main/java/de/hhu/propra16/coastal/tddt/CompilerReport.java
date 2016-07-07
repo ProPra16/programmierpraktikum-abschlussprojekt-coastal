@@ -70,6 +70,20 @@ public class CompilerReport {
         lbstatus.setId("red");
         TDDController.toTestEditor(taeditor, tatest);
         target = CompileTarget.TEST;
+        if (TDDTMenu.baby.exercise.isBabysteps()) {
+            if (!TDDTMenu.baby.status.getText().equals("REFACTOR CODE") && !TDDTMenu.baby.status.getText().equals("REFACTOR TEST")) {
+                TDDTMenu.baby.timer = TDDTMenu.baby.oldTimer;
+                if (TDDTMenu.baby.status.getText().equals("RED")) {
+                    TDDTMenu.baby.test.setText(TDDTMenu.baby.olderCode);
+                    TDDTMenu.baby.oldCode = TDDTMenu.baby.test.getText();
+                }
+                else {
+                    TDDTMenu.baby.editor.setText(TDDTMenu.baby.olderCode);
+                    TDDTMenu.baby.oldCode = TDDTMenu.baby.editor.getText();
+                }
+            }
+            else TDDTMenu.baby.time.setText("-:-");
+        }
     }
 
     public static void setPreviousCode(String previous) {

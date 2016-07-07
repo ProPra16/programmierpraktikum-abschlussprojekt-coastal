@@ -92,6 +92,8 @@ public class TDDTMenu implements Initializable {
 
     private File directory;
 
+    protected static Babysteps baby;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -191,6 +193,10 @@ public class TDDTMenu implements Initializable {
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
         CompilerReport.setPreviousCode(taeditor.getText());
+        if (currentExercise.isBabysteps()) {
+            baby = new Babysteps(currentExercise, lbstatus, lbtime, taeditor, tatest);
+            baby.babystep();
+        }
     }
 
 
