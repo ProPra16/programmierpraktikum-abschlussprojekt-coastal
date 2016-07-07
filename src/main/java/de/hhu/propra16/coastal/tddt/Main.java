@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 public class Main extends Application {
-
+    //test
     @Override
     public void start(Stage primaryStage) {
         Parent root = null;
@@ -19,12 +19,10 @@ public class Main extends Application {
             System.err.println("Sample nicht gefunden");
         }
         primaryStage.setTitle("Test Driven Development Trainer");
-        Scene scene = new Scene(root);
-
+        Scene scene = new Scene(root, 1920, 1080);
         URL url = getClass().getResource("tddt.css");
         scene.getStylesheets().add(url.toExternalForm());
         primaryStage.setScene(scene);
-        primaryStage.setMaximized(true);
         TDDTMenu.setStage(primaryStage);
         primaryStage.show();
     }
