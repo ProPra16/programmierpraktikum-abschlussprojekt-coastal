@@ -13,7 +13,9 @@ public class Timer {
 
     public void end(){
         end = System.currentTimeMillis();
-        timeSpend += (int) (end-start)/1000;
+        if(started()){
+            timeSpend += (int) (end-start)/1000;
+        }
 
     }
 
