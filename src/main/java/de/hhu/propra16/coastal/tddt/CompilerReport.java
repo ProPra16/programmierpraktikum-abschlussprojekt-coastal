@@ -1,6 +1,5 @@
 package de.hhu.propra16.coastal.tddt;
 
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import vk.core.api.CompileError;
@@ -8,9 +7,7 @@ import vk.core.api.JavaStringCompiler;
 import vk.core.api.TestFailure;
 import vk.core.api.TestResult;
 
-import java.net.URL;
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 /**
  * Created by student on 06/07/16.
@@ -22,8 +19,7 @@ public class CompilerReport {
     private static String previousCode;
 
     private static CompileTarget target = CompileTarget.TEST;
-
-
+    private static int mNumberOfFailedTests;
 
     static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
         tracker = new Tracking();
@@ -110,35 +106,43 @@ public class CompilerReport {
         }
     }
 
-    static void showTestResults(JavaStringCompiler compiler, TextArea tatestterminal) {
-        if(compiler.getTestResult() == null) {
+    static void showTestResults(TestResult result, TextArea tatestterminal) {
+        if(result == null) {
             return;
         }
-        TestResult result = compiler.getTestResult();
         String output = "";
+        String failures = "";
+        mNumberOfFailedTests = result.getNumberOfFailedTests();
+        int numberOfIgnoredTests = result.getNumberOfIgnoredTests();
+        int numberOfSuccessfulTests = result.getNumberOfSuccessfulTests();
 
-        output = output + "Numbers of failed Tests: " + result.getNumberOfFailedTests() +"\n" +"\n";
-        output = output + "Numbers of ignored Tests: " + result.getNumberOfIgnoredTests() +"\n" +"\n";
-        output = output + "Numbers of successfull Tests: " + result.getNumberOfSuccessfulTests() +"\n" +"\n";
-
-        for(TestFailure failure: result.getTestFailures()) {
-            output = output + failure.getMethodName() +": " + failure.getMessage() +"\n" +"\n";
+        for(TestFailure failure : result.getTestFailures()) {
+            if (ATDD.isAcceptanceTest(failure.getMethodName())) {
+                mNumberOfFailedTests--;
+            }
+            else {
+                failures += failure.getMethodName() + ": " + failure.getMessage() +"\n" +"\n";
+            }
         }
-        tatestterminal.setText(tatestterminal.getText() + output);
 
+        output = output + "Numbers of failed Tests: " + mNumberOfFailedTests +"\n" +"\n";
+        output = output + "Numbers of ignored Tests: " + numberOfIgnoredTests +"\n" +"\n";
+        output = output + "Numbers of successful Tests: " + numberOfSuccessfulTests +"\n" +"\n";
+
+        tatestterminal.setText(output + failures + tatestterminal.getText());
     }
 
     static ErrorType error(JavaStringCompiler compiler, Collection<CompileError> compilerProgramErrors, Collection<CompileError> compilerTestsErrors, Exercise curentExercise, ITDDLabel lbstatus) {
 
         switch (lbstatus.getText()) {
             case "RED":
-                if(compiler.getCompilerResult().hasCompileErrors()) {
-                    for(CompileError e: compilerTestsErrors) {
-                        if(e.getMessage().indexOf("cannot find symbol") == -1 || e.getMessage().indexOf(curentExercise.getClassName()) == -1 || e.getMessage().indexOf(curentExercise.getTestName()) != -1) {
+                if (compiler.getCompilerResult().hasCompileErrors()) {
+                    for (CompileError e: compilerTestsErrors) {
+                        if (e.getMessage().indexOf("cannot find symbol") == -1 || e.getMessage().indexOf(curentExercise.getClassName()) == -1 || e.getMessage().indexOf(curentExercise.getTestName()) != -1) {
                             return ErrorType.compilerErrorTest;
                         }
                     }
-                } else if(compiler.getTestResult().getNumberOfFailedTests() == 0) {
+                } else if (mNumberOfFailedTests == 0) {
                     return ErrorType.TestsNotFailed;
                 }
                 return ErrorType.NOERROR;
