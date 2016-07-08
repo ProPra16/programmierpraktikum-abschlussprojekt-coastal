@@ -7,6 +7,8 @@ import vk.core.api.JavaStringCompiler;
 import vk.core.api.TestFailure;
 import vk.core.api.TestResult;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -14,22 +16,89 @@ import java.util.Collection;
  */
 public class CompilerReport {
 
-    private static Tracking tracker = new Tracking();
+    private static File fileChart = new File("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
 
     private static String previousCode;
 
     private static CompileTarget target = CompileTarget.TEST;
 
+    /*chart File into String[]*/
+    static int[] readAll(String filePath){
+        /*init declar*/
+        ArrayList<String> outputArrayList = new ArrayList<>();
+        int cnt=0;
+        String tmp;
+        /*into String*/
+        try{
+            BufferedReader loadChart = new BufferedReader(new FileReader(filePath));
+            tmp = loadChart.readLine();
+            while(tmp!=null){
+                if(tmp.isEmpty()) break;
+                outputArrayList.add(tmp);
+                tmp = loadChart.readLine();
+                cnt++;
+            }
+        }
+        catch(IOException ex){
+            System.out.println(ex.toString());
+        }
+        /*into String array*/
+        int[] outputArray = new int[cnt];
+        for(int i=0; i<cnt; i++){
+            outputArray[i] = Integer.parseInt(outputArrayList.get(i));
+        }
+        return outputArray;
+    }
+
+    /*saving int[] to file*/
+    static void save(int[] saveTo){
+        try{
+            String saveToString ="";
+            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt"));
+            for(int i=0; i<saveTo.length; i++){
+                saveToString +=saveTo[i]+"\n";
+            }
+            writer.write(saveToString);
+        }
+        catch(IOException ex){
+            System.out.println(ex.toString());
+        }
+    }
+
     static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
+        /*load chart*/
+        int[] chartArray = readAll("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
+
         /*implementing Tracking*/
+        Tracking tracker;
+        tracker = new Tracking();
         for(int i=0; i<3; i++){
             tracker.addTimer();
         }
 
         switch (lbstatus.getText()) {
             case "RED":
+                /*Tracking*/
                 tracker.stopTimer(3);
                 tracker.startTimer();
+                if(chartArray.length==4){
+                    chartArray[3]+=tracker.getTime(3);
+                    save(chartArray);
+                }
+                else{
+                    int[] first = new int[4];
+                    for(int i=0; i<first.length; i++){
+                        if(i<chartArray.length){
+                            first[i] = chartArray[i];
+                        }
+                        else{
+                            first[i] = 0;
+                        }
+                    }
+                    //if(tracker.started(3)) first[3] = tracker.getTime(3);
+                    save(first);
+                }
+                /**/
                 btback.setDisable(false);
                 lbstatus.setText("GREEN");
                 lbstatus.setId("green");
@@ -37,23 +106,35 @@ public class CompilerReport {
                 target = CompileTarget.EDITOR;
                 break;
             case "GREEN":
+                /*Tracking*/
                 tracker.stopTimer();
                 tracker.startTimer(1);
+                chartArray[0]+=tracker.getTime();
+                save(chartArray);
+                /**/
                 btback.setDisable(true);
                 lbstatus.setText("REFACTOR CODE");
                 lbstatus.setId("black");
                 target = CompileTarget.EDITOR;
                 break;
             case "REFACTOR CODE":
+                /*Tracking*/
                 tracker.stopTimer(1);
                 tracker.startTimer(2);
+                chartArray[1]+=tracker.getTime(1);
+                save(chartArray);
+                /**/
                 lbstatus.setText("REFACTOR TEST");
                 TDDController.toTestEditor(taeditor, tatest);
                 target = CompileTarget.TEST;
                 break;
             case "REFACTOR TEST":
+                /*Tracking*/
                 tracker.stopTimer(2);
                 tracker.startTimer(3);
+                chartArray[2]+=tracker.getTime(2);
+                save(chartArray);
+                /**/
                 previousCode = taeditor.getText();
                 lbstatus.setText("RED");
                 lbstatus.setId("red");
@@ -107,7 +188,9 @@ public class CompilerReport {
     static void showTestResults(JavaStringCompiler compiler, TextArea tatestterminal) {
         TestResult result = compiler.getTestResult();
         String output = "";
-
+        if(result == null) {
+            return;
+        }
         output = output + "Numbers of failed Tests: " + result.getNumberOfFailedTests() +"\n" +"\n";
         output = output + "Numbers of ignored Tests: " + result.getNumberOfIgnoredTests() +"\n" +"\n";
         output = output + "Numbers of successfull Tests: " + result.getNumberOfSuccessfulTests() +"\n" +"\n";
