@@ -9,6 +9,7 @@ import java.util.Collection;
 /**
  * Created by student on 02/07/16.
  */
+
 public class CompilerInteraction {
 
 
@@ -16,9 +17,10 @@ public class CompilerInteraction {
         taterminal.clear();
         tatestterminal.clear();
         boolean compileError = false;
-        if(lvexercises.getItems().isEmpty() || currentExercise == null) {
+        if (lvexercises.getItems().isEmpty() || currentExercise == null) {
             return;
         }
+
         CompilationUnit compilationUnitProgram = new CompilationUnit(currentExercise.getClassName(), taeditor.getText(), false);
         CompilationUnit compilationUnitTest = new CompilationUnit(currentExercise.getTestName(), tatest.getText(), true);
         JavaStringCompiler compiler = CompilerFactory.getCompiler(compilationUnitProgram, compilationUnitTest);
@@ -27,36 +29,42 @@ public class CompilerInteraction {
         Collection<CompileError> errorsProgram = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnitProgram);
         Collection<CompileError> errorsTest = compiler.getCompilerResult().getCompilerErrorsForCompilationUnit(compilationUnitTest);
 
-        for(CompileError error : errorsTest) {
+        for (CompileError error : errorsTest) {
             compileError = true;
             String currentTerminal = tatestterminal.getText();
             tatestterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
         }
-        if(continueable(compiler, errorsProgram, errorsTest, currentExercise, lbstatus)) {
-            CompilerReport.changeReport(taeditor, tatest, lbstatus, btback);
 
+        if (!compileError) {
+            CompilerReport.showTestResults(compiler.getTestResult(), tatestterminal);
+        }
+
+        if (continueable(compiler, errorsProgram, errorsTest, currentExercise, lbstatus)) {
+            CompilerReport.changeReport(taeditor, tatest, lbstatus, btback);
         } else {
             CompilerReport.showErrors(compiler, errorsProgram, errorsTest, taterminal, tatestterminal, currentExercise, lbstatus);
         }
 
-       if(!compileError) {
-            CompilerReport.showTestResults(compiler, tatestterminal);
-        }
-
         if (currentExercise.isBabysteps()) {
-            Babysteps baby = new Babysteps(currentExercise, lbstatus, lbtime);
-            baby.babystep();
+            if (!TDDTMenu.baby.status.getText().equals("REFACTOR CODE") && !TDDTMenu.baby.status.getText().equals("REFACTOR TEST")) {
+                TDDTMenu.baby.timer = TDDTMenu.baby.oldTimer;
+                if (TDDTMenu.baby.status.getText().equals("RED")) {
+                    TDDTMenu.baby.oldCode = TDDTMenu.baby.test.getText();
+                }
+                else {
+                    TDDTMenu.baby.oldCode = TDDTMenu.baby.editor.getText();
+                }
+            }
+            else {
+                TDDTMenu.baby.time.setText("-:-");
+            }
         }
     }
 
     private static boolean continueable(JavaStringCompiler compiler, Collection<CompileError> compileProgramErrors, Collection<CompileError> compileTestsErrors, Exercise currentExercise, ITDDLabel lbstatus) {
-        if(CompilerReport.error(compiler,  compileProgramErrors, compileTestsErrors, currentExercise, lbstatus) == ErrorType.NOERROR) {
+        if (CompilerReport.error(compiler,  compileProgramErrors, compileTestsErrors, currentExercise, lbstatus) == ErrorType.NOERROR) {
             return true;
         }
         return false;
     }
-
-
-
-
 }

@@ -11,7 +11,7 @@ public class CatalogTest {
 
     @Test
     public void addExercise1() throws Exception {
-        Catalog catalog = new Catalog();
+        Catalog catalog = new Catalog("testName");
         Exercise mockercise = mock(Exercise.class);
         catalog.addExercise(mockercise);
         assertEquals(mockercise, catalog.getExercises().get(0));
@@ -22,7 +22,7 @@ public class CatalogTest {
         String testClassContent = "testClassContent";
         String testTestContent = "testTestContent";
         String testDescription = "testDescription";
-        Catalog catalog = new Catalog();
+        Catalog catalog = new Catalog("testName");
         ITDDTextArea mockAreaClass = mock(ITDDTextArea.class);
         ITDDTextArea mockAreaTest = mock(ITDDTextArea.class);
         ITDDLabel mockLabel = mock(ITDDLabel.class);
@@ -42,7 +42,7 @@ public class CatalogTest {
 
     @Test
     public void loadInListView() throws Exception {
-        Catalog catalog = new Catalog();
+        Catalog catalog = new Catalog("testName");
         ObservableList<Exercise> list = FXCollections.observableArrayList();
         ITDDListView mockListView = mock(ITDDListView.class);
         when(mockListView.getItems()).thenReturn(list);

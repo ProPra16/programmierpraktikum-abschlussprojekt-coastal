@@ -1,13 +1,13 @@
 package de.hhu.propra16.coastal.tddt;
 
-//import javafx.scene.control.TextArea;
+import javafx.scene.control.TextArea;
 import java.util.*;
 import javafx.*;
-import org.fxmisc.flowless.*;
-import org.fxmisc.richtext.*;
+//import org.fxmisc.flowless.*;
+//import org.fxmisc.richtext.*;
 
-public class TDDTextArea extends CodeArea implements ITDDTextArea {
-    String[] KEYWORDS = {"abstract", "assert", "boolean", "break", "byte",
+public class TDDTextArea extends TextArea implements ITDDTextArea {
+    /*String[] KEYWORDS = {"abstract", "assert", "boolean", "break", "byte",
             "case", "catch", "char", "class", "const",
             "continue", "default", "do", "double", "else",
             "enum", "extends", "final", "finally", "float",
@@ -16,11 +16,11 @@ public class TDDTextArea extends CodeArea implements ITDDTextArea {
             "new", "package", "private", "protected", "public",
             "return", "short", "static", "strictfp", "super",
             "switch", "synchronized", "this", "throw", "throws",
-            "transient", "try", "void", "volatile", "while"};
+            "transient", "try", "void", "volatile", "while"};*/
 
-    public void setText(String text){
+    //public void setText(String text){
 
-    }
+    //}
 
     /*
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
@@ -29,7 +29,7 @@ public class TDDTextArea extends CodeArea implements ITDDTextArea {
     private static final String BRACKET_PATTERN = "\\[|\\]";
     private static final String SEMICOLON_PATTERN = "\\;";
     private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
-    private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
+    private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\";*/
 
     /*
     private static final Pattern PATTERN = Pattern.compile(

@@ -55,8 +55,8 @@
             <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
          </rowConstraints>
          <children>
-             <TDDTextArea fx:id="taeditor" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
-             <TDDTextArea fx:id="tatest" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+             <TDDTextArea fx:id="taeditor" editable="false" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+             <TDDTextArea fx:id="tatest" editable="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
              <Label layoutX="50.0" layoutY="45.0" text="Das zu bearbeitende Programm: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
              <Label layoutX="421.0" layoutY="45.0" text="Die zu schreibenden Tests: " GridPane.columnIndex="1" GridPane.rowIndex="2" />
              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -74,7 +74,7 @@
 
             <TDDListView fx:id="lvexercises" onMouseClicked="#chooseExercise" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <TDDLabel fx:id="lbdescription" alignment="TOP_LEFT" prefHeight="145.0" prefWidth="635.0" text="Aufgabenstellung" GridPane.columnSpan="2" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <TDDLabel fx:id="lbtime" alignment="TOP_RIGHT" prefHeight="145.0" prefWidth="200.0" text="00:00" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <TDDLabel fx:id="lbtime" alignment="TOP_RIGHT" prefHeight="145.0" prefWidth="200.0" text="-:-" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
             <TextArea fx:id="taterminal" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
             <TextArea fx:id="tatestterminal" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>

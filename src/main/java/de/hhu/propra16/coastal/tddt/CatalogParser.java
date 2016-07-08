@@ -107,7 +107,7 @@ public class CatalogParser extends DefaultHandler {
                         time = LocalTime.parse("00:" + timeString, timeFormatter);
                         mExercise.addBabystepTime(time.getMinute() * 60 + time.getSecond());
                     } catch (DateTimeParseException e) {
-                        e.printStackTrace(); // TODO throw
+                        throw new CatalogTagNotFoundException(BABYSTEPS, CONFIG, mLocator);
                     }
                 }
                 break;
