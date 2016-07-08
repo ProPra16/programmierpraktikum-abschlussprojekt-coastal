@@ -50,6 +50,7 @@ public class CompilerReport {
         return outputArray;
     }
 
+    /*saving int[] to file*/
     static void save(int[] saveTo){
         try{
             String saveToString ="";

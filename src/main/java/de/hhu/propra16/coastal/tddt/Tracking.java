@@ -66,6 +66,7 @@ public class Tracking {
         return timerList.get(x).getLabel();
     }
 
+    /*check whether timer has been started*/
     public boolean started(int x){
         return timerList.get(x).started();
     }

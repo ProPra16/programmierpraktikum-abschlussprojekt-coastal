@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        /*Empty/create chart.txt*/
+        /*Empty and create chart.txt*/
         try{
             FileWriter chartFileWriter = new FileWriter("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
             chartFileWriter.write("");

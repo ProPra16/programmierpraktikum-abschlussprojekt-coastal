@@ -31,6 +31,7 @@ public class Timer {
         return name;
     }
 
+    /*check whether timer has been started*/
     public boolean started(){
         if(start==0) return false;
         return true;

@@ -193,7 +193,7 @@ public class TDDTMenu implements Initializable {
     @FXML
     protected void showChart(ActionEvent event){
         int[] chartNumber = new int[4];
-        /*init declar*/
+        /*init declaration*/
         File fileChart = new File("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
         int sum = 1;
         /*load file*/
@@ -216,9 +216,9 @@ public class TDDTMenu implements Initializable {
         }
 
         /*Chart Darstellung, oeffnet ein neues Fenster*/
-        Stage stage = new Stage();
+        Stage benutzeranalyse = new Stage();
         Scene scene = new Scene(new Group(), 500, 500);
-        stage.setTitle("Benutzeranalyse");
+        benutzeranalyse.setTitle("Benutzeranalyse");
 
 
         ObservableList<PieChart.Data> pieChartData =
@@ -231,8 +231,8 @@ public class TDDTMenu implements Initializable {
         chart.setTitle("Verbrachte Zeit von Nutzer:");
 
         ((Group) scene.getRoot()).getChildren().add(chart);
-        stage.setScene(scene);
-        stage.show();
+        benutzeranalyse.setScene(scene);
+        benutzeranalyse.show();
 
     }
 
