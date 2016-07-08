@@ -25,19 +25,15 @@
             <items>
                   <MenuItem fx:id="miopen" mnemonicParsing="false" onAction="#open" text="Öffne Katalog" />
                   <MenuItem fx:id="misave" mnemonicParsing="false" onAction="#save" text="Speichern" />
-              <MenuItem fx:id="miclose" mnemonicParsing="false" onAction="#close" text="Programm schließen" />
+                  <MenuItem fx:id="miclose" mnemonicParsing="false" onAction="#close" text="Programm schließen" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Hilfe">
             <items>
               <MenuItem fx:id="mihelp" mnemonicParsing="false" onAction="#help" text="Benutzerhandbuch" />
+              <MenuItem fx:id="userTracking" mnemonicParsing="false"  onAction="#showChart" text="Benutzer-Analyse" />
             </items>
           </Menu>
-
-            <Menu mnemonicParsing="false" fx:id="userTracking" onAction="#showChart" text="BenutzerAnalyse">
-
-            </Menu>
-
         </menus>
       </MenuBar>
       <GridPane hgap="50.0" layoutX="30.0" layoutY="52.0" prefHeight="298.0" prefWidth="558.0" vgap="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="52.0">
