@@ -36,7 +36,7 @@ public class CompilerInteraction {
         }
 
         if (!compileError) {
-            CompilerReport.showTestResults(compiler.getTestResult(), tatestterminal);
+            CompilerReport.showTestResults(compiler, tatestterminal);
         }
 
         if (continueable(compiler, errorsProgram, errorsTest, currentExercise, lbstatus)) {

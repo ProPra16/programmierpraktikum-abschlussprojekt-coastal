@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Main extends Application {
-    //test
     @Override
     public void start(Stage primaryStage) {
         /*Empty/create chart.txt*/
