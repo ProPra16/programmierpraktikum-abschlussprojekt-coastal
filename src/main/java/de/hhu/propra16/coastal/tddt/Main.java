@@ -6,12 +6,25 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        /*Empty/create chart.txt*/
+        try{
+            FileWriter chartFileWriter = new FileWriter("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
+            chartFileWriter.write("");
+            chartFileWriter.flush();
+        }
+        catch(IOException ex){
+            System.out.println(ex.toString());
+        }
+
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("sample.fxml"));

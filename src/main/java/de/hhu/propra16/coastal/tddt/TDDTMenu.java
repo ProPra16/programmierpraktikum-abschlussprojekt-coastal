@@ -1,6 +1,5 @@
 package de.hhu.propra16.coastal.tddt;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.*;
@@ -11,18 +10,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 
-import java.awt.*;
 import java.io.File;
 
 import java.net.URL;
@@ -198,20 +194,22 @@ public class TDDTMenu implements Initializable {
     protected void showChart(ActionEvent event){
         int[] chartNumber = new int[4];
         /*init declar*/
-        File fileChart = new File("chart.txt");
-        int sum = 0;
-
+        File fileChart = new File("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
+        int sum = 1;
         /*load file*/
         if(fileChart.exists()){
             try{
-                FileReader chartFileReader = new FileReader("chart.txt");
+                FileReader chartFileReader = new FileReader("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
                 for(int i=0; i<4; i++){
                     chartNumber[i] = chartFileReader.read();
                 }
             }
             catch(IOException ex){
-                System.out.println("User hat noch keine Aktionen betätigt.");
+                System.out.println("User hat noch keine Aktionen betaetigt.");
             }
+        }
+        else{
+            System.out.println("User hat noch keine Aktionen betaetigt.");
         }
         for(int i=0; i<chartNumber.length; i++){
             sum+=chartNumber[i];
@@ -219,23 +217,23 @@ public class TDDTMenu implements Initializable {
 
         /*Chart Darstellung, oeffnet ein neues Fenster*/
         Stage stage = new Stage();
-        Scene scene = new Scene(new Group());
+        Scene scene = new Scene(new Group(), 500, 500);
         stage.setTitle("Benutzeranalyse");
-        stage.setWidth(500);
-        stage.setHeight(500);
+
 
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                        new PieChart.Data("RED", (int) chartNumber[0]/sum),
-                        new PieChart.Data("GREEN", (int) chartNumber[1]/sum),
-                        new PieChart.Data("Refactor Code", (int) chartNumber[2]/sum),
-                        new PieChart.Data("Refactor Test", (int) chartNumber[3]/sum));
+                        new PieChart.Data("Status: RED", (int) (chartNumber[0]*100/sum)),
+                        new PieChart.Data("Refactor Code", (int) (chartNumber[1]*100/sum)),
+                        new PieChart.Data("Status: GREEN", (int) (chartNumber[2]*100/sum)),
+                        new PieChart.Data("Refactor Test", (int) (chartNumber[3]*100/sum)));
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Verbrachte Zeit von Nutzer:");
 
         ((Group) scene.getRoot()).getChildren().add(chart);
         stage.setScene(scene);
         stage.show();
+
     }
 
     public static void setStage (Stage stage) {
