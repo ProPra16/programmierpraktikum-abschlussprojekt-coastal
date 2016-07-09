@@ -17,14 +17,6 @@ public class Catalog {
         mExercises.add(exercise);
     }
 
-    /*public void loadExercises(ITDDTextArea taeditor, ITDDTextArea tatest, Label lbdescription, ListView<Exercise> lvexercises) {
-        Exercise exercise = mExercises.get(0);
-        loadClassContent(taeditor, exercise);
-        loadTestContent(tatest, exercise);
-        loadDescription(lbdescription, exercise);
-        loadInListView(lvexercises);
-        TDDController.toTestEditor(taeditor, tatest);
-    }*/
 
     public void loadExercise(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbdescription, Exercise exercise) {
         loadClassContent(taeditor, exercise);
