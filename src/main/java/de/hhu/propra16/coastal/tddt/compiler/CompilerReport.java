@@ -25,6 +25,8 @@ public class CompilerReport {
 
     private static String previousCode;
 
+    private static String previousTest;
+
     private static CompileTarget target = CompileTarget.TEST;
 
     /*chart File into String[]*/
@@ -149,6 +151,7 @@ public class CompilerReport {
                 save(chartArray);*/
                 /**/
                 previousCode = taeditor.getText();
+                previousTest = tatest.getText();
                 lbstatus.setText("RED");
                 lbstatus.setId("red");
                 break;
@@ -158,15 +161,21 @@ public class CompilerReport {
     public static void back(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
         btback.setDisable(true);
         taeditor.setText(previousCode);
+        tatest.setText(previousTest);
         lbstatus.setText("RED");
         lbstatus.setId("red");
         TDDController.toTestEditor(taeditor, tatest);
         target = CompileTarget.TEST;
-        TDDTMenu.baby.editor.setText(TDDTMenu.baby.oldEditorText);
+        TDDTMenu.baby.test.setText(previousTest);
+        TDDTMenu.baby.editor.setText(previousCode);
     }
 
-    public static void setPreviousCode(String previous) {
-        previousCode = previous;
+    public static void setPreviousCode(String oldCode) {
+        previousCode = oldCode;
+    }
+
+    public static void setPreviousTest(String oldTest) {
+        previousTest = oldTest;
     }
 
     static void showErrors(JavaStringCompiler compiler, Collection<CompileError> errorsProgram, Collection<CompileError> errorsTest, TextArea taterminal, TextArea tatestterminal, Exercise currentExercise, ITDDLabel lbstatus) {

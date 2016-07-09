@@ -193,6 +193,7 @@ public class TDDTMenu   {
         //currentExercise.s
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
         CompilerReport.setPreviousCode(taeditor.getText());
+        CompilerReport.setPreviousTest(tatest.getText());
         if (currentExercise.isBabysteps()) {
             baby = new Babysteps(currentExercise, lbstatus, lbtime, taeditor, tatest);
             baby.babystep();
