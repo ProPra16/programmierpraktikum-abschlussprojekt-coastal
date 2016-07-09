@@ -7,16 +7,17 @@ import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import javafx.application.Platform;
 
 public class Babysteps {
-    protected int timer;
-    protected int oldTimer;
-    protected ITDDLabel status;
-    protected ITDDLabel time;
-    protected ITDDTextArea editor;
-    protected ITDDTextArea test;
-    protected String oldEditorText;
-    protected String oldTestText;
-    protected Exercise exercise;
-    protected Timer t = new Timer();
+    public int timer;
+    public int oldTimer;
+    public ITDDLabel status;
+    public ITDDLabel time;
+    public ITDDTextArea editor;
+    public ITDDTextArea test;
+    public String oldEditorText;
+    public String oldTestText;
+    public Exercise exercise;
+    public Timer t = new Timer();
+    
     public Babysteps(Exercise currentExercise, ITDDLabel lbstatus, ITDDLabel lbtime, ITDDTextArea taeditor, ITDDTextArea tatest) {
         timer = currentExercise.getBabystepTime();
         oldTimer = timer;

@@ -80,7 +80,7 @@ public class TDDTMenu   {
 
     private File directory;
 
-    protected static Babysteps baby;
+    public static Babysteps baby;
 
 
     @FXML
