@@ -23,6 +23,7 @@ public class CompilerReport {
     private static CompileTarget target = CompileTarget.TEST;
 
     /*chart File into String[]*/
+    @Deprecated
     static int[] readAll(String filePath){
         /*init declar*/
         ArrayList<String> outputArrayList = new ArrayList<>();
@@ -51,6 +52,7 @@ public class CompilerReport {
     }
 
     /*saving int[] to file*/
+    @Deprecated
     static void save(int[] saveTo){
         try{
             String saveToString ="";
@@ -67,19 +69,19 @@ public class CompilerReport {
 
     static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
         /*load chart*/
-        int[] chartArray = readAll("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
+        //int[] chartArray = readAll("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
 
         /*implementing Tracking*/
-        Tracking tracker;
+        /*Tracking tracker;
         tracker = new Tracking();
         for(int i=0; i<3; i++){
             tracker.addTimer();
-        }
+        }*/
 
         switch (lbstatus.getText()) {
             case "RED":
                 /*Tracking*/
-                tracker.stopTimer(3);
+                /*tracker.stopTimer(3);
                 tracker.startTimer();
                 if(chartArray.length==4){
                     chartArray[3]+=tracker.getTime(3);
@@ -97,7 +99,7 @@ public class CompilerReport {
                     }
                     //if(tracker.started(3)) first[3] = tracker.getTime(3);
                     save(first);
-                }
+                }*/
                 /**/
                 btback.setDisable(false);
                 lbstatus.setText("GREEN");
@@ -107,10 +109,10 @@ public class CompilerReport {
                 break;
             case "GREEN":
                 /*Tracking*/
-                tracker.stopTimer();
+                /*tracker.stopTimer();
                 tracker.startTimer(1);
                 chartArray[0]+=tracker.getTime();
-                save(chartArray);
+                save(chartArray);*/
                 /**/
                 btback.setDisable(true);
                 lbstatus.setText("REFACTOR CODE");
@@ -119,10 +121,10 @@ public class CompilerReport {
                 break;
             case "REFACTOR CODE":
                 /*Tracking*/
-                tracker.stopTimer(1);
+                /*tracker.stopTimer(1);
                 tracker.startTimer(2);
                 chartArray[1]+=tracker.getTime(1);
-                save(chartArray);
+                save(chartArray);*/
                 /**/
                 lbstatus.setText("REFACTOR TEST");
                 TDDController.toTestEditor(taeditor, tatest);
@@ -130,10 +132,10 @@ public class CompilerReport {
                 break;
             case "REFACTOR TEST":
                 /*Tracking*/
-                tracker.stopTimer(2);
+                /*tracker.stopTimer(2);
                 tracker.startTimer(3);
                 chartArray[2]+=tracker.getTime(2);
-                save(chartArray);
+                save(chartArray);*/
                 /**/
                 previousCode = taeditor.getText();
                 lbstatus.setText("RED");

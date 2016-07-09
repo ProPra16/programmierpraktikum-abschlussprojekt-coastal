@@ -15,6 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -219,6 +220,7 @@ public class TDDTMenu   {
 
 
     @FXML
+    @Ignore
     protected void showChart(ActionEvent event){
         int[] chartNumber = new int[4];
         /*init declaration*/
@@ -261,6 +263,7 @@ public class TDDTMenu   {
         ((Group) scene.getRoot()).getChildren().add(chart);
         benutzeranalyse.setScene(scene);
         benutzeranalyse.show();
+
 
     }
 
