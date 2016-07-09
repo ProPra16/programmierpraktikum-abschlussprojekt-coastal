@@ -11,9 +11,10 @@ public class Babysteps {
     protected ITDDLabel time;
     protected ITDDTextArea editor;
     protected ITDDTextArea test;
-    protected String oldCode;
-    protected String olderCode;
+    protected String oldEditorText;
+    protected String oldTestText;
     protected Exercise exercise;
+    protected Timer t = new Timer();
     public Babysteps(Exercise currentExercise, ITDDLabel lbstatus, ITDDLabel lbtime, ITDDTextArea taeditor, ITDDTextArea tatest) {
         timer = currentExercise.getBabystepTime();
         oldTimer = timer;
@@ -26,33 +27,35 @@ public class Babysteps {
 
     public void babystep() {
         if (status.getText().equals("RED")) {
-            oldCode = test.getText();
+            oldTestText = test.getText();
         }
         if (status.getText().equals("GREEN")) {
-            olderCode = test.getText();
-            oldCode = editor.getText();
+            oldEditorText = editor.getText();
         }
         if (timer > 0) {
-            Timer t = new Timer();
             t.schedule(new TimerTask() {
                 public void run() {
                     Platform.runLater(() -> {
-                        timer--;
-                        int minutes = timer / 60;
-                        int seconds = timer % 60;
-                        time.setText(Integer.toString(minutes) + ":" + Integer.toString(seconds));
-                        if (timer == 0) {
-                            timer = oldTimer;
-                            if (status.getText().equals("RED")) {
-                                test.setText(oldCode);
+                        if (!status.getText().equals("REFACTOR CODE") && !status.getText().equals("REFACTOR TEST")) {
+                            int minutes = timer / 60;
+                            int seconds = timer % 60;
+                            time.setText(Integer.toString(minutes) + ":" + Integer.toString(seconds));
+                            if (timer == 0) {
+                                timer = oldTimer;
+                                if (status.getText().equals("RED")) {
+                                    test.setText(oldTestText);
+                                } else {
+                                    editor.setText(oldEditorText);
+                                }
                             }
-                            else {
-                                editor.setText(oldCode);
-                            }
+                            timer--;
+                        }
+                        else {
+                            TDDTMenu.baby.time.setText("-:-");
                         }
                     });
                 }
-            }, 1000, 1000);
+            }, 0, 1000);
         }
     }
 }

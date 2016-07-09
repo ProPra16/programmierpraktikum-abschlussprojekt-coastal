@@ -46,17 +46,12 @@ public class CompilerInteraction {
         }
 
         if (currentExercise.isBabysteps()) {
-            if (!TDDTMenu.baby.status.getText().equals("REFACTOR CODE") && !TDDTMenu.baby.status.getText().equals("REFACTOR TEST")) {
-                TDDTMenu.baby.timer = TDDTMenu.baby.oldTimer;
-                if (TDDTMenu.baby.status.getText().equals("RED")) {
-                    TDDTMenu.baby.oldCode = TDDTMenu.baby.test.getText();
-                }
-                else {
-                    TDDTMenu.baby.oldCode = TDDTMenu.baby.editor.getText();
-                }
+            TDDTMenu.baby.timer = TDDTMenu.baby.oldTimer;
+            if (TDDTMenu.baby.status.getText().equals("RED")) {
+                TDDTMenu.baby.oldTestText = TDDTMenu.baby.test.getText();
             }
-            else {
-                TDDTMenu.baby.time.setText("-:-");
+            if (TDDTMenu.baby.status.getText().equals("GREEN")) {
+                TDDTMenu.baby.oldEditorText = TDDTMenu.baby.editor.getText();
             }
         }
     }
