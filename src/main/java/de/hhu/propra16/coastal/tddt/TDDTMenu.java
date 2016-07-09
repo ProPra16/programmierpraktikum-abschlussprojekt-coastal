@@ -92,6 +92,9 @@ public class TDDTMenu   {
         dialog.setInitialDirectory(Paths.get("src/test").toFile()); //TODO
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
         File file = dialog.showOpenDialog(primaryStage);
+        if(file == null) {
+            return;
+        }
         directory = file.getParentFile();
         currentExercise = null;
         if(file == null) {
