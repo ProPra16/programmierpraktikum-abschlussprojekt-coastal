@@ -151,7 +151,6 @@ public class CompilerReport {
         lbstatus.setId("red");
         TDDController.toTestEditor(taeditor, tatest);
         target = CompileTarget.TEST;
-        TDDTMenu.baby.test.setText(TDDTMenu.baby.oldTestText);
         TDDTMenu.baby.editor.setText(TDDTMenu.baby.oldEditorText);
     }
 
