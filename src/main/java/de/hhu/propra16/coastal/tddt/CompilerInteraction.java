@@ -40,19 +40,9 @@ public class CompilerInteraction {
         }
 
         if (continueable(compiler, errorsProgram, errorsTest, currentExercise, lbstatus)) {
-            CompilerReport.changeReport(taeditor, tatest, lbstatus, btback);
+            CompilerReport.changeReport(taeditor, tatest, lbstatus, btback, currentExercise);
         } else {
             CompilerReport.showErrors(compiler, errorsProgram, errorsTest, taterminal, tatestterminal, currentExercise, lbstatus);
-        }
-
-        if (currentExercise.isBabysteps()) {
-            TDDTMenu.baby.timer = TDDTMenu.baby.oldTimer;
-            if (TDDTMenu.baby.status.getText().equals("RED")) {
-                TDDTMenu.baby.oldTestText = TDDTMenu.baby.test.getText();
-            }
-            if (TDDTMenu.baby.status.getText().equals("GREEN")) {
-                TDDTMenu.baby.oldEditorText = TDDTMenu.baby.editor.getText();
-            }
         }
     }
 

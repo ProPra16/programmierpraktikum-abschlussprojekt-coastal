@@ -67,7 +67,7 @@ public class CompilerReport {
         }
     }
 
-    static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
+    static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback, Exercise currentExercise) {
         /*load chart*/
         //int[] chartArray = readAll("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
 
@@ -77,7 +77,7 @@ public class CompilerReport {
         for(int i=0; i<3; i++){
             tracker.addTimer();
         }*/
-
+        TDDTMenu.baby.timer = TDDTMenu.baby.oldTimer;
         switch (lbstatus.getText()) {
             case "RED":
                 /*Tracking*/
@@ -106,6 +106,9 @@ public class CompilerReport {
                 lbstatus.setId("green");
                 TDDController.toEditor(taeditor, tatest);
                 target = CompileTarget.EDITOR;
+                if(currentExercise.isBabysteps()) {
+                    TDDTMenu.baby.oldTestText = TDDTMenu.baby.test.getText();
+                }
                 break;
             case "GREEN":
                 /*Tracking*/
@@ -118,6 +121,9 @@ public class CompilerReport {
                 lbstatus.setText("REFACTOR CODE");
                 lbstatus.setId("black");
                 target = CompileTarget.EDITOR;
+                if(currentExercise.isBabysteps()) {
+                    TDDTMenu.baby.oldEditorText = TDDTMenu.baby.editor.getText();
+                }
                 break;
             case "REFACTOR CODE":
                 /*Tracking*/
