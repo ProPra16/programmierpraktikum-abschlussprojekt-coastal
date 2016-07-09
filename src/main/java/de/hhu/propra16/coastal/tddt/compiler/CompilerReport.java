@@ -1,10 +1,7 @@
 package de.hhu.propra16.coastal.tddt.compiler;
 
 import de.hhu.propra16.coastal.tddt.catalog.Exercise;
-import de.hhu.propra16.coastal.tddt.gui.ITDDLabel;
-import de.hhu.propra16.coastal.tddt.gui.ITDDTextArea;
-import de.hhu.propra16.coastal.tddt.gui.TDDController;
-import de.hhu.propra16.coastal.tddt.gui.TDDTMenu;
+import de.hhu.propra16.coastal.tddt.gui.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import vk.core.api.CompileError;
@@ -74,7 +71,7 @@ public class CompilerReport {
         }
     }
 
-    static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback, Exercise currentExercise) {
+    static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback, Exercise currentExercise, Babysteps baby) {
         /*load chart*/
         //int[] chartArray = readAll("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
 
@@ -84,7 +81,7 @@ public class CompilerReport {
         for(int i=0; i<3; i++){
             tracker.addTimer();
         }*/
-        TDDTMenu.baby.timer = TDDTMenu.baby.oldTimer;
+        baby.refreshTimer();
         switch (lbstatus.getText()) {
             case "RED":
                 /*Tracking*/
@@ -114,7 +111,7 @@ public class CompilerReport {
                 TDDController.toEditor(taeditor, tatest);
                 target = CompileTarget.EDITOR;
                 if(currentExercise.isBabysteps()) {
-                    TDDTMenu.baby.oldTestText = TDDTMenu.baby.test.getText();
+                    baby.setOldTest(tatest);
                 }
                 break;
             case "GREEN":
@@ -129,7 +126,7 @@ public class CompilerReport {
                 lbstatus.setId("black");
                 target = CompileTarget.EDITOR;
                 if(currentExercise.isBabysteps()) {
-                    TDDTMenu.baby.oldEditorText = TDDTMenu.baby.editor.getText();
+                    baby.setOldEditor(taeditor);
                 }
                 break;
             case "REFACTOR CODE":
@@ -166,8 +163,6 @@ public class CompilerReport {
         lbstatus.setId("red");
         TDDController.toTestEditor(taeditor, tatest);
         target = CompileTarget.TEST;
-        TDDTMenu.baby.test.setText(previousTest);
-        TDDTMenu.baby.editor.setText(previousCode);
     }
 
     public static void setPreviousCode(String oldCode) {

@@ -166,7 +166,7 @@ public class TDDTMenu   {
 
     @FXML
     protected void next(ActionEvent event) {
-        CompilerInteraction.compile(taeditor, tatest, taterminal, tatestterminal, lbstatus, lbtime, currentExercise, lvexercises, btback);
+        CompilerInteraction.compile(taeditor, tatest, taterminal, tatestterminal, lbstatus, lbtime, currentExercise, lvexercises, btback, baby);
     }
 
     @FXML
@@ -190,13 +190,12 @@ public class TDDTMenu   {
         }
 
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
-        //currentExercise.s
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
         CompilerReport.setPreviousCode(taeditor.getText());
         CompilerReport.setPreviousTest(tatest.getText());
         if (currentExercise.isBabysteps()) {
-            baby = new Babysteps(currentExercise, lbstatus, lbtime, taeditor, tatest);
-            baby.babystep();
+            baby = new Babysteps(currentExercise);
+            baby.babystep(lbstatus, lbtime, taeditor, tatest);
         }
     }
 

@@ -7,58 +7,61 @@ import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import javafx.application.Platform;
 
 public class Babysteps {
-    public int timer;
-    public int oldTimer;
-    public ITDDLabel status;
-    public ITDDLabel time;
-    public ITDDTextArea editor;
-    public ITDDTextArea test;
-    public String oldEditorText;
-    public String oldTestText;
-    public Exercise exercise;
-    public Timer t = new Timer();
+    private int timer;
+    private int oldTimer;
+    private String oldEditorText;
+    private String oldTestText;
     
-    public Babysteps(Exercise currentExercise, ITDDLabel lbstatus, ITDDLabel lbtime, ITDDTextArea taeditor, ITDDTextArea tatest) {
+
+    public Babysteps(Exercise currentExercise) {
         timer = currentExercise.getBabystepTime();
         oldTimer = timer;
-        status = lbstatus;
-        time = lbtime;
-        editor = taeditor;
-        test = tatest;
-        exercise = currentExercise;
     }
 
-    public void babystep() {
-        if (status.getText().equals("RED")) {
-            oldTestText = test.getText();
+    public void babystep(ITDDLabel lbstatus, ITDDLabel lbtime, ITDDTextArea taeditor, ITDDTextArea tatest) {
+        if (lbstatus.getText().equals("RED")) {
+            oldTestText = tatest.getText();
         }
-        if (status.getText().equals("GREEN")) {
-            oldEditorText = editor.getText();
+        if (lbstatus.getText().equals("GREEN")) {
+            oldEditorText = taeditor.getText();
         }
         if (timer > 0) {
+            Timer t = new Timer();
             t.schedule(new TimerTask() {
                 public void run() {
                     Platform.runLater(() -> {
-                        if (!status.getText().equals("REFACTOR CODE") && !status.getText().equals("REFACTOR TEST")) {
+                        if (!lbstatus.getText().equals("REFACTOR CODE") && !lbstatus.getText().equals("REFACTOR TEST")) {
                             int minutes = timer / 60;
                             int seconds = timer % 60;
-                            time.setText(Integer.toString(minutes) + ":" + Integer.toString(seconds));
+                            lbtime.setText(Integer.toString(minutes) + ":" + Integer.toString(seconds));
                             if (timer == 0) {
                                 timer = oldTimer;
-                                if (status.getText().equals("RED")) {
-                                    test.setText(oldTestText);
+                                if (lbstatus.getText().equals("RED")) {
+                                    tatest.setText(oldTestText);
                                 } else {
-                                    editor.setText(oldEditorText);
+                                    taeditor.setText(oldEditorText);
                                 }
                             }
                             timer--;
                         }
                         else {
-                            TDDTMenu.baby.time.setText("-:-");
+                            lbtime.setText("-:-");
                         }
                     });
                 }
             }, 0, 1000);
         }
+    }
+
+    public void refreshTimer() {
+        timer = oldTimer;
+    }
+
+    public void setOldTest(ITDDTextArea tatest) {
+        oldTestText = tatest.getText();
+    }
+
+    public void setOldEditor(ITDDTextArea taeditor) {
+        oldEditorText = taeditor.getText();
     }
 }
