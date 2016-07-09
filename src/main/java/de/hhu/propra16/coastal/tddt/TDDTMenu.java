@@ -33,18 +33,9 @@ import java.util.*;
 
 
 
-public class TDDTMenu implements Initializable {
+public class TDDTMenu   {
 
     private static Stage primaryStage;
-
-    @FXML
-    private MenuItem miopen;
-
-    @FXML
-    private MenuItem misave;
-
-    @FXML
-    private MenuItem miclose;
 
     @FXML
     private MenuItem userTracking;
@@ -90,13 +81,12 @@ public class TDDTMenu implements Initializable {
 
     protected static Babysteps baby;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
 
     @FXML
     protected void open(ActionEvent event) {
+        primaryStage.setOnCloseRequest(e-> {
+            speichernAbfrage(TriggerSaveOption.Close);
+        });
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Wähle eine Datei aus");
         dialog.setInitialDirectory(Paths.get("src/test").toFile()); //TODO
@@ -166,6 +156,7 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void close(ActionEvent event) {
+        speichernAbfrage(TriggerSaveOption.Close);
         primaryStage.close();
     }
 
@@ -190,28 +181,36 @@ public class TDDTMenu implements Initializable {
         if(lvexercises.getSelectionModel().getSelectedItem() == null) {
             return;
         }
-        if(currentExercise != null && !lvexercises.getSelectionModel().getSelectedItem().equals(currentExercise)) {
-            ButtonType ja = new ButtonType("Ja");
-            ButtonType nein = new ButtonType("Nein");
-            ButtonType abbrechen = new ButtonType("Abbrechen");
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchtest du speichern, bevor zu einer anderen Aufgabe gewechselt wird?", ja, nein, abbrechen);
-
-            alert.setHeaderText("");
-            alert.setTitle("");
-            alert.showAndWait();
-            if(alert.getResult() == ja) {
-                save();
-            } else if(alert.getResult() == abbrechen) {
-                return;
-            }
+        if(!lvexercises.getSelectionModel().getSelectedItem().equals(currentExercise)) {
+            speichernAbfrage(TriggerSaveOption.ChangeExercise);
         }
 
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
+        //currentExercise.s
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
         CompilerReport.setPreviousCode(taeditor.getText());
         if (currentExercise.isBabysteps()) {
             baby = new Babysteps(currentExercise, lbstatus, lbtime, taeditor, tatest);
             baby.babystep();
+        }
+    }
+
+    public void speichernAbfrage(TriggerSaveOption option) {
+        if(currentExercise != null ) {
+            ButtonType ja = new ButtonType("Ja");
+            ButtonType nein = new ButtonType("Nein");
+            String abfrage = "bevor zu einer anderen Aufgabe gewechselt wird";
+            if (option == TriggerSaveOption.Close) {
+                abfrage = "bevor das Programm geschlossen wird?";
+            }
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchtest du speichern, " + abfrage, ja, nein);
+
+            alert.setHeaderText("");
+            alert.setTitle("");
+            alert.showAndWait();
+            if (alert.getResult() == ja) {
+                save();
+            }
         }
     }
 
