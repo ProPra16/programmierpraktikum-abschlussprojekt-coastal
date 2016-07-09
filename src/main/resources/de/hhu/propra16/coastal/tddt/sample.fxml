@@ -24,7 +24,7 @@
           <Menu mnemonicParsing="false" text="Datei">
             <items>
                   <MenuItem fx:id="miopen" mnemonicParsing="false" onAction="#open" text="Öffne Katalog" />
-                  <MenuItem fx:id="misave" mnemonicParsing="false" onAction="#save" text="Speichern" />
+                  <MenuItem fx:id="misave" mnemonicParsing="false" onAction="#saveClick" text="Speichern" />
                   <MenuItem fx:id="miclose" mnemonicParsing="false" onAction="#close" text="Programm schließen" />
             </items>
           </Menu>

@@ -103,7 +103,7 @@ public class TDDTMenu implements Initializable {
         dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
         File file = dialog.showOpenDialog(primaryStage);
         directory = file.getParentFile();
-
+        currentExercise = null;
         if(file == null) {
             return;
         }
@@ -128,7 +128,11 @@ public class TDDTMenu implements Initializable {
     }
 
     @FXML
-    protected void save(ActionEvent event) {
+    protected void saveClick(ActionEvent event) {
+        save();
+    }
+
+    private void save() {
         if(currentExercise == null) {
             return;
         }
@@ -186,6 +190,22 @@ public class TDDTMenu implements Initializable {
         if(lvexercises.getSelectionModel().getSelectedItem() == null) {
             return;
         }
+        if(currentExercise != null && !lvexercises.getSelectionModel().getSelectedItem().equals(currentExercise)) {
+            ButtonType ja = new ButtonType("Ja");
+            ButtonType nein = new ButtonType("Nein");
+            ButtonType abbrechen = new ButtonType("Abbrechen");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchtest du speichern, bevor zu einer anderen Aufgabe gewechselt wird?", ja, nein, abbrechen);
+
+            alert.setHeaderText("");
+            alert.setTitle("");
+            alert.showAndWait();
+            if(alert.getResult() == ja) {
+                save();
+            } else if(alert.getResult() == abbrechen) {
+                return;
+            }
+        }
+
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
         catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
         CompilerReport.setPreviousCode(taeditor.getText());
