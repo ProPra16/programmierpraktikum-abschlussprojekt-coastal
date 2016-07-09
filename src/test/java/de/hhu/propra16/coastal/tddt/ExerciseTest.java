@@ -1,5 +1,6 @@
 package de.hhu.propra16.coastal.tddt;
 
+import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import org.junit.Before;
 import org.junit.Test;
 

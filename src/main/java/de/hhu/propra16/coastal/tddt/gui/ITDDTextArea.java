@@ -1,4 +1,4 @@
-package de.hhu.propra16.coastal.tddt;
+package de.hhu.propra16.coastal.tddt.gui;
 
 public interface ITDDTextArea {
     void setEditable(boolean editable);

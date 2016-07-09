@@ -1,5 +1,10 @@
-package de.hhu.propra16.coastal.tddt;
+package de.hhu.propra16.coastal.tddt.compiler;
 
+import de.hhu.propra16.coastal.tddt.catalog.Exercise;
+import de.hhu.propra16.coastal.tddt.gui.ITDDLabel;
+import de.hhu.propra16.coastal.tddt.gui.ITDDTextArea;
+import de.hhu.propra16.coastal.tddt.gui.TDDController;
+import de.hhu.propra16.coastal.tddt.gui.TDDTMenu;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import vk.core.api.CompileError;

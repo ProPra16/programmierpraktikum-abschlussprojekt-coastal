@@ -1,4 +1,8 @@
-package de.hhu.propra16.coastal.tddt;
+package de.hhu.propra16.coastal.tddt.catalog;
+
+import de.hhu.propra16.coastal.tddt.gui.ITDDLabel;
+import de.hhu.propra16.coastal.tddt.gui.ITDDListView;
+import de.hhu.propra16.coastal.tddt.gui.ITDDTextArea;
 
 import java.util.ArrayList;
 

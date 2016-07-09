@@ -1,4 +1,4 @@
-package de.hhu.propra16.coastal.tddt;
+package de.hhu.propra16.coastal.tddt.tracking;
 public class Timer {
     String name;
     int timeSpend = 0;

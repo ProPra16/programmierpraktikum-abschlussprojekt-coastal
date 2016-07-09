@@ -1,12 +1,16 @@
-package de.hhu.propra16.coastal.tddt;
+package de.hhu.propra16.coastal.tddt.gui;
 
+import de.hhu.propra16.coastal.tddt.catalog.Catalog;
+import de.hhu.propra16.coastal.tddt.catalog.CatalogParser;
+import de.hhu.propra16.coastal.tddt.catalog.Exercise;
+import de.hhu.propra16.coastal.tddt.compiler.CompilerInteraction;
+import de.hhu.propra16.coastal.tddt.compiler.CompilerReport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.*;
 import javafx.scene.Group;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -22,16 +26,12 @@ import org.xml.sax.SAXParseException;
 
 import java.io.File;
 
-import java.net.URL;
-
 import java.io.*;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
-
 
 
 public class TDDTMenu   {

@@ -1,7 +1,9 @@
-package de.hhu.propra16.coastal.tddt;
+package de.hhu.propra16.coastal.tddt.gui;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import javafx.application.Platform;
 
 public class Babysteps {

@@ -1,4 +1,4 @@
-package de.hhu.propra16.coastal.tddt;
+package de.hhu.propra16.coastal.tddt.gui;
 
 //import javafx.scene.control.TextArea;
 import org.fxmisc.richtext.CodeArea;

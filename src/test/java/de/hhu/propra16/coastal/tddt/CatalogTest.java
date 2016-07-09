@@ -1,5 +1,10 @@
 package de.hhu.propra16.coastal.tddt;
 
+import de.hhu.propra16.coastal.tddt.catalog.Catalog;
+import de.hhu.propra16.coastal.tddt.catalog.Exercise;
+import de.hhu.propra16.coastal.tddt.gui.ITDDLabel;
+import de.hhu.propra16.coastal.tddt.gui.ITDDListView;
+import de.hhu.propra16.coastal.tddt.gui.ITDDTextArea;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.Test;

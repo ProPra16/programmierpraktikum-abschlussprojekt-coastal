@@ -1,5 +1,7 @@
 package de.hhu.propra16.coastal.tddt;
 
+import de.hhu.propra16.coastal.tddt.gui.ITDDTextArea;
+import de.hhu.propra16.coastal.tddt.gui.TDDController;
 import javafx.scene.control.TextArea;
 import org.junit.Before;
 import org.junit.Ignore;

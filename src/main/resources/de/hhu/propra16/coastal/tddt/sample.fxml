@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<?import de.hhu.propra16.coastal.tddt.TDDLabel?>
-<?import de.hhu.propra16.coastal.tddt.TDDListView?>
-<?import de.hhu.propra16.coastal.tddt.TDDTextArea?>
+<?import de.hhu.propra16.coastal.tddt.gui.TDDLabel?>
+<?import de.hhu.propra16.coastal.tddt.gui.TDDListView?>
+<?import de.hhu.propra16.coastal.tddt.gui.TDDTextArea?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhu.propra16.coastal.tddt.TDDTMenu">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hhu.propra16.coastal.tddt.gui.TDDTMenu">
    <children>
       <MenuBar prefHeight="29.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
