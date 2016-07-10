@@ -186,7 +186,7 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void previous(ActionEvent event) {
-        CompilerReport.back(taeditor, tatest, lbstatus, btback);
+        CompilerReport.back(taeditor, tatest, lbstatus, btback, baby);
     }
 
 
@@ -225,6 +225,8 @@ public class TDDTMenu implements Initializable {
             lbbabysteps.setText("AKTIVIERT");
             lbbabysteps.setId("green");
         } else {
+            baby.stopTimer();
+            lbtime.setText("-:-");
             lbbabysteps.setText("DEAKTIVIERT");
             lbbabysteps.setId("red");
         }

@@ -155,7 +155,7 @@ public class CompilerReport {
         }
     }
 
-    public static void back(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback) {
+    public static void back(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback, Babysteps baby) {
         btback.setDisable(true);
         taeditor.setText(previousCode);
         tatest.setText(previousTest);
@@ -163,6 +163,7 @@ public class CompilerReport {
         lbstatus.setId("red");
         TDDController.toTestEditor(taeditor, tatest);
         target = CompileTarget.TEST;
+        baby.refreshTimer();
     }
 
     public static void setPreviousCode(String oldCode) {
