@@ -111,7 +111,7 @@ public class CompilerReport {
                 TDDController.toEditor(taeditor, tatest);
                 target = CompileTarget.EDITOR;
                 if(currentExercise.isBabysteps()) {
-                    baby.setOldTest(tatest);
+                    baby.getOldTest(tatest);
                 }
                 break;
             case "GREEN":
@@ -126,7 +126,7 @@ public class CompilerReport {
                 lbstatus.setId("black");
                 target = CompileTarget.EDITOR;
                 if(currentExercise.isBabysteps()) {
-                    baby.setOldEditor(taeditor);
+                    baby.getOldEditor(taeditor);
                 }
                 break;
             case "REFACTOR CODE":
