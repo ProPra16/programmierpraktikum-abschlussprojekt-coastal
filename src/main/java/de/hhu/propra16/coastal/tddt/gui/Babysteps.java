@@ -11,20 +11,12 @@ public class Babysteps {
     private int oldTimer;
     private String oldEditorText;
     private String oldTestText;
-    
 
-    public Babysteps(Exercise currentExercise) {
+
+    public Babysteps(Exercise currentExercise, ITDDLabel lbstatus, ITDDLabel lbtime, ITDDTextArea taeditor, ITDDTextArea tatest) {
         timer = currentExercise.getBabystepTime();
         oldTimer = timer;
-    }
-
-    public void babystep(ITDDLabel lbstatus, ITDDLabel lbtime, ITDDTextArea taeditor, ITDDTextArea tatest) {
-        if (lbstatus.getText().equals("RED")) {
-            oldTestText = tatest.getText();
-        }
-        if (lbstatus.getText().equals("GREEN")) {
-            oldEditorText = taeditor.getText();
-        }
+        oldTestText = tatest.getText();
         if (timer > 0) {
             Timer t = new Timer();
             t.schedule(new TimerTask() {
@@ -57,11 +49,11 @@ public class Babysteps {
         timer = oldTimer;
     }
 
-    public void setOldTest(ITDDTextArea tatest) {
+    public void getOldTest(ITDDTextArea tatest) {
         oldTestText = tatest.getText();
     }
 
-    public void setOldEditor(ITDDTextArea taeditor) {
+    public void getOldEditor(ITDDTextArea taeditor) {
         oldEditorText = taeditor.getText();
     }
 }
