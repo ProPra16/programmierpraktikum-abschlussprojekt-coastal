@@ -74,6 +74,12 @@
                             <TDDLabel fx:id="lbbabysteps" prefHeight="46.0" prefWidth="189.0" text="DEAKTIVIERT" textFill="RED" />
                         </children>
                     </HBox>
+                    <HBox prefHeight="100">
+                        <children>
+                            <Label prefHeight="46.0" prefWidth="100.0" text="Tracking: " />
+                            <TDDLabel fx:id="lbtracking" prefHeight="46.0" prefWidth="189.0" text="DEAKTIVIERT" textFill="RED" />
+                        </children>
+                    </HBox>
                 </children>
              </VBox>
              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">

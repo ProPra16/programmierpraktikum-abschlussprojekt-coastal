@@ -7,6 +7,7 @@ import de.hhu.propra16.coastal.tddt.compiler.CompilerInteraction;
 import de.hhu.propra16.coastal.tddt.compiler.CompilerReport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.Group;
 import javafx.event.ActionEvent;
@@ -28,13 +29,15 @@ import java.io.File;
 
 import java.io.*;
 
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ResourceBundle;
 
 
-public class TDDTMenu   {
+public class TDDTMenu implements Initializable {
 
     private static Stage primaryStage;
 
@@ -66,6 +69,9 @@ public class TDDTMenu   {
     protected TDDLabel lbbabysteps;
 
     @FXML
+    protected TDDLabel lbtracking;
+
+    @FXML
     protected TDDLabel lbtime;
 
     @FXML
@@ -85,6 +91,12 @@ public class TDDTMenu   {
 
     public static Babysteps baby;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+
+
+    }
 
     @FXML
     protected void open(ActionEvent event) {
@@ -205,6 +217,14 @@ public class TDDTMenu   {
             lbbabysteps.setText("DEAKTIVIERT");
             lbbabysteps.setId("red");
         }
+
+        if(currentExercise.isTracking()) {
+            lbtracking.setText("AKTIVIERT");
+            lbtracking.setId("green");
+        } else {
+            lbtracking.setText("DEAKTIVIERT");
+            lbtracking.setId("red");
+        }
     }
 
     public void speichernAbfrage(TriggerSaveOption option) {
@@ -278,4 +298,6 @@ public class TDDTMenu   {
     public static void setStage (Stage stage) {
         primaryStage = stage;
     }
+
+
 }
