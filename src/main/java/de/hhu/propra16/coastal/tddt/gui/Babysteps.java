@@ -31,7 +31,11 @@ public class Babysteps {
                         if (!lbstatus.getText().equals("REFACTOR CODE") && !lbstatus.getText().equals("REFACTOR TEST")) {
                             int minutes = timer / 60;
                             int seconds = timer % 60;
-                            lbtime.setText(Integer.toString(minutes) + ":" + Integer.toString(seconds));
+                            String prettySeconds = Integer.toString(seconds);
+                            if(seconds < 10) {
+                                prettySeconds = "0" + prettySeconds;
+                            }
+                            lbtime.setText(Integer.toString(minutes) + ":" + prettySeconds);
                             if (timer == 0) {
                                 timer = oldTimer;
                                 if (lbstatus.getText().equals("RED")) {
@@ -54,7 +58,7 @@ public class Babysteps {
     public void refreshTimer() {
         timer = oldTimer;
     }
-    
+
     public void stopTimer() {
         t.cancel();
     }
