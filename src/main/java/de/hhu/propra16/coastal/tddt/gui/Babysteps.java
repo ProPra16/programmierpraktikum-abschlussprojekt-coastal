@@ -11,14 +11,20 @@ public class Babysteps {
     private int oldTimer;
     private String oldEditorText;
     private String oldTestText;
+    private Timer t;
 
 
-    public Babysteps(Exercise currentExercise, ITDDLabel lbstatus, ITDDLabel lbtime, ITDDTextArea taeditor, ITDDTextArea tatest) {
+    public Babysteps(Exercise currentExercise, ITDDTextArea taeditor, ITDDTextArea tatest) {
         timer = currentExercise.getBabystepTime();
         oldTimer = timer;
         oldTestText = tatest.getText();
+        oldEditorText = taeditor.getText();
+        t = new Timer();
+
+    }
+
+    public void babystep(ITDDLabel lbstatus, ITDDLabel lbtime, ITDDTextArea taeditor, ITDDTextArea tatest) {
         if (timer > 0) {
-            Timer t = new Timer();
             t.schedule(new TimerTask() {
                 public void run() {
                     Platform.runLater(() -> {
@@ -47,6 +53,10 @@ public class Babysteps {
 
     public void refreshTimer() {
         timer = oldTimer;
+    }
+    
+    public void stopTimer() {
+        t.cancel();
     }
 
     public void getOldTest(ITDDTextArea tatest) {

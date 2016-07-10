@@ -217,7 +217,11 @@ public class TDDTMenu implements Initializable {
         CompilerReport.setPreviousCode(taeditor.getText());
         CompilerReport.setPreviousTest(tatest.getText());
         if (currentExercise.isBabysteps()) {
-            baby = new Babysteps(currentExercise, lbstatus, lbtime, taeditor, tatest);
+            if(baby != null ) {
+                baby.stopTimer();
+            }
+            baby = new Babysteps(currentExercise, taeditor, tatest);
+            baby.babystep(lbstatus, lbtime, taeditor, tatest);
             lbbabysteps.setText("AKTIVIERT");
             lbbabysteps.setId("green");
         } else {
