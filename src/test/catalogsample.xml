@@ -1,4 +1,4 @@
-﻿<exercises><!-- <>
+﻿<exercises>
 	<exercise name="Römische Zahlen">
 		<description>Konvertiert arabische in römische Zahlen.</description>
 		<classes>
@@ -20,7 +20,7 @@ public class RomanNumberConverterTest {
 		<babysteps value="False" />
 		<timetracking value="True" />
 		</config>
-	</exercise></> -->
+	</exercise>
 	<exercise name="Römische Zahlen">
 	<description>Konvertiert arabische in römische Zahlen.</description>
 		<classes>

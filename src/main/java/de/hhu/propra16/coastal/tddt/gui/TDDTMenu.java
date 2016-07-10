@@ -63,6 +63,9 @@ public class TDDTMenu   {
     protected TDDLabel lbstatus;
 
     @FXML
+    protected TDDLabel lbbabysteps;
+
+    @FXML
     protected TDDLabel lbtime;
 
     @FXML
@@ -196,6 +199,11 @@ public class TDDTMenu   {
         if (currentExercise.isBabysteps()) {
             baby = new Babysteps(currentExercise);
             baby.babystep(lbstatus, lbtime, taeditor, tatest);
+            lbbabysteps.setText("AKTIVIERT");
+            lbbabysteps.setId("green");
+        } else {
+            lbbabysteps.setText("DEAKTIVIERT");
+            lbbabysteps.setId("red");
         }
     }
 
