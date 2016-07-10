@@ -202,10 +202,18 @@ public class TDDTMenu implements Initializable {
         }
         if(!lvexercises.getSelectionModel().getSelectedItem().equals(currentExercise)) {
             speichernAbfrage(TriggerSaveOption.ChangeExercise);
+        } else {
+            return;
         }
 
         currentExercise = lvexercises.getSelectionModel().getSelectedItem();
-        catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
+        File program = new File(directory.toPath().toString() + "/" + catalog +"/" + currentExercise.getClassName() + ".java");
+        File test = new File(directory.toPath().toString() + "/" + catalog +"/" + currentExercise.getTestName() + ".java");
+        if(Files.exists(program.toPath()) && Files.exists(test.toPath()) && continueAbfrage()) {
+            continueExercise(program,test);
+        } else {
+            catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise);
+        }
         CompilerReport.setPreviousCode(taeditor.getText());
         CompilerReport.setPreviousTest(tatest.getText());
         if (currentExercise.isBabysteps()) {
@@ -226,8 +234,8 @@ public class TDDTMenu implements Initializable {
         }
     }
 
-    public void speichernAbfrage(TriggerSaveOption option) {
-        if(currentExercise != null ) {
+    private void speichernAbfrage(TriggerSaveOption option) {
+        if(currentExercise != null) {
             ButtonType ja = new ButtonType("Ja");
             ButtonType nein = new ButtonType("Nein");
             String abfrage = "bevor zu einer anderen Aufgabe gewechselt wird";
@@ -243,6 +251,23 @@ public class TDDTMenu implements Initializable {
                 save();
             }
         }
+    }
+
+    private void continueExercise(File program, File test) {
+        catalog.loadExercise(taeditor, tatest, lbdescription, currentExercise, program, test);
+    }
+
+    private boolean continueAbfrage() {
+        ButtonType ja = new ButtonType("Ja");
+        ButtonType nein = new ButtonType("Nein");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Diese Aufgabe hast du bereits bearbeitet. Möchtest du daran weiterarbeiten?", ja, nein);
+        alert.setHeaderText("");
+        alert.setTitle("");
+        alert.showAndWait();
+        if(alert.getResult() == ja) {
+            return true;
+        }
+        return false;
     }
 
 
