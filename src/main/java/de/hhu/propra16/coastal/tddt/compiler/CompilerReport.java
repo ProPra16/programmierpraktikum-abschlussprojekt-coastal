@@ -160,7 +160,7 @@ public class CompilerReport {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
 
             } else if (error == ErrorType.TestsNotSucceeded) {
-                tatestterminal.setText("Alle Tests müssen erfüllt werden" +"\n" + "\n" + tatestterminal.getText());
+                tatestterminal.setText("Alle Tests müssen erfüllt werden!" +"\n" + "\n" + tatestterminal.getText());
             } else {
                 tatestterminal.setText("Ein Test muss fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
             }
@@ -171,7 +171,7 @@ public class CompilerReport {
             } else if (error == ErrorType.compilerErrorTest) {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
             } else {
-                taterminal.setText("Alle Tests müssen erfüllt werden" + "\n" + "\n" + taterminal.getText());
+                taterminal.setText("Alle Tests müssen erfüllt werden!" + "\n" + "\n" + taterminal.getText());
             }
         }
     }

@@ -196,7 +196,11 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void help(ActionEvent event) {
-
+        //BufferedReader help = new BufferedReader(new File("programmierpraktikum-abschlussprojekt-coastal-master\\src\\main\\resources\\de\\hhu\\propra16\\coastal\\tddt\\help.txt"));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "blabla");//help.readLine());
+        alert.setHeaderText("");
+        alert.setTitle("Benutzerhandbuch");
+        alert.showAndWait();
     }
 
     @FXML
