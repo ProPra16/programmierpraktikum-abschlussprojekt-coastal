@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import jdk.nashorn.internal.ir.annotations.Ignore;
@@ -200,7 +201,7 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void help(ActionEvent event) {
-        Stage benutzerhandbuch = new Stage();
+        /*Stage benutzerhandbuch = new Stage();
         GridPane gridpane = new GridPane();
         gridpane.setPrefSize(400, 400);
         GridPane grid = new GridPane();
@@ -255,7 +256,21 @@ public class TDDTMenu implements Initializable {
         Scene scene = new Scene(gridpane);
         benutzerhandbuch.setTitle("Benutzerhandbuch");
         benutzerhandbuch.setScene(scene);
-        benutzerhandbuch.show();
+        benutzerhandbuch.show();*/
+        Stage stage = new Stage();
+        StackPane pane = new StackPane();
+        WebView browser = new WebView();
+        URL url = getClass().getResource("test.html");
+        System.out.println(url.toExternalForm());
+        try {
+            browser.getEngine().load(url.toExternalForm());
+        }catch(Exception e) {
+            System.out.println("boo");
+        }
+        pane.getChildren().add(browser);
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
