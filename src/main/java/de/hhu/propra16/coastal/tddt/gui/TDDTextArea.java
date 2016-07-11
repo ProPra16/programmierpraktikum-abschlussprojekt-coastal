@@ -1,12 +1,24 @@
 package de.hhu.propra16.coastal.tddt.gui;
 
 //import javafx.scene.control.TextArea;
-import org.fxmisc.richtext.CodeArea;
 
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.StyleSpans;
+import org.fxmisc.richtext.StyleSpansBuilder;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TDDTextArea extends CodeArea implements ITDDTextArea {
-    private static final String[] KEYWORDS = {"abstract", "assert", "boolean", "break", "byte",
+    @Override
+    public void setText(String text) {
+
+    }
+
+    private static final String[] KEYWORDS = new String[] {
+            "abstract", "assert", "boolean", "break", "byte",
             "case", "catch", "char", "class", "const",
             "continue", "default", "do", "double", "else",
             "enum", "extends", "final", "finally", "float",
@@ -15,13 +27,8 @@ public class TDDTextArea extends CodeArea implements ITDDTextArea {
             "new", "package", "private", "protected", "public",
             "return", "short", "static", "strictfp", "super",
             "switch", "synchronized", "this", "throw", "throws",
-            "transient", "try", "void", "volatile", "while"};
-
-
-    public void setText(String text){
-        clear();
-        appendText(text);
-    }
+            "transient", "try", "void", "volatile", "while"
+    };
 
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
     private static final String PAREN_PATTERN = "\\(|\\)";
@@ -40,5 +47,31 @@ public class TDDTextArea extends CodeArea implements ITDDTextArea {
                     + "|(?<STRING>" + STRING_PATTERN + ")"
                     + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
     );
+
+
+
+    public StyleSpans<Collection<String>> computeHighlighting() {
+        Matcher matcher = PATTERN.matcher(getText());
+        int lastKwEnd = 0;
+        StyleSpansBuilder<Collection<String>> spansBuilder
+                = new StyleSpansBuilder<>();
+        while(matcher.find()) {
+            String styleClass =
+                    matcher.group("KEYWORD") != null ? "keyword" :
+                            matcher.group("PAREN") != null ? "paren" :
+                                    matcher.group("BRACE") != null ? "brace" :
+                                            matcher.group("BRACKET") != null ? "bracket" :
+                                                    matcher.group("SEMICOLON") != null ? "semicolon" :
+                                                            matcher.group("STRING") != null ? "string" :
+                                                                    matcher.group("COMMENT") != null ? "comment" :
+                                                                            null; /* never happens */ assert styleClass != null;
+            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
+            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+            lastKwEnd = matcher.end();
+        }
+        String tmp = getText();
+        spansBuilder.add(Collections.emptyList(), tmp.length() - lastKwEnd);
+        return spansBuilder.create();
+    }
 }
 

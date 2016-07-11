@@ -23,6 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.fxmisc.richtext.LineNumberFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -97,9 +98,19 @@ public class TDDTMenu implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        taeditor.setParagraphGraphicFactory(LineNumberFactory.get(taeditor));
+        taeditor.richChanges()
+                .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
+                .subscribe(change ->{
+                    taeditor.setStyleSpans(0, taeditor.computeHighlighting());
+                });
+        tatest.setParagraphGraphicFactory(LineNumberFactory.get(tatest));
 
-
-
+        tatest.richChanges()
+                .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
+                .subscribe(change ->{
+                    tatest.setStyleSpans(0, tatest.computeHighlighting());
+                });
     }
 
     @FXML
