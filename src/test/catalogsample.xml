@@ -1,6 +1,6 @@
 ﻿<exercises>
 	<exercise name="Römische Zahlen">
-		<description>Konvertiert arabische in römische Zahlen.</description>
+		<description>Konvertieren Sie arabische in römische Zahlen.</description>
 		<classes>
 			<class name="RomanNumberConverter">public class RomanNumberConverter {
 }
@@ -22,9 +22,9 @@ public class RomanNumberConverterTest {
 		</config>
 	</exercise>
 	<exercise name="Römische Zahlen">
-	<description>Konvertiert arabische in römische Zahlen.</description>
+	<description>Konvertieren Sie arabische in römische Zahlen.</description>
 		<classes>
-			<class name="RomanNumberConverter"> public class RomanNumberConverter {
+			<class name="RomanNumberConverter">public class RomanNumberConverter {
 }
 			</class>
 		</classes>
@@ -43,9 +43,9 @@ import org.junit.Test;
 		</config>
 	</exercise>
 	<exercise name="Fibonacci">
-	<description>Schreibt ein Programm, dass die Fibonacci-Folge berechnet.</description>
+	<description>Schreiben Sie ein Programm, das die Fibonacci-Folge berechnet.</description>
 		<classes>
-			<class name="Fibonacci"> public class Fibonacci {
+			<class name="Fibonacci">public class Fibonacci {
 }
 			</class>
 		</classes>

@@ -152,15 +152,15 @@ public class CompilerReport {
             taterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
         }
 
-        String errorMessagesProgram = "Compiler Error in Program:" + "\n" + "\n";
-        String errorMessagesTest = "Compiler Error in Test:" + "\n" + "\n";
+        String errorMessagesProgram = "Compiler error in program:" + "\n" + "\n";
+        String errorMessagesTest = "Compiler error in test:" + "\n" + "\n";
         ErrorType error = error(compiler, errorsProgram, errorsTest, currentExercise, lbstatus);
         if (target == CompileTarget.TEST) {
             if(error == ErrorType.compilerErrorTest) {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
 
             } else if (error == ErrorType.TestsNotSucceeded) {
-                tatestterminal.setText("Alle Tests müssen erfüllt werden" +"\n" + "\n" + tatestterminal.getText());
+                tatestterminal.setText("Alle Tests müssen erfüllt werden!" +"\n" + "\n" + tatestterminal.getText());
             } else {
                 tatestterminal.setText("Ein Test muss fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
             }
@@ -171,7 +171,7 @@ public class CompilerReport {
             } else if (error == ErrorType.compilerErrorTest) {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
             } else {
-                taterminal.setText("Alle Tests müssen erfüllt werden" + "\n" + "\n" + taterminal.getText());
+                taterminal.setText("Alle Tests müssen erfüllt werden!" + "\n" + "\n" + taterminal.getText());
             }
         }
     }
@@ -182,9 +182,9 @@ public class CompilerReport {
         if(result == null) {
             return;
         }
-        output = output + "Numbers of failed Tests: " + result.getNumberOfFailedTests() +"\n" +"\n";
-        output = output + "Numbers of ignored Tests: " + result.getNumberOfIgnoredTests() +"\n" +"\n";
-        output = output + "Numbers of successfull Tests: " + result.getNumberOfSuccessfulTests() +"\n" +"\n";
+        output = output + "Number of failed tests: " + result.getNumberOfFailedTests() +"\n" +"\n";
+        output = output + "Number of ignored tests: " + result.getNumberOfIgnoredTests() +"\n" +"\n";
+        output = output + "Number of successful tests: " + result.getNumberOfSuccessfulTests() +"\n" +"\n";
 
         for(TestFailure failure: result.getTestFailures()) {
             output = output + failure.getMethodName() +": " + failure.getMessage() +"\n" +"\n";

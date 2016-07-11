@@ -8,7 +8,9 @@ import de.hhu.propra16.coastal.tddt.compiler.CompilerReport;
 import de.hhu.propra16.coastal.tddt.tracking.Tracking;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.chart.*;
 import javafx.scene.Group;
 import javafx.event.ActionEvent;
@@ -19,7 +21,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import jdk.nashorn.internal.ir.annotations.Ignore;
@@ -207,7 +212,76 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void help(ActionEvent event) {
-
+        /*Stage benutzerhandbuch = new Stage();
+        GridPane gridpane = new GridPane();
+        gridpane.setPrefSize(400, 400);
+        GridPane grid = new GridPane();
+        GridPane pane = new GridPane();
+        gridpane.getColumnConstraints().add(new ColumnConstraints(100));
+        gridpane.getColumnConstraints().add(new ColumnConstraints(300));
+        gridpane.add(grid, 0, 0);
+        gridpane.add(pane, 1, 0);
+        Label[] help = new Label[3];
+        help[0] = new Label("1 Menü");
+        help[1] = new Label("2 Arbeitsstatus");
+        help[2] = new Label("3 Erweiterungen");
+        String[] helper = {"", "", ""};
+        try {
+            BufferedReader h = new BufferedReader(new FileReader("src/test/help.txt"));
+            for (int i = 0; i < 23; i++) {
+                if (i < 9) helper[0] += h.readLine();
+                if (i > 9 && i < 19) helper[1] += h.readLine();
+                else helper[2] += h.readLine();
+            }
+        }
+        catch (IOException e) { }
+        Label[] helping = new Label[3];
+        for (int i = 0; i < 3; i++) {
+            helping[i] = new Label();
+            helping[i].setAlignment(Pos.CENTER_LEFT);
+            helping[i].setText(helper[i]);
+            help[i].setAlignment(Pos.CENTER_LEFT);
+            grid.add(help[i], 0, i);
+        }
+        help[0].setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent me) {
+                pane.getChildren().remove(0, 0);
+                pane.add(helping[0], 0, 0);
+            }
+        });
+        help[1].setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent me) {
+                pane.getChildren().remove(0, 0);
+                pane.add(helping[1], 0, 0);
+            }
+        });
+        help[2].setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent me) {
+                pane.getChildren().remove(0, 0);
+                pane.add(helping[2], 0, 0);
+            }
+        });
+        Scene scene = new Scene(gridpane);
+        benutzerhandbuch.setTitle("Benutzerhandbuch");
+        benutzerhandbuch.setScene(scene);
+        benutzerhandbuch.show();*/
+        Stage stage = new Stage();
+        StackPane pane = new StackPane();
+        WebView browser = new WebView();
+        URL url = getClass().getResource("test.html");
+        System.out.println(url.toExternalForm());
+        try {
+            browser.getEngine().load(url.toExternalForm());
+        }catch(Exception e) {
+            System.out.println("boo");
+        }
+        pane.getChildren().add(browser);
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -312,12 +386,12 @@ public class TDDTMenu implements Initializable {
 
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
-                            new PieChart.Data("Status: RED", (int) (chartNumber[0] * 100 / sum)),
+                            new PieChart.Data("Red", (int) (chartNumber[0] * 100 / sum)),
                             new PieChart.Data("Refactor Code", (int) (chartNumber[2] * 100 / sum)),
-                            new PieChart.Data("Status: GREEN", (int) (chartNumber[1] * 100 / sum)),
+                            new PieChart.Data("Green", (int) (chartNumber[1] * 100 / sum)),
                             new PieChart.Data("Refactor Test", (int) (chartNumber[3] * 100 / sum)));
             final PieChart chart = new PieChart(pieChartData);
-            chart.setTitle("Verbrachte Zeit von Nutzer:");
+            chart.setTitle("Verbrachte Zeit vom Nutzer:");
             ((Group) scene.getRoot()).getChildren().add(chart);
             benutzeranalyse.setScene(scene);
             benutzeranalyse.show();
