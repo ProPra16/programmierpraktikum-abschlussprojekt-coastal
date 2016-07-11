@@ -1,5 +1,6 @@
 package de.hhu.propra16.coastal.tddt;
 
+import de.hhu.propra16.coastal.tddt.compiler.CompilerReport;
 import de.hhu.propra16.coastal.tddt.gui.TDDTMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         /*Empty/create chart.txt*/
         try{
-            FileWriter chartFileWriter = new FileWriter("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
+            FileWriter chartFileWriter = new FileWriter("src/test/chart.txt");
             chartFileWriter.write("");
             chartFileWriter.flush();
         }
