@@ -5,6 +5,7 @@ import de.hhu.propra16.coastal.tddt.catalog.CatalogParser;
 import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import de.hhu.propra16.coastal.tddt.compiler.CompilerInteraction;
 import de.hhu.propra16.coastal.tddt.compiler.CompilerReport;
+import de.hhu.propra16.coastal.tddt.tracking.Tracking;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -18,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import jdk.nashorn.internal.ir.annotations.Ignore;
@@ -90,6 +92,8 @@ public class TDDTMenu implements Initializable {
     private File directory;
 
     public static Babysteps baby;
+
+    public static Tracking tracker = new Tracking();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -181,12 +185,12 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void next(ActionEvent event) {
-        CompilerInteraction.compile(taeditor, tatest, taterminal, tatestterminal, lbstatus, lbtime, currentExercise, lvexercises, btback, baby);
+        CompilerInteraction.compile(taeditor, tatest, taterminal, tatestterminal, lbstatus, lbtime, currentExercise, lvexercises, btback, baby, tracker);
     }
 
     @FXML
     protected void previous(ActionEvent event) {
-        CompilerReport.back(taeditor, tatest, lbstatus, btback, baby);
+        CompilerReport.back(taeditor, tatest, lbstatus, btback, baby, tracker);
     }
 
 
@@ -277,50 +281,50 @@ public class TDDTMenu implements Initializable {
 
 
     @FXML
-    @Ignore
     protected void showChart(ActionEvent event){
-        int[] chartNumber = new int[4];
         /*init declaration*/
-        File fileChart = new File("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
-        int sum = 1;
+        int[] chartNumber = CompilerReport.readAll("src/test/chart.txt");
+        int sum = 0;
+        for (int i = 0; i < chartNumber.length; i++) {
+            sum += chartNumber[i];
+        }
         /*load file*/
-        if(fileChart.exists()){
-            try{
-                FileReader chartFileReader = new FileReader("src/main/resources/de/hhu/propra16/coastal/tddt/chart.txt");
-                for(int i=0; i<4; i++){
-                    chartNumber[i] = chartFileReader.read();
-                }
-            }
-            catch(IOException ex){
-                System.out.println("User hat noch keine Aktionen betaetigt.");
-            }
+        if(chartNumber.length==4 && sum!=0) {
+
+
+            /*Chart Darstellung, oeffnet ein neues Fenster*/
+            Stage benutzeranalyse = new Stage();
+            Scene scene = new Scene(new Group(), 500, 500);
+            benutzeranalyse.setTitle("Benutzeranalyse");
+
+            sum = (sum == 0) ? 1 : sum;
+
+            ObservableList<PieChart.Data> pieChartData =
+                    FXCollections.observableArrayList(
+                            new PieChart.Data("Status: RED", (int) (chartNumber[0] * 100 / sum)),
+                            new PieChart.Data("Refactor Code", (int) (chartNumber[2] * 100 / sum)),
+                            new PieChart.Data("Status: GREEN", (int) (chartNumber[1] * 100 / sum)),
+                            new PieChart.Data("Refactor Test", (int) (chartNumber[3] * 100 / sum)));
+            final PieChart chart = new PieChart(pieChartData);
+            chart.setTitle("Verbrachte Zeit von Nutzer:");
+            ((Group) scene.getRoot()).getChildren().add(chart);
+            benutzeranalyse.setScene(scene);
+            benutzeranalyse.show();
         }
         else{
-            System.out.println("User hat noch keine Aktionen betaetigt.");
+            /*Opens Game Win window*/
+            Label msg1 = new Label("Es wurden nicht genug Daten gesammelt.");
+            Stage benutzeranalyse = new Stage();
+            StackPane sp = new StackPane();
+            sp.getChildren().addAll(msg1);
+
+            Scene sc = new Scene(sp, 300, 200);
+
+            benutzeranalyse.setTitle("Benutzeranalyse");
+            benutzeranalyse.setScene(sc);
+
+            benutzeranalyse.show();
         }
-        for(int i=0; i<chartNumber.length; i++){
-            sum+=chartNumber[i];
-        }
-
-        /*Chart Darstellung, oeffnet ein neues Fenster*/
-        Stage benutzeranalyse = new Stage();
-        Scene scene = new Scene(new Group(), 500, 500);
-        benutzeranalyse.setTitle("Benutzeranalyse");
-
-
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Status: RED", (int) (chartNumber[0]*100/sum)),
-                        new PieChart.Data("Refactor Code", (int) (chartNumber[1]*100/sum)),
-                        new PieChart.Data("Status: GREEN", (int) (chartNumber[2]*100/sum)),
-                        new PieChart.Data("Refactor Test", (int) (chartNumber[3]*100/sum)));
-        final PieChart chart = new PieChart(pieChartData);
-        chart.setTitle("Verbrachte Zeit von Nutzer:");
-
-        ((Group) scene.getRoot()).getChildren().add(chart);
-        benutzeranalyse.setScene(scene);
-        benutzeranalyse.show();
-
 
     }
 

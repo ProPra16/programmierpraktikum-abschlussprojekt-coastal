@@ -1,5 +1,6 @@
 package de.hhu.propra16.coastal.tddt.compiler;
 
+import de.hhu.propra16.coastal.tddt.tracking.*;
 import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import de.hhu.propra16.coastal.tddt.gui.Babysteps;
 import de.hhu.propra16.coastal.tddt.gui.ITDDLabel;
@@ -18,7 +19,7 @@ import java.util.Collection;
 public class CompilerInteraction {
 
 
-    public static void compile(ITDDTextArea taeditor, ITDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus, ITDDLabel lbtime, Exercise currentExercise, ITDDListView<Exercise> lvexercises, Button btback, Babysteps baby) {
+    public static void compile(ITDDTextArea taeditor, ITDDTextArea tatest, TextArea taterminal, TextArea tatestterminal, ITDDLabel lbstatus, ITDDLabel lbtime, Exercise currentExercise, ITDDListView<Exercise> lvexercises, Button btback, Babysteps baby, Tracking tracker) {
         taterminal.clear();
         tatestterminal.clear();
         boolean compileError = false;
@@ -45,7 +46,7 @@ public class CompilerInteraction {
         }
 
         if (continueable(compiler, errorsProgram, errorsTest, currentExercise, lbstatus)) {
-            CompilerReport.changeReport(taeditor, tatest, lbstatus, btback, currentExercise, baby);
+            CompilerReport.changeReport(taeditor, tatest, lbstatus, btback, currentExercise, baby, tracker);
         } else {
             CompilerReport.showErrors(compiler, errorsProgram, errorsTest, taterminal, tatestterminal, currentExercise, lbstatus);
         }

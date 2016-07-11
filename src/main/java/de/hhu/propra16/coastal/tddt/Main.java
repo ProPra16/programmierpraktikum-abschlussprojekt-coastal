@@ -18,7 +18,7 @@ public class Main extends Application {
         /*Empty/create chart.txt*/
         try{
             FileWriter chartFileWriter = new FileWriter("src/test/chart.txt");
-            chartFileWriter.write("");
+            chartFileWriter.write("0");
             chartFileWriter.flush();
         }
         catch(IOException ex){

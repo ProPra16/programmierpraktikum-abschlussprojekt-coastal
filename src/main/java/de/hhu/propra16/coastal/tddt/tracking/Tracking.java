@@ -3,11 +3,12 @@ package de.hhu.propra16.coastal.tddt.tracking;
 import java.util.ArrayList;
 
 public class Tracking {
-    ArrayList<Timer> timerList;
+    ArrayList<Timer> timerList = new ArrayList<Timer>();
     /*A Tracking datatype automatically contains one Timer object in its ArrayList*/
-    public Tracking(){
-        timerList = new ArrayList<Timer>();
-        timerList.add(new Timer());
+    public Tracking() {
+        for(int i=0; i<4; i++){
+            timerList.add(new Timer());
+        }
     }
 
     public void addTimer(){
