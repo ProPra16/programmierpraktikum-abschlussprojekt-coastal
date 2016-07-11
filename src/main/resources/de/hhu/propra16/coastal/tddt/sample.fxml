@@ -31,7 +31,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Statistiken">
                 <items>
-                    <MenuItem fx:id="userTracking" mnemonicParsing="false"  onAction="#showChart" text="Benutzer-Analyse" />
+                    <MenuItem fx:id="userTracking" mnemonicParsing="false"  onAction="#showChart" text="Benutzeranalyse" />
                 </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Hilfe">
