@@ -271,12 +271,11 @@ public class TDDTMenu implements Initializable {
         Stage stage = new Stage();
         StackPane pane = new StackPane();
         WebView browser = new WebView();
-        URL url = getClass().getResource("test.html");
+        URL url = getClass().getResource("help.html");
         System.out.println(url.toExternalForm());
         try {
             browser.getEngine().load(url.toExternalForm());
         }catch(Exception e) {
-            System.out.println("boo");
         }
         pane.getChildren().add(browser);
         Scene scene = new Scene(pane);

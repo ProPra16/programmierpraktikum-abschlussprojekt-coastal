@@ -1,0 +1,45 @@
+<html>
+<meta charset="UTF-8">
+    <body>
+        <h1>Benutzerhandbuch</h1>
+
+        <h2>1 Menü</h2>
+        <li><b>Datei</b></li>
+        <p>Nach Programmstart können Sie zunächst eine Aufgabe auswählen. Dazu gehen Sie auf <i>Datei → Öffne Katalog</i>,
+        suchen dort nach ihrem XML-Dokument und öffnen dieses anschließend. Rechts sollten Sie nun einen Katalog sehen,
+        aus dem Sie eine Aufgabe auswählen können.<br>
+        Beim Start einer Aufgabe erscheint ggf. ein Fenster mit der Frage, ob Sie an ihrer zuletzt gespeicherten Version
+        weiterarbeiten möchten. Oben links wird eine kurze Beschreibung des Arbeitsauftrags angezeigt.<br>
+        Beim Verlassen einer Aufgabe werden Sie gefragt, ob Sie Ihren Fortschritt der momentanen Aufgabe speichern möchten,
+        sodass bei erneutem Starten dieser Aufgabe die Textfelder mit ihrem gespeichertem Inhalt aufgerufen werden können.</p>
+        <li><b>Speichern</b></li>
+        <p>Wenn Sie <i>Speichern</i> auswählen, wird der Fortschritt der momentanen Aufgabe wie oben erläutert gespeichert.</p>
+        <li><b>Programm schließen</b></li>
+        <p>Schließt das Programmfenster.</p>
+        <br>
+        <h3>2 Arbeitsstatus</h3>
+        <p>Es gibt vier Status: <b style="color: red;">RED</b>, <b style="color: green;">GREEN</b>, <b>REFACTOR CODE</b> und <b>REFACTOR TEST</b>.</p>
+        <li style="color: red;"><b>RED</b></li>
+        <p>In diesem Status müssen Sie in das obere rechte Textfeld einen Test zur Aufgabe schreiben, der fehlschlägt.<br>
+        Wenn Sie auf den Button <i>Nächster Schritt</i> drücken, werden Ihnen im unteren rechten Textfeld entsprechende Meldungen (z. B. Kompilierfehler) angezeigt.<br>
+        Sobald es keine Fehler bei den zu schreibenden Tests mehr gibt, sondern nur noch beim zu bearbeitenden Programm, wechselt der Status zu <b style="color: green;">GREEN</b>.</p>
+        <li style="color: green;"><b>GREEN</b></li>
+        <p>Um in den nächsten Status überzugehen, müssen Sie den Programmcode im oberen linken Textfeld ergänzen bzw. verändern,
+        bis alle Tests im oberen rechten Textfeld erfüllt sind. Beim Klick auf <i>Nächster Schritt</i> gelangen Sie, sofern das
+        untere linke Textfeld keine Meldungen anzeigt, in den Status <b>REFACTOR CODE</b>.<br>
+        Sollten Sie einen Fehler beim Schreiben der Tests im Status <b style="color: red;">RED</b> gemacht haben, können Sie auf <i>Schritt zurück</i> drücken,
+        jedoch würden dabei Ihr Code und Ihre Tests zu dem Zeitpunkt zurückgesetzt, zu dem Sie zuletzt am Anfang des Status <b style="color: red;">RED</b> gewesen sind.</p>
+        <li><b>REFACTOR CODE/TEST</b></li>
+        <p>In diesen beiden Status können Sie u. a. Einrückungen und Kommentare vornehmen, Variablennamen ändern sowie die Wartbarkeit und Erweiterbarkeit Ihres Codes/Ihrer Tests verbessern.<br>
+        Mit einem Klick auf <i>Nächster Schritt</i> kommen Sie von <b>REFACTOR CODE</b> zu <b>REFACTOR TEST</b> bzw. von <b>REFACTOR TEST</b> zu <b style="color: red;">RED</b>.</p>
+        <br>
+        <h4>3 Erweiterungen</h4>
+        <li><b>Babysteps</b></li>
+        <p>Wenn für eine Übung Babysteps eingeschaltet sind, wird die Zeit, die Sie in den Phasen <b style="color: red;">RED</b> und <b style="color: green;">GREEN</b> haben, limitiert.<br>
+        Die verbleibende Zeit wird rechts neben dem Schriftzug <i>Verbleibende Zeit</i> angezeigt und im Sekundentakt heruntergeschaltet.<br>
+        Ist die Zeit abgelaufen, wird der neue Test/Code gelöscht und es wird in die vorangegangene Phase zurückgewechselt.</p>
+        <li><b>Tracking</b></li>
+        <p>Ist diese Funktion aktiviert, werden die Zeiten, die Sie in den einzelnen Phasen verbringen, aufgezeichnet.<br>
+        Unter <i>Statistiken → Benutzeranalyse</i> können Sie die Zeiten in Form eines Kuchendiagrammes einsehen.</p>
+    </body>
+</html>
