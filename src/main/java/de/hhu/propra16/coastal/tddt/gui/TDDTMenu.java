@@ -212,70 +212,15 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void help(ActionEvent event) {
-        /*Stage benutzerhandbuch = new Stage();
-        GridPane gridpane = new GridPane();
-        gridpane.setPrefSize(400, 400);
-        GridPane grid = new GridPane();
-        GridPane pane = new GridPane();
-        gridpane.getColumnConstraints().add(new ColumnConstraints(100));
-        gridpane.getColumnConstraints().add(new ColumnConstraints(300));
-        gridpane.add(grid, 0, 0);
-        gridpane.add(pane, 1, 0);
-        Label[] help = new Label[3];
-        help[0] = new Label("1 Menü");
-        help[1] = new Label("2 Arbeitsstatus");
-        help[2] = new Label("3 Erweiterungen");
-        String[] helper = {"", "", ""};
-        try {
-            BufferedReader h = new BufferedReader(new FileReader("src/test/help.txt"));
-            for (int i = 0; i < 23; i++) {
-                if (i < 9) helper[0] += h.readLine();
-                if (i > 9 && i < 19) helper[1] += h.readLine();
-                else helper[2] += h.readLine();
-            }
-        }
-        catch (IOException e) { }
-        Label[] helping = new Label[3];
-        for (int i = 0; i < 3; i++) {
-            helping[i] = new Label();
-            helping[i].setAlignment(Pos.CENTER_LEFT);
-            helping[i].setText(helper[i]);
-            help[i].setAlignment(Pos.CENTER_LEFT);
-            grid.add(help[i], 0, i);
-        }
-        help[0].setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent me) {
-                pane.getChildren().remove(0, 0);
-                pane.add(helping[0], 0, 0);
-            }
-        });
-        help[1].setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent me) {
-                pane.getChildren().remove(0, 0);
-                pane.add(helping[1], 0, 0);
-            }
-        });
-        help[2].setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent me) {
-                pane.getChildren().remove(0, 0);
-                pane.add(helping[2], 0, 0);
-            }
-        });
-        Scene scene = new Scene(gridpane);
-        benutzerhandbuch.setTitle("Benutzerhandbuch");
-        benutzerhandbuch.setScene(scene);
-        benutzerhandbuch.show();*/
         Stage stage = new Stage();
+        stage.setTitle("Benutzerhandbuch");
         StackPane pane = new StackPane();
         WebView browser = new WebView();
         URL url = getClass().getResource("help.html");
-        System.out.println(url.toExternalForm());
         try {
             browser.getEngine().load(url.toExternalForm());
         }catch(Exception e) {
+            System.out.println("Laden der HTML nicht möglich");
         }
         pane.getChildren().add(browser);
         Scene scene = new Scene(pane);
