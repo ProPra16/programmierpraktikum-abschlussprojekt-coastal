@@ -12,9 +12,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TDDTextArea extends CodeArea implements ITDDTextArea {
-    @Override
+    //@Override
     public void setText(String text) {
-
+        clear();
+        appendText(text);
     }
 
     private static final String[] KEYWORDS = new String[] {
