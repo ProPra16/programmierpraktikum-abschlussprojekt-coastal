@@ -184,7 +184,6 @@ public class TDDTMenu implements Initializable {
     @FXML
     protected void close(ActionEvent event) {
         speichernAbfrage(TriggerSaveOption.Close);
-        Platform.exit();
     }
 
     @FXML

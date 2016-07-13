@@ -37,6 +37,7 @@ public class Main extends Application {
         scene.getStylesheets().add(url.toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
+        primaryStage.setOnCloseRequest(event -> Platform.exit());
         TDDTMenu.setStage(primaryStage);
         primaryStage.show();
     }
