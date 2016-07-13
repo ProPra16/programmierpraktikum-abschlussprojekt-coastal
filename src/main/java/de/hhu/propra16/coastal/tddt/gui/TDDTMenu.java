@@ -6,6 +6,7 @@ import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import de.hhu.propra16.coastal.tddt.compiler.CompilerInteraction;
 import de.hhu.propra16.coastal.tddt.compiler.CompilerReport;
 import de.hhu.propra16.coastal.tddt.tracking.Tracking;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -183,7 +184,7 @@ public class TDDTMenu implements Initializable {
     @FXML
     protected void close(ActionEvent event) {
         speichernAbfrage(TriggerSaveOption.Close);
-        primaryStage.close();
+        Platform.exit();
     }
 
     @FXML

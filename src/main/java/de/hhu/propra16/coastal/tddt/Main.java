@@ -1,8 +1,8 @@
 package de.hhu.propra16.coastal.tddt;
 
-import de.hhu.propra16.coastal.tddt.compiler.CompilerReport;
 import de.hhu.propra16.coastal.tddt.gui.TDDTMenu;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,6 +43,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        Platform.setImplicitExit(true); // allows Platform.exit() to close all windows related to the App
         launch(args);
     }
 }
