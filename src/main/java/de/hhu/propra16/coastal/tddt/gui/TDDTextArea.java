@@ -11,6 +11,10 @@ import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/*
+* Marvin hat bei der Implementierung von RichTextFX mitgeholfen. Vergessen in den Commits zu erwähnen.
+* Alle RichTextFX Implmentierungen wurden mit Marvin zusammen gemacht*/
+
 public class TDDTextArea extends CodeArea implements ITDDTextArea {
     //@Override
     public void setText(String text) {
