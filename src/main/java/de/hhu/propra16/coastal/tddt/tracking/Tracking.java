@@ -3,7 +3,8 @@ package de.hhu.propra16.coastal.tddt.tracking;
 import java.util.ArrayList;
 
 public class Tracking {
-    ArrayList<Timer> timerList = new ArrayList<Timer>();
+    private ArrayList<Timer> timerList = new ArrayList<>();
+
     /*A Tracking datatype automatically contains one Timer object in its ArrayList*/
     public Tracking() {
         for(int i=0; i<4; i++){
@@ -13,19 +14,6 @@ public class Tracking {
 
     public void addTimer(){
         timerList.add(new Timer());
-    }
-
-    /*Operating with the standard Timer*/
-    public void startTimer(){
-        timerList.get(0).start();
-    }
-
-    public void stopTimer(){
-        timerList.get(0).end();
-    }
-
-    public int getTime() {
-        return timerList.get(0).returnTimeSpentInSeconds();
     }
 
     public void setLabel(String s){
@@ -41,7 +29,7 @@ public class Tracking {
     }
     /*Operating with any timer in the Arraylist*/
     public void startTimer(int x){
-        if(x<timerList.size()) {
+        if(x<timerList.size() && !timerList.get(x).started()) {
             timerList.get(x).start();
         }
     }

@@ -71,15 +71,15 @@ public class CompilerReport {
 
     static void changeReport(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback, Exercise currentExercise, Babysteps baby, Tracking tracker) {
         /*save chart*/
-        int[] chartArray = {tracker.getTime(), tracker.getTime(1), tracker.getTime(2), tracker.getTime(3)};
+        int[] chartArray = {tracker.getTime(0), tracker.getTime(1), tracker.getTime(2), tracker.getTime(3)};
         save(chartArray);
         baby.refreshTimer();
         switch (lbstatus.getText()) {
             case "RED":
                 /*Tracking*/
-                tracker.stopTimer(3);
-                tracker.startTimer();
-                chartArray[3] = tracker.getTime(3);
+                tracker.stopTimer(0);
+                tracker.startTimer(1);
+                chartArray[0] = tracker.getTime(0);
                 save(chartArray);
                 /**/
                 btback.setDisable(false);
@@ -93,9 +93,9 @@ public class CompilerReport {
                 break;
             case "GREEN":
                 /*Tracking*/
-                tracker.stopTimer();
-                tracker.startTimer(1);
-                chartArray[0] = tracker.getTime();
+                tracker.stopTimer(1);
+                tracker.startTimer(2);
+                chartArray[1] = tracker.getTime(1);
                 save(chartArray);
                 /**/
                 btback.setDisable(true);
@@ -108,9 +108,9 @@ public class CompilerReport {
                 break;
             case "REFACTOR CODE":
                 /*Tracking*/
-                tracker.stopTimer(1);
-                tracker.startTimer(2);
-                chartArray[1] = tracker.getTime(1);
+                tracker.stopTimer(2);
+                tracker.startTimer(3);
+                chartArray[2] = tracker.getTime(2);
                 save(chartArray);
                 /**/
                 lbstatus.setText("REFACTOR TEST");
@@ -119,9 +119,9 @@ public class CompilerReport {
                 break;
             case "REFACTOR TEST":
                 /*Tracking*/
-                tracker.stopTimer(2);
-                tracker.startTimer(3);
-                chartArray[2] = tracker.getTime(2);
+                tracker.stopTimer(3);
+                tracker.startTimer(0);
+                chartArray[3] = tracker.getTime(3);
                 save(chartArray);
                 /**/
                 previousCode = taeditor.getText();
@@ -134,7 +134,7 @@ public class CompilerReport {
 
     public static void back(ITDDTextArea taeditor, ITDDTextArea tatest, ITDDLabel lbstatus, Button btback, Babysteps baby, Tracking tracker) {
         /*Tracking*/
-        tracker.startTimer();
+        tracker.startTimer(0);
         /**/
         btback.setDisable(true);
         taeditor.setText(previousCode);
