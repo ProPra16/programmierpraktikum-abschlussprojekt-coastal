@@ -20,4 +20,4 @@ REFACTOR CODE/TEST: In diesen beiden Status können Sie Einrückungen und Kommen
 3 Erweiterungen
 Babysteps: Wenn für eine Übung Babysteps eingeschaltet sind, wird die Zeit, die Sie in den Phasen RED und GREEN haben, limitiert. Die verbleibende Zeit wird rechts neben dem Schriftzug „Verbleibende Zeit“ angezeigt und im Sekundentakt heruntergeschaltet. Ist die Zeit abgelaufen, wird der neue Test/Code gelöscht und es wird in die vorangegangene Phase zurückgewechselt.
 
-Tracking: Ist diese Funktion aktiviert, werden die Zeiten, die Sie in den einzelnen Phasen verbringen, aufgezeichnet. Unter „Statistiken – Benutzeranalyse“ können Sie die Zeiten in Form eines Kuchendiagrammes einsehen.
+Tracking: Ist diese Funktion aktiviert, werden die Zeiten, die Sie in den einzelnen Phasen verbringen, aufgezeichnet. Unter „Statistiken → Benutzeranalyse“ können Sie die Zeiten in Form eines Kuchendiagrammes einsehen.
