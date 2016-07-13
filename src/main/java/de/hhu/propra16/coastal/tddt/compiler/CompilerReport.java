@@ -79,6 +79,8 @@ public class CompilerReport {
                 /*Tracking*/
                 tracker.stopTimer(3);
                 tracker.startTimer();
+                chartArray[3] = tracker.getTime(3);
+                save(chartArray);
                 /**/
                 btback.setDisable(false);
                 lbstatus.setText("GREEN");
@@ -93,6 +95,8 @@ public class CompilerReport {
                 /*Tracking*/
                 tracker.stopTimer();
                 tracker.startTimer(1);
+                chartArray[0] = tracker.getTime();
+                save(chartArray);
                 /**/
                 btback.setDisable(true);
                 lbstatus.setText("REFACTOR CODE");
@@ -106,6 +110,8 @@ public class CompilerReport {
                 /*Tracking*/
                 tracker.stopTimer(1);
                 tracker.startTimer(2);
+                chartArray[1] = tracker.getTime(1);
+                save(chartArray);
                 /**/
                 lbstatus.setText("REFACTOR TEST");
                 TDDController.toTestEditor(taeditor, tatest);
@@ -115,6 +121,8 @@ public class CompilerReport {
                 /*Tracking*/
                 tracker.stopTimer(2);
                 tracker.startTimer(3);
+                chartArray[2] = tracker.getTime(2);
+                save(chartArray);
                 /**/
                 previousCode = taeditor.getText();
                 previousTest = tatest.getText();
