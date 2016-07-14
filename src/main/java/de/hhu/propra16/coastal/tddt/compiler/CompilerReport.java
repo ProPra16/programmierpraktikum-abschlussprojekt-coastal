@@ -3,6 +3,7 @@ package de.hhu.propra16.coastal.tddt.compiler;
 import de.hhu.propra16.coastal.tddt.tracking.*;
 import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import de.hhu.propra16.coastal.tddt.gui.*;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import vk.core.api.CompileError;
@@ -13,6 +14,7 @@ import vk.core.api.TestResult;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by student on 06/07/16.
@@ -154,7 +156,7 @@ public class CompilerReport {
         previousTest = oldTest;
     }
 
-    static void showErrors(JavaStringCompiler compiler, Collection<CompileError> errorsProgram, Collection<CompileError> errorsTest, TextArea taterminal, TextArea tatestterminal, Exercise currentExercise, ITDDLabel lbstatus) {
+    static void showErrors(JavaStringCompiler compiler, Collection<CompileError> errorsProgram, Collection<CompileError> errorsTest, TextArea taterminal, TextArea tatestterminal, Exercise currentExercise, ITDDLabel lbstatus, List<ErrorObject> errors) {
         for(CompileError error : errorsProgram) {
             String currentTerminal = taterminal.getText();
             taterminal.setText(currentTerminal + " " + error.getLineNumber() + ": " + error.getMessage() + "\n" + "\n");
@@ -163,6 +165,7 @@ public class CompilerReport {
         String errorMessagesProgram = "Compiler error in program:" + "\n" + "\n";
         String errorMessagesTest = "Compiler error in test:" + "\n" + "\n";
         ErrorType error = error(compiler, errorsProgram, errorsTest, currentExercise, lbstatus);
+        String message ="";
         if (target == CompileTarget.TEST) {
             if(error == ErrorType.compilerErrorTest) {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
@@ -172,6 +175,7 @@ public class CompilerReport {
             } else {
                 tatestterminal.setText("Ein Test muss fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
             }
+            message = tatestterminal.getText();
 
         } else {
             if(error == ErrorType.compilerErrorProgram) {
@@ -181,7 +185,9 @@ public class CompilerReport {
             } else {
                 taterminal.setText("Alle Tests müssen erfüllt werden!" + "\n" + "\n" + taterminal.getText());
             }
+            message = taterminal.getText();
         }
+        errors.add(new ErrorObject(error, message, lbstatus.getText()));
     }
 
     static void showTestResults(JavaStringCompiler compiler, TextArea tatestterminal) {
