@@ -6,34 +6,25 @@ import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import de.hhu.propra16.coastal.tddt.compiler.CompilerInteraction;
 import de.hhu.propra16.coastal.tddt.compiler.CompilerReport;
 import de.hhu.propra16.coastal.tddt.tracking.Tracking;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.chart.*;
 import javafx.scene.Group;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-
-import java.io.File;
 
 import java.io.*;
 
@@ -133,9 +124,6 @@ public class TDDTMenu implements Initializable {
         }
         directory = file.getParentFile();
         currentExercise = null;
-        if(file == null) {
-            return;
-        }
 
         try {
             catalog = new CatalogParser().parse(file);
@@ -196,7 +184,6 @@ public class TDDTMenu implements Initializable {
     @FXML
     protected void close(ActionEvent event) {
         speichernAbfrage(TriggerSaveOption.Close);
-        primaryStage.close();
     }
 
     @FXML
@@ -253,7 +240,7 @@ public class TDDTMenu implements Initializable {
             baby.stopTimer();
         }
         if (currentExercise.isBabysteps()) {
-            baby = new Babysteps(currentExercise, taeditor, tatest);
+            baby = new Babysteps(currentExercise, tatest);
             baby.babystep(lbstatus, lbtime, taeditor, tatest);
             lbbabysteps.setText("AKTIVIERT");
             lbbabysteps.setId("green");
@@ -270,6 +257,7 @@ public class TDDTMenu implements Initializable {
             lbtracking.setText("DEAKTIVIERT");
             lbtracking.setId("red");
         }
+        tracker.startTimer(0);
     }
 
     private void speichernAbfrage(TriggerSaveOption option) {
@@ -326,14 +314,12 @@ public class TDDTMenu implements Initializable {
             Scene scene = new Scene(new Group(), 500, 500);
             benutzeranalyse.setTitle("Benutzeranalyse");
 
-            sum = (sum == 0) ? 1 : sum;
-
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
-                            new PieChart.Data("Red", (int) (chartNumber[0] * 100 / sum)),
-                            new PieChart.Data("Refactor Code", (int) (chartNumber[2] * 100 / sum)),
-                            new PieChart.Data("Green", (int) (chartNumber[1] * 100 / sum)),
-                            new PieChart.Data("Refactor Test", (int) (chartNumber[3] * 100 / sum)));
+                            new PieChart.Data("Red", chartNumber[0] * 100 / sum),
+                            new PieChart.Data("Refactor Code", chartNumber[2] * 100 / sum),
+                            new PieChart.Data("Green", chartNumber[1] * 100 / sum),
+                            new PieChart.Data("Refactor Test", chartNumber[3] * 100 / sum));
             final PieChart chart = new PieChart(pieChartData);
             chart.setTitle("Verbrachte Zeit vom Nutzer:");
             ((Group) scene.getRoot()).getChildren().add(chart);

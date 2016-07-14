@@ -22,18 +22,18 @@ public class TrackingTest {
 
     @Test
     public void firsTimer() throws Exception{
-        t.startTimer();
+        t.startTimer(0);
         thread.sleep(1000);
-        t.stopTimer();
-        assertEquals(1, t.getTime());
+        t.stopTimer(0);
+        assertEquals(1, t.getTime(0));
     }
 
     @Test
     public void firstTimer2Seconds() throws Exception{
-        t.startTimer();
+        t.startTimer(0);
         thread.sleep(2000);
-        t.stopTimer();
-        assertEquals(2, t.getTime());
+        t.stopTimer(0);
+        assertEquals(2, t.getTime(0));
     }
 
     @Test
