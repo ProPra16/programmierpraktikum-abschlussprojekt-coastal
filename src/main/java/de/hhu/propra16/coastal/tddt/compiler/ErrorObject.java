@@ -3,9 +3,9 @@ package de.hhu.propra16.coastal.tddt.compiler;
 
 public class ErrorObject {
 
-    ErrorType error;
-    String message;
-    String section;
+    private ErrorType error;
+    private String message;
+    private String section;
 
     public ErrorObject(ErrorType error, String message, String section) {
         this.error = error;
