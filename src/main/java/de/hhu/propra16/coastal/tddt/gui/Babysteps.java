@@ -14,11 +14,10 @@ public class Babysteps {
     private Timer t;
 
 
-    public Babysteps(Exercise currentExercise, ITDDTextArea taeditor, ITDDTextArea tatest) {
+    public Babysteps(Exercise currentExercise, ITDDTextArea tatest) {
         timer = currentExercise.getBabystepTime();
         oldTimer = timer;
         oldTestText = tatest.getText();
-        oldEditorText = taeditor.getText();
         t = new Timer();
 
     }
