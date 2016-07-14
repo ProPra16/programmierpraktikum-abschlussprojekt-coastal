@@ -240,7 +240,7 @@ public class TDDTMenu implements Initializable {
             baby.stopTimer();
         }
         if (currentExercise.isBabysteps()) {
-            baby = new Babysteps(currentExercise, taeditor, tatest);
+            baby = new Babysteps(currentExercise, tatest);
             baby.babystep(lbstatus, lbtime, taeditor, tatest);
             lbbabysteps.setText("AKTIVIERT");
             lbbabysteps.setId("green");
