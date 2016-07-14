@@ -23,3 +23,4 @@ Stand der letzten Woche:
 
 Bei der Endphase haben Kommilitonen gegenseitig Code verbessert und Bugfixes gemacht. Somit wurden Codeabschnitte zum Teils von mehreren Personen durchgelesen.
 Sonst ist die Verteilung der Aufgaben gleich geblieben und jeder hat seinen Teil vervollständigt.
+
