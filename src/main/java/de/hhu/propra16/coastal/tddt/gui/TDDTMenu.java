@@ -382,6 +382,9 @@ public class TDDTMenu implements Initializable {
     }
 
     private void refreshUserFails() {
+        if(analyzer == null || errors == null) {
+            return;
+        }
         analyzer.loadErrors(errors);
     }
 

@@ -165,7 +165,6 @@ public class CompilerReport {
         String errorMessagesProgram = "Compiler error in program:" + "\n" + "\n";
         String errorMessagesTest = "Compiler error in test:" + "\n" + "\n";
         ErrorType error = error(compiler, errorsProgram, errorsTest, currentExercise, lbstatus);
-        String message ="";
         if (target == CompileTarget.TEST) {
             if(error == ErrorType.compilerErrorTest) {
                 tatestterminal.setText(errorMessagesTest + tatestterminal.getText());
@@ -175,7 +174,6 @@ public class CompilerReport {
             } else {
                 tatestterminal.setText("Ein Test muss fehlschlagen!" +"\n" + "\n" + tatestterminal.getText());
             }
-            message = tatestterminal.getText();
 
         } else {
             if(error == ErrorType.compilerErrorProgram) {
@@ -185,9 +183,8 @@ public class CompilerReport {
             } else {
                 taterminal.setText("Alle Tests müssen erfüllt werden!" + "\n" + "\n" + taterminal.getText());
             }
-            message = taterminal.getText();
         }
-        errors.add(new ErrorObject(error, message, lbstatus.getText()));
+        errors.add(new ErrorObject(error, taterminal.getText() + tatestterminal.getText(), lbstatus.getText()));
     }
 
     static void showTestResults(JavaStringCompiler compiler, TextArea tatestterminal) {
