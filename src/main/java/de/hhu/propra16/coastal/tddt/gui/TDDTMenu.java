@@ -5,11 +5,15 @@ import de.hhu.propra16.coastal.tddt.catalog.CatalogParser;
 import de.hhu.propra16.coastal.tddt.catalog.Exercise;
 import de.hhu.propra16.coastal.tddt.compiler.CompilerInteraction;
 import de.hhu.propra16.coastal.tddt.compiler.CompilerReport;
+import de.hhu.propra16.coastal.tddt.compiler.ErrorObject;
 import de.hhu.propra16.coastal.tddt.tracking.Tracking;
+import de.hhu.propra16.coastal.tddt.tracking.UserFailsAnalyzer;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.chart.*;
 import javafx.scene.Group;
 import javafx.event.ActionEvent;
@@ -17,6 +21,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -33,6 +39,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -82,6 +90,8 @@ public class TDDTMenu implements Initializable {
     @FXML
     private TDDLabel lbdescription;
 
+    private UserFailsAnalyzer analyzer;
+
     private Catalog catalog;
 
     private Exercise currentExercise;
@@ -91,6 +101,12 @@ public class TDDTMenu implements Initializable {
     public static Babysteps baby;
 
     public static Tracking tracker = new Tracking();
+
+    private Stage userFails;
+
+
+    private List<ErrorObject> errors = new ArrayList<ErrorObject>();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -188,7 +204,8 @@ public class TDDTMenu implements Initializable {
 
     @FXML
     protected void next(ActionEvent event) {
-        CompilerInteraction.compile(taeditor, tatest, taterminal, tatestterminal, lbstatus, lbtime, currentExercise, lvexercises, btback, baby, tracker);
+        CompilerInteraction.compile(taeditor, tatest, taterminal, tatestterminal, lbstatus, lbtime, currentExercise, lvexercises, btback, baby, tracker, errors);
+        refreshUserFails();
     }
 
     @FXML
@@ -327,7 +344,7 @@ public class TDDTMenu implements Initializable {
             benutzeranalyse.show();
         }
         else{
-            /*Opens Game Win window*/
+            /*Opens Not Enough Data window*/
             Label msg1 = new Label("Es wurden nicht genug Daten gesammelt.");
             Stage benutzeranalyse = new Stage();
             StackPane sp = new StackPane();
@@ -341,6 +358,31 @@ public class TDDTMenu implements Initializable {
             benutzeranalyse.show();
         }
 
+    }
+
+    @FXML
+    protected void showFails(ActionEvent event) {
+        userFails = new Stage();
+
+        FXMLLoader loader = null;
+
+        try {
+            loader = new FXMLLoader(getClass().getResource("userfails.fxml"));
+        } catch (Exception e) {
+            System.err.println(getClass().getResource("userfails.fxml"));
+        }
+        analyzer = new UserFailsAnalyzer(loader);
+        Scene scene = new Scene(analyzer, 1024, 720);
+        userFails.setTitle("Fehleranalyse");
+        userFails.setScene(scene);
+        userFails.setResizable(false);
+        userFails.show();
+        refreshUserFails();
+
+    }
+
+    private void refreshUserFails() {
+        analyzer.loadErrors(errors);
     }
 
     public static void setStage (Stage stage) {
